@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:yama_shopping/modal/cart.dart';
 import 'package:yama_shopping/modal/product.dart';
 import 'package:yama_shopping/services/product_service.dart';
 
@@ -8,12 +9,8 @@ class MyProduct extends StatelessWidget {
   final ProductService productService = ProductService();
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-    final double itemWidth = size.width / 2;
     String categoryID = ModalRoute.of(context)!.settings.arguments as String;
+    Cart cart = Provider.of<Cart>(context);
     final Color theme = Theme.of(context).backgroundColor;
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +45,6 @@ class MyProduct extends StatelessWidget {
                       itemCount: products.items.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          height: 600,
                           padding: const EdgeInsets.all(8.0),
                           margin: const EdgeInsets.all(8.0),
                           decoration:
@@ -63,29 +59,46 @@ class MyProduct extends StatelessWidget {
                             Image.network(
                               products.items[index].image,
                               width: 200,
-                              height: 100,
+                              height: 120,
                             ),
-                            SizedBox(
-                              height: 28,
-                            ),
+                            const SizedBox(height: 15),
                             Text(
                               products.items[index].name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            const SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '\$${products.items[index].price}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.red, fontSize: 16),
                                 ),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      cart.add(products.items[index]);
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: const Text('Success'),
+                                                content: const Text(
+                                                    'Add to cart successfully'),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            context, 'Cancel'),
+                                                    child: Text('OK'),
+                                                    style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all(theme)),
+                                                  )
+                                                ],
+                                              ));
+                                    },
                                     icon: Icon(
                                       Icons.add_box_sharp,
                                       color: theme,
@@ -100,29 +113,6 @@ class MyProduct extends StatelessWidget {
             },
           ),
         ),
-        // child: categories.isEmpty
-        //     ? SpinKitCubeGrid(
-        //         color: theme,
-        //       )
-        //     : ListView.builder(
-        //         padding: const EdgeInsets.all(8.0),
-        //         itemCount: categories.length,
-        //         itemBuilder: (context, index) {
-        //           return Container(
-        //             padding: const EdgeInsets.all(8.0),
-        //             margin: const EdgeInsets.all(8.0),
-        //             color: Colors.teal[100],
-        //             child: Column(children: [
-        //               Image.network(
-        //                 categories[index].image,
-        //                 width: 100,
-        //                 height: 100,
-        //               ),
-        //               Text(categories[index].name),
-        //             ]),
-        //           );
-        //         },
-        //       )
       ),
     );
   }

@@ -23,16 +23,13 @@ class MyApp extends StatelessWidget {
         Provider(
           create: (context) => User('thanhtaimrjoe', 'Thanhtai100'),
         ),
-        // Provider(
-        //   create: (context) => Catalog(),
-        // ),
         FutureProvider<List<dynamic>>(
           initialData: [],
           create: (context) => categoryService.fetchCategories(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => Cart(),
-        // ),
+        ChangeNotifierProvider<Cart>(
+          create: (context) => Cart(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(backgroundColor: Colors.teal[400]),
@@ -41,7 +38,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => MyLogin(),
           '/catalog': (context) => MyCatalog(),
           '/product': (context) => MyProduct(),
-          //'/cart': (context) => MyCart(),
+          '/cart': (context) => MyCart(),
         },
       ),
     );
