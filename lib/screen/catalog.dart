@@ -29,18 +29,24 @@ class MyCatalog extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.teal[100],
-                      child: Column(children: [
-                        Image.network(
-                          categories[index].image,
-                          width: 100,
-                          height: 100,
-                        ),
-                        Text(categories[index].name),
-                      ]),
+                    return InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/product',
+                            arguments: categories[index].id);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.all(8.0),
+                        color: Colors.teal[100],
+                        child: Column(children: [
+                          Image.network(
+                            categories[index].image,
+                            width: 100,
+                            height: 100,
+                          ),
+                          Text(categories[index].name),
+                        ]),
+                      ),
                     );
                   },
                 )),

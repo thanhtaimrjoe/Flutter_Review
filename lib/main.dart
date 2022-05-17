@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yama_shopping/modal/Category.dart';
 import 'package:yama_shopping/modal/cart.dart';
 import 'package:yama_shopping/modal/user.dart';
 import 'package:yama_shopping/screen/cart.dart';
 import 'package:yama_shopping/screen/catalog.dart';
+import 'package:yama_shopping/screen/product.dart';
 import 'package:yama_shopping/services/category_service.dart';
 import 'screen/login.dart';
 
@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
           initialData: [],
           create: (context) => categoryService.fetchCategories(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Cart(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => Cart(),
+        // ),
       ],
       child: MaterialApp(
         theme: ThemeData(backgroundColor: Colors.teal[400]),
@@ -40,7 +40,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => MyLogin(),
           '/catalog': (context) => MyCatalog(),
-          '/cart': (context) => MyCart(),
+          '/product': (context) => MyProduct(),
+          //'/cart': (context) => MyCart(),
         },
       ),
     );
