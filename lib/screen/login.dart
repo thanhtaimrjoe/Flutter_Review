@@ -10,11 +10,22 @@ class MyLogin extends StatelessWidget {
     final Color theme = Theme.of(context).backgroundColor;
     User user = Provider.of<User>(context);
     return Scaffold(
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('YAMA SHOPPING'),
+            Image.asset(
+              'assets/shopping-bag.png',
+              width: 150,
+              height: 150,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'YAMA SHOPPING',
+              style: TextStyle(
+                  fontSize: 24, fontWeight: FontWeight.bold, color: theme),
+            ),
             const SizedBox(
               height: 16,
             ),

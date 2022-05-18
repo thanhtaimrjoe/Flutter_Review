@@ -15,13 +15,37 @@ class MyCart extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-              child: cart.items.isEmpty
-                  ? const Text('Cart was empty')
-                  : MyCartList()),
+              child:
+                  cart.items.isEmpty ? EmptyCart(theme: theme) : MyCartList()),
           MyTotalPrice()
         ],
       ),
     );
+  }
+}
+
+class EmptyCart extends StatelessWidget {
+  final Color theme;
+  // ignore: use_key_in_widget_constructors
+  const EmptyCart({required this.theme});
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.network(
+          'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/empty-cart.png?alt=media&token=91c4e8c0-fe63-48e1-891f-a874122359f7',
+          width: 200,
+          height: 200,
+        ),
+        const SizedBox(height: 16),
+        Text(
+          'Your cart was empty',
+          style: TextStyle(fontSize: 18, color: theme),
+        ),
+      ],
+    ));
   }
 }
 

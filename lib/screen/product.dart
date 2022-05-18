@@ -67,7 +67,6 @@ class MyProduct extends StatelessWidget {
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                            const SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -89,7 +88,7 @@ class MyProduct extends StatelessWidget {
                                                   ElevatedButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
-                                                            context, 'Cancel'),
+                                                            context, 'OK'),
                                                     child: Text('OK'),
                                                     style: ButtonStyle(
                                                         backgroundColor:

@@ -54,8 +54,41 @@ class _MyCatalogState extends State<MyCatalog> {
 class MyPersonal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Welcome User01'),
+    final Color theme = Theme.of(context).backgroundColor;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              padding: const EdgeInsets.all(8),
+              // ignore: sort_child_properties_last
+              child: Icon(
+                Icons.person,
+                size: 80,
+                color: theme,
+              ),
+              decoration: BoxDecoration(
+                  border: Border.all(color: theme, width: 3),
+                  borderRadius: BorderRadius.circular(50))),
+          const SizedBox(height: 16),
+          Text(
+            "Welcome user01",
+            style: TextStyle(
+                color: theme, fontSize: 24, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/');
+            },
+            // ignore: sort_child_properties_last
+            child: const Text('Log Out'),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(theme),
+                elevation: MaterialStateProperty.all(0.0)),
+          )
+        ],
+      ),
     );
   }
 }
