@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/modal/user.dart';
@@ -56,6 +59,12 @@ class MyLogin extends StatelessWidget {
                   result = false;
                 }
                 if (result) {
+                  //test firebase database
+                  DatabaseReference _testRef =
+                      FirebaseDatabase.instance.ref().child("test");
+                  _testRef
+                      .set("Hello firebase database ${Random().nextInt(100)}");
+
                   Navigator.pushReplacementNamed(context, '/catalog');
                 } else {
                   showDialog(
