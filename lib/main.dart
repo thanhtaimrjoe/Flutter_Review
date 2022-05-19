@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/modal/cart.dart';
@@ -5,6 +6,7 @@ import 'package:yama_shopping/modal/user.dart';
 import 'package:yama_shopping/screen/cart.dart';
 import 'package:yama_shopping/screen/catalog.dart';
 import 'package:yama_shopping/screen/product.dart';
+import 'package:yama_shopping/services/authentication_service.dart';
 import 'package:yama_shopping/services/category_service.dart';
 import 'screen/login.dart';
 
@@ -21,8 +23,12 @@ class MyApp extends StatelessWidget {
     //catalog.fetchCategories;
     return MultiProvider(
         providers: [
-          Provider(
-            create: (context) => User('thanhtaimrjoe', 'Thanhtai100'),
+          Provider<AuthenticationService>(
+              create: (_) => AuthenticationService(FirebaseAuth.instance)),
+          StreamProvider(
+            create: (context) =>
+                context.read<AuthenticationService>().authStateChanges,
+            initialData: null,
           ),
           FutureProvider<List<dynamic>>(
             initialData: [],

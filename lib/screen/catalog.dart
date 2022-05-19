@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:yama_shopping/services/authentication_service.dart';
 
 class MyCatalog extends StatefulWidget {
   @override
@@ -55,11 +56,7 @@ class _MyCatalogState extends State<MyCatalog> {
 class MyPersonal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        print(user);
-      }
-    });
+    final firebaseUser = context.watch<User?>();
     final Color theme = Theme.of(context).backgroundColor;
     return Center(
       child: Column(
@@ -78,17 +75,18 @@ class MyPersonal extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50))),
           const SizedBox(height: 16),
           Text(
-            "Welcome",
+            "${firebaseUser?.email}",
             style: TextStyle(
                 color: theme, fontSize: 24, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
+              context.read<AuthenticationService>().signOut();
               Navigator.pushReplacementNamed(context, '/');
             },
             // ignore: sort_child_properties_last
-            child: const Text('Log Out'),
+            child: const Text('Sign Out'),
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(theme),
                 elevation: MaterialStateProperty.all(0.0)),
