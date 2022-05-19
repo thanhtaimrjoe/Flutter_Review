@@ -1,20 +1,15 @@
-import 'dart:math';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
-import 'package:yama_shopping/modal/user.dart';
 
 class MyLogin extends StatelessWidget {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Color theme = Theme.of(context).backgroundColor;
-    User user = Provider.of<User>(context);
     return FutureBuilder(
       future: _fbApp,
       builder: (context, snapshot) {
@@ -46,9 +41,10 @@ class MyLogin extends StatelessWidget {
                     height: 16,
                   ),
                   TextField(
-                    controller: usernameController,
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Username'),
+                        border: OutlineInputBorder(), labelText: 'Email'),
                   ),
                   const SizedBox(
                     height: 16,
@@ -63,41 +59,58 @@ class MyLogin extends StatelessWidget {
                     height: 16,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      var result = true;
-                      if (usernameController.text != user.username) {
-                        result = false;
-                      }
-                      if (passwordController.text != user.password) {
-                        result = false;
-                      }
-                      if (result) {
-                        //test firebase database
-                        DatabaseReference _testRef =
-                            FirebaseDatabase.instance.ref().child("test");
-                        _testRef.set(
-                            "IOS app firebase dekitanda ${Random().nextInt(100)}");
-
-                        Navigator.pushReplacementNamed(context, '/catalog');
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Warning'),
-                                  content: const Text(
-                                      'Your username or password was wrong. Please try again'),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context, 'OK');
-                                      },
-                                      child: Text('OK'),
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(theme)),
-                                    )
-                                  ],
-                                ));
+                    onPressed: () async {
+                      try {
+                        final credential = await FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text);
+                        if (credential.user != null) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacementNamed(context, '/catalog');
+                        }
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'user-not-found') {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: const Text('Alert'),
+                                    content: const Text(
+                                        'Email or password was wrong, please try again'),
+                                    actions: [
+                                      ElevatedButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'OK'),
+                                        child: Text('OK'),
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    theme)),
+                                      )
+                                    ],
+                                  ));
+                        } else if (e.code == 'wrong-password') {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: const Text('Alert'),
+                                    content: const Text(
+                                        'Email or password was wrong, please try again'),
+                                    actions: [
+                                      ElevatedButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'OK'),
+                                        child: Text('OK'),
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    theme)),
+                                      )
+                                    ],
+                                  ));
+                        }
+                      } catch (e) {
+                        print(e.toString());
                       }
                     },
                     child: Text('Login'),

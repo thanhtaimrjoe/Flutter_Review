@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -54,6 +55,11 @@ class _MyCatalogState extends State<MyCatalog> {
 class MyPersonal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        print(user);
+      }
+    });
     final Color theme = Theme.of(context).backgroundColor;
     return Center(
       child: Column(
@@ -72,7 +78,7 @@ class MyPersonal extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50))),
           const SizedBox(height: 16),
           Text(
-            "Welcome user01",
+            "Welcome",
             style: TextStyle(
                 color: theme, fontSize: 24, fontWeight: FontWeight.w500),
           ),
