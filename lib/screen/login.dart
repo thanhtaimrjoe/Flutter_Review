@@ -76,7 +76,7 @@ class MyLogin extends StatelessWidget {
                         DatabaseReference _testRef =
                             FirebaseDatabase.instance.ref().child("test");
                         _testRef.set(
-                            "Hello firebase database ${Random().nextInt(100)}");
+                            "IOS app firebase dekitanda ${Random().nextInt(100)}");
 
                         Navigator.pushReplacementNamed(context, '/catalog');
                       } else {
