@@ -2,12 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
 
 class MyLogin extends StatelessWidget {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Future<FirebaseApp> fbApp = Firebase.initializeApp();
@@ -23,7 +22,7 @@ class MyLogin extends StatelessWidget {
             return Scaffold(
               body: Container(
                 color: theme,
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -40,93 +39,15 @@ class MyLogin extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), labelText: 'Email'),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), labelText: 'Password'),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        String result = await context
-                            .read<AuthenticationService>()
-                            .signIn(
-                                emailController.text, passwordController.text);
-                        if (result == 'Signed In') {
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacementNamed(context, '/catalog');
-                        } else if (result == 'wrong-password') {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: const Text('Alert'),
-                                    content: const Text(
-                                        'Email or password was wrong, please try again'),
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'OK'),
-                                        child: Text('OK'),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    theme)),
-                                      )
-                                    ],
-                                  ));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: const Text('Alert'),
-                                    content: Text(
-                                        'Some thing wrong, please try again.\n$result'),
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'OK'),
-                                        child: Text('OK'),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    theme)),
-                                      )
-                                    ],
-                                  ));
-                        }
-                      },
-                      child: Text(
-                        'Login',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.white)),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text('--- Or login with ---'),
+                    const SizedBox(height: 16),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.white,
                             onPrimary: Colors.black,
                             minimumSize: Size(double.infinity, 50)),
-                        label: Text('Sign In with Google'),
+                        label: const Text("Sign In with Google",
+                            style: TextStyle(fontSize: 18)),
                         onPressed: () async {
                           UserCredential userCredential = await context
                               .read<AuthenticationService>()
@@ -135,7 +56,7 @@ class MyLogin extends StatelessWidget {
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacementNamed(context, '/catalog');
                         },
-                        icon: Icon(Icons.language_outlined)),
+                        icon: const Icon(FontAwesomeIcons.google)),
                   ],
                 ),
               ),
