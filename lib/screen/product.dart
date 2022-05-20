@@ -39,13 +39,13 @@ class MyProduct extends StatelessWidget {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 1 / 1.2,
+                        childAspectRatio: 1 / 1.3,
                       ),
                       padding: const EdgeInsets.all(8.0),
                       itemCount: products.items.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(13.0),
                           margin: const EdgeInsets.all(8.0),
                           decoration:
                               BoxDecoration(color: Colors.white, boxShadow: [
@@ -61,11 +61,11 @@ class MyProduct extends StatelessWidget {
                               width: 200,
                               height: 120,
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 8),
                             Text(
                               products.items[index].name,
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
