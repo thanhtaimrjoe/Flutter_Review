@@ -22,6 +22,7 @@ class MyLogin extends StatelessWidget {
           } else if (snapshot.hasData) {
             return Scaffold(
               body: Container(
+                color: theme,
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -32,12 +33,12 @@ class MyLogin extends StatelessWidget {
                       height: 150,
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'YAMA SHOPPING',
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: theme),
+                          color: Colors.white),
                     ),
                     const SizedBox(
                       height: 16,
@@ -109,13 +110,23 @@ class MyLogin extends StatelessWidget {
                                   ));
                         }
                       },
-                      child: Text('Login'),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(color: Colors.black),
+                      ),
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(theme)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white)),
                     ),
                     const SizedBox(height: 8),
                     const Text('--- Or login with ---'),
-                    IconButton(
+                    const SizedBox(height: 8),
+                    ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            onPrimary: Colors.black,
+                            minimumSize: Size(double.infinity, 50)),
+                        label: Text('Sign In with Google'),
                         onPressed: () async {
                           UserCredential userCredential = await context
                               .read<AuthenticationService>()
