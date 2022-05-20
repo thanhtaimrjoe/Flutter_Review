@@ -49,12 +49,13 @@ class MyLogin extends StatelessWidget {
                         label: const Text("Sign In with Google",
                             style: TextStyle(fontSize: 18)),
                         onPressed: () async {
-                          UserCredential userCredential = await context
+                          String result = await context
                               .read<AuthenticationService>()
                               .signInWithGoogle();
-                          print('userCredential: $userCredential');
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacementNamed(context, '/catalog');
+                          if (result == 'Signed In') {
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushReplacementNamed(context, '/catalog');
+                          }
                         },
                         icon: const Icon(FontAwesomeIcons.google)),
                   ],
