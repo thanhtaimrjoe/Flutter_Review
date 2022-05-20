@@ -53,33 +53,60 @@ class _MyCatalogState extends State<MyCatalog> {
   }
 }
 
+class Option {
+  String name;
+  Icon icon;
+  Option(this.name, this.icon);
+}
+
 class MyPersonal extends StatelessWidget {
+  final options = [
+    Option('Change language', const Icon(Icons.language)),
+    Option('Change location', const Icon(Icons.location_on)),
+    Option('About me', const Icon(Icons.person)),
+  ];
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User?>();
+    //final firebaseUser = context.watch<User?>();
+    final user = FirebaseAuth.instance.currentUser;
     final Color theme = Theme.of(context).backgroundColor;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-              padding: const EdgeInsets.all(8),
-              // ignore: sort_child_properties_last
-              child: Icon(
-                Icons.person,
-                size: 80,
-                color: theme,
-              ),
-              decoration: BoxDecoration(
-                  border: Border.all(color: theme, width: 3),
-                  borderRadius: BorderRadius.circular(50))),
-          const SizedBox(height: 16),
+        children: <Widget>[
+          CircleAvatar(
+              radius: 40, backgroundImage: NetworkImage('${user?.photoURL}')),
           Text(
-            "${firebaseUser?.email}",
+            "${user?.displayName}",
             style: TextStyle(
                 color: theme, fontSize: 24, fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 16),
+          SizedBox(
+            height: 200,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(24.0),
+              itemCount: options.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: const EdgeInsets.all(12),
+                  color: Colors.grey[300],
+                  child: Row(
+                    //mainAxisAlignment: Main,
+                    children: [
+                      options[index].icon,
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          options[index].name,
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
           ElevatedButton(
             onPressed: () {
               context.read<AuthenticationService>().signOut();

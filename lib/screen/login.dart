@@ -10,10 +10,10 @@ class MyLogin extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+    final Future<FirebaseApp> fbApp = Firebase.initializeApp();
     final Color theme = Theme.of(context).backgroundColor;
     return FutureBuilder(
-        future: _fbApp,
+        future: fbApp,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             print('You have an error! ${snapshot.error.toString()}');
@@ -67,6 +67,7 @@ class MyLogin extends StatelessWidget {
                             .signIn(
                                 emailController.text, passwordController.text);
                         if (result == 'Signed In') {
+                          // ignore: use_build_context_synchronously
                           Navigator.pushReplacementNamed(context, '/catalog');
                         } else if (result == 'wrong-password') {
                           showDialog(
@@ -111,7 +112,19 @@ class MyLogin extends StatelessWidget {
                       child: Text('Login'),
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(theme)),
-                    )
+                    ),
+                    const SizedBox(height: 8),
+                    const Text('--- Or login with ---'),
+                    IconButton(
+                        onPressed: () async {
+                          UserCredential userCredential = await context
+                              .read<AuthenticationService>()
+                              .signInWithGoogle();
+                          print('userCredential: $userCredential');
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacementNamed(context, '/catalog');
+                        },
+                        icon: Icon(Icons.language_outlined)),
                   ],
                 ),
               ),
