@@ -43,6 +43,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   font_awesome_flutter: ^9.2.0
   flutter_facebook_auth: ^4.3.4
+  cloud_firestore: ^3.1.15
 
 dev_dependencies:
   flutter_test:

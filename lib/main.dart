@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           ),
           FutureProvider<List<dynamic>>(
             initialData: [],
-            create: (context) => categoryService.fetchCategories(),
+            create: (context) => categoryService.firestoreCategories(),
           ),
           ChangeNotifierProvider<Cart>(
             create: (context) => Cart(),
