@@ -39,13 +39,13 @@ class MyLogin extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    const SizedBox(height: 16),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 50),
+                    //Google Sign In
                     ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.white,
                             onPrimary: Colors.black,
-                            minimumSize: Size(double.infinity, 50)),
+                            minimumSize: const Size(double.infinity, 50)),
                         label: const Text("Sign In with Google",
                             style: TextStyle(fontSize: 18)),
                         onPressed: () async {
@@ -58,6 +58,25 @@ class MyLogin extends StatelessWidget {
                           }
                         },
                         icon: const Icon(FontAwesomeIcons.google)),
+                    const SizedBox(height: 16),
+                    //Facebook Sign In
+                    ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            onPrimary: Colors.black,
+                            minimumSize: const Size(double.infinity, 50)),
+                        label: const Text("Sign In with Facebook",
+                            style: TextStyle(fontSize: 18)),
+                        onPressed: () async {
+                          String result = await context
+                              .read<AuthenticationService>()
+                              .signInWithFacebook();
+                          if (result == 'Signed In') {
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushReplacementNamed(context, '/catalog');
+                          }
+                        },
+                        icon: const Icon(FontAwesomeIcons.facebook)),
                   ],
                 ),
               ),
