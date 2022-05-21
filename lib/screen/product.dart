@@ -9,6 +9,7 @@ class MyProduct extends StatelessWidget {
   final ProductService productService = ProductService();
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     String categoryID = ModalRoute.of(context)!.settings.arguments as String;
     Cart cart = Provider.of<Cart>(context);
     final Color theme = Theme.of(context).backgroundColor;
@@ -36,16 +37,15 @@ class MyProduct extends StatelessWidget {
                       color: theme,
                     )
                   : GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 1 / 1.3,
+                        childAspectRatio: size.width / (size.height / 1.8),
                       ),
                       padding: const EdgeInsets.all(8.0),
                       itemCount: products.items.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          padding: const EdgeInsets.all(13.0),
+                          padding: const EdgeInsets.all(12.0),
                           margin: const EdgeInsets.all(8.0),
                           decoration:
                               BoxDecoration(color: Colors.white, boxShadow: [
@@ -61,7 +61,7 @@ class MyProduct extends StatelessWidget {
                               width: 200,
                               height: 120,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 16),
                             Text(
                               products.items[index].name,
                               style: const TextStyle(
