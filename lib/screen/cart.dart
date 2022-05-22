@@ -35,7 +35,7 @@ class EmptyCart extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.network(
-          'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/empty-cart.png?alt=media&token=91c4e8c0-fe63-48e1-891f-a874122359f7',
+          'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/empty-cart.png?alt=media&token=93bdf841-30a4-496a-9fb0-1e38184b207d',
           width: 200,
           height: 200,
         ),
