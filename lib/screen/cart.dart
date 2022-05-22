@@ -88,7 +88,7 @@ class MyCartList extends StatelessWidget {
           ]),
           child: Row(children: [
             Image.network(
-              cart.items[index].productItem.image,
+              cart.items[index].product.image,
               width: 100,
               height: 150,
             ),
@@ -96,7 +96,7 @@ class MyCartList extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    cart.items[index].productItem.name,
+                    cart.items[index].product.name,
                     style: const TextStyle(
                         fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
@@ -106,10 +106,10 @@ class MyCartList extends StatelessWidget {
               ),
             ),
             Text(
-                '\$${cart.items[index].productItem.price * cart.items[index].quantity}'),
+                '\$${cart.items[index].product.price * cart.items[index].quantity}'),
             IconButton(
                 onPressed: () {
-                  cart.delete(cart.items[index].productItem.id);
+                  cart.delete(cart.items[index].product.id);
                 },
                 icon: const Icon(Icons.delete_sharp))
           ]),

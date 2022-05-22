@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
+import 'package:yama_shopping/services/category_service.dart';
 
 class MyCatalog extends StatefulWidget {
   @override

@@ -27,22 +27,23 @@ class MyProduct extends StatelessWidget {
         backgroundColor: theme,
       ),
       body: Center(
-        child: FutureProvider<Product>(
-          create: (context) => productService.fetchProducts(categoryID),
-          initialData: Product('', []),
-          child: Consumer<Product>(
+        child: FutureProvider<List<dynamic>>(
+          create: (context) =>
+              productService.findProductsByCategoryID(categoryID),
+          initialData: [],
+          child: Consumer<List<dynamic>>(
             builder: (context, products, child) {
-              return products.items.isEmpty
+              return products.isEmpty
                   ? SpinKitCubeGrid(
                       color: theme,
                     )
                   : GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: size.width / (size.height / 1.8),
+                        childAspectRatio: size.width / (size.height / 1.5),
                       ),
                       padding: const EdgeInsets.all(8.0),
-                      itemCount: products.items.length,
+                      itemCount: products.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: const EdgeInsets.all(12.0),
@@ -57,13 +58,13 @@ class MyProduct extends StatelessWidget {
                           ]),
                           child: Column(children: [
                             Image.network(
-                              products.items[index].image,
+                              products[index].image,
                               width: 200,
                               height: 120,
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              products.items[index].name,
+                              products[index].name,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
@@ -71,13 +72,13 @@ class MyProduct extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '\$${products.items[index].price}',
+                                  '\$${products[index].price}',
                                   style: const TextStyle(
                                       color: Colors.red, fontSize: 16),
                                 ),
                                 IconButton(
                                     onPressed: () {
-                                      cart.add(products.items[index]);
+                                      cart.add(products[index]);
                                       showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(

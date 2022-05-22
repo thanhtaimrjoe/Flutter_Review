@@ -7,7 +7,7 @@ class Cart with ChangeNotifier {
   int findItemById(String id) {
     var position = -1;
     for (var i = 0; i < items.length; i++) {
-      if (items[i].productItem.id == id) {
+      if (items[i].product.id == id) {
         position = i;
       }
     }
@@ -15,7 +15,7 @@ class Cart with ChangeNotifier {
     return position;
   }
 
-  void add(ProductItem newItem) {
+  void add(Product newItem) {
     int position = findItemById(newItem.id);
     if (position != -1) {
       items[position].quantity += 1;
@@ -26,18 +26,16 @@ class Cart with ChangeNotifier {
   }
 
   void delete(String id) {
-    items.removeWhere((element) => element.productItem.id == id);
+    items.removeWhere((element) => element.product.id == id);
     notifyListeners();
   }
 
-  int getTotal() => items.fold(
-      0,
-      (total, element) =>
-          total + (element.productItem.price * element.quantity));
+  int getTotal() => items.fold(0,
+      (total, element) => total + (element.product.price * element.quantity));
 }
 
 class CartItem {
-  ProductItem productItem;
+  Product product;
   int quantity;
-  CartItem(this.productItem, this.quantity);
+  CartItem(this.product, this.quantity);
 }

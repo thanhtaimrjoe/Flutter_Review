@@ -1,12 +1,23 @@
-import 'dart:convert';
-import 'package:http/http.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yama_shopping/modal/product.dart';
 
 class ProductService {
-  Future<Product> fetchProducts(String id) async {
-    Response response = await get(Uri.parse(
-        "https://61bb0f23e943920017784c15.mockapi.io/api/v1/products/$id"));
-    var jsonResponse = jsonDecode(response.body);
-    return Product.fromJSON(jsonResponse);
+  Future<List<dynamic>> findProductsByCategoryID(String id) async {
+    try {
+      List<dynamic> result = [];
+      await FirebaseFirestore.instance
+          .collection("yama")
+          .doc(id)
+          .collection("products")
+          .get()
+          .then((event) {
+        result = event.docs
+            .map((product) => Product.fromJSON(product.data()))
+            .toList();
+      });
+      return result;
+    } catch (e) {
+      return [];
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart';
 import 'package:yama_shopping/modal/category.dart';
+import 'package:yama_shopping/modal/product.dart';
 
 class CategoryService {
   Future<List<dynamic>> fetchCategories() async {
