@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
 
 class MyLogin extends StatelessWidget {
+  const MyLogin({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final Future<FirebaseApp> fbApp = Firebase.initializeApp();
@@ -15,9 +16,11 @@ class MyLogin extends StatelessWidget {
         future: fbApp,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print('You have an error! ${snapshot.error.toString()}');
             // ignore: prefer_const_constructors
-            return Scaffold(body: Center(child: Text('Something went wrong')));
+            return Scaffold(
+                body: Center(
+                    child: Text(
+                        'Something went wrong.\n${snapshot.error.toString()}')));
           } else if (snapshot.hasData) {
             return Scaffold(
               body: Container(
@@ -27,7 +30,7 @@ class MyLogin extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/shopping-bag.png',
+                      'assets/images/shopping-bag.png',
                       width: 150,
                       height: 150,
                     ),

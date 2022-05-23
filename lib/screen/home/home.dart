@@ -1,16 +1,29 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:yama_shopping/constants.dart';
+import 'package:yama_shopping/screen/cart.dart';
+import 'package:yama_shopping/screen/home/components/categories.dart';
+import 'package:yama_shopping/screen/home/components/new_arrival.dart';
+import 'package:yama_shopping/screen/home/components/popular.dart';
+import 'package:yama_shopping/screen/home/components/product_card.dart';
+import 'package:yama_shopping/screen/home/components/search_form.dart';
+import 'package:yama_shopping/screen/home/components/section_title.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
-import 'package:yama_shopping/services/category_service.dart';
+import 'package:yama_shopping/services/product_service.dart';
 
-class MyCatalog extends StatefulWidget {
+class MyHome extends StatefulWidget {
+  const MyHome({Key? key}) : super(key: key);
+
   @override
-  State<MyCatalog> createState() => _MyCatalogState();
+  State<MyHome> createState() => _MyHomeState();
 }
 
-class _MyCatalogState extends State<MyCatalog> {
+class _MyHomeState extends State<MyHome> {
   int _selectedItem = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -19,8 +32,9 @@ class _MyCatalogState extends State<MyCatalog> {
   }
 
   final List<Widget> _widgetOptions = <Widget>[
-    MyHome(),
-    MyPersonal(),
+    const MyHomePage(),
+    const MyCartPage(),
+    MyPersonalPage(),
   ];
 
   @override
@@ -28,21 +42,30 @@ class _MyCatalogState extends State<MyCatalog> {
     final Color theme = Theme.of(context).backgroundColor;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Yama Shoping'),
-        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+            onPressed: () {}, icon: SvgPicture.asset("assets/icons/menu.svg")),
+        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SvgPicture.asset("assets/icons/Location.svg"),
+          const SizedBox(width: defaultPadding / 2),
+          Text(
+            "829 Dong Bac, Tan Hoa",
+            style: Theme.of(context).textTheme.subtitle2,
+          )
+        ]),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/cart');
-              },
-              icon: const Icon(Icons.shopping_cart_sharp)),
+              onPressed: () {},
+              icon: SvgPicture.asset("assets/icons/Notification.svg"))
         ],
-        backgroundColor: theme,
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 36,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Person'),
         ],
         selectedItemColor: theme,
@@ -60,12 +83,14 @@ class Option {
   Option(this.name, this.icon);
 }
 
-class MyPersonal extends StatelessWidget {
+class MyPersonalPage extends StatelessWidget {
   final options = [
     Option('Change language', const Icon(Icons.language)),
     Option('Change location', const Icon(Icons.location_on)),
     Option('About me', const Icon(Icons.person)),
   ];
+
+  MyPersonalPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     //final firebaseUser = context.watch<User?>();
@@ -125,47 +150,50 @@ class MyPersonal extends StatelessWidget {
   }
 }
 
-class MyHome extends StatelessWidget {
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     List<dynamic> categories = Provider.of<List<dynamic>>(context);
     final Color theme = Theme.of(context).backgroundColor;
-    return Center(
-        child: categories.isEmpty
-            ? SpinKitCubeGrid(
-                color: theme,
-              )
-            : ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/product',
-                          arguments: categories[index].id);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      decoration:
-                          BoxDecoration(color: Colors.white, boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 20,
-                        )
-                      ]),
-                      child: Column(children: [
-                        Image.network(
-                          categories[index].image,
-                          width: 100,
-                          height: 100,
-                        ),
-                        Text(categories[index].name),
-                      ]),
-                    ),
-                  );
-                },
-              ));
+    return categories.isEmpty
+        ? Center(
+            child: SpinKitCubeGrid(
+              color: theme,
+            ),
+          )
+        : SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Explore",
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                        fontWeight: FontWeight.w500, color: Colors.black),
+                  ),
+                  const Text(
+                    "best manga for you",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const SearchForm(),
+                  Categories(categories: categories),
+                  SectionTitle(
+                    title: "New Arrival",
+                    pressSeeAll: () {},
+                  ),
+                  const NewArrival(),
+                  const SizedBox(height: defaultPadding),
+                  SectionTitle(
+                    title: "Popular",
+                    pressSeeAll: () {},
+                  ),
+                  const Popular(),
+                ],
+              ),
+            ),
+          );
   }
 }

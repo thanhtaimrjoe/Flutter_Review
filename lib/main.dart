@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yama_shopping/constants.dart';
 import 'package:yama_shopping/modal/cart.dart';
-import 'package:yama_shopping/screen/cart.dart';
-import 'package:yama_shopping/screen/catalog.dart';
+import 'package:yama_shopping/screen/home/home.dart';
 import 'package:yama_shopping/screen/product.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
 import 'package:yama_shopping/services/category_service.dart';
@@ -14,8 +14,11 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   CategoryService categoryService = CategoryService();
+
+  MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
             initialData: null,
           ),
           FutureProvider<List<dynamic>>(
-            initialData: [],
+            initialData: const [],
             create: (context) => categoryService.firestoreCategories(),
           ),
           ChangeNotifierProvider<Cart>(
@@ -38,13 +41,18 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
-          theme: ThemeData(backgroundColor: Colors.teal[400]),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              primarySwatch: Colors.blue,
+              scaffoldBackgroundColor: bgColor,
+              fontFamily: "Gordita",
+              textTheme:
+                  const TextTheme(bodyText2: TextStyle(color: Colors.black54))),
           initialRoute: '/',
           routes: {
-            '/': (context) => MyLogin(),
-            '/catalog': (context) => MyCatalog(),
-            '/product': (context) => MyProduct(),
-            '/cart': (context) => MyCart(),
+            '/': (context) => const MyLogin(),
+            '/catalog': (context) => const MyHome(),
+            '/product': (context) => MyProductPage(),
           },
         ));
   }

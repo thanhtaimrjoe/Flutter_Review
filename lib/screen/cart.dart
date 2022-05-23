@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/modal/cart.dart';
 
-class MyCart extends StatelessWidget {
+class MyCartPage extends StatelessWidget {
+  const MyCartPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Cart cart = Provider.of<Cart>(context);
@@ -15,9 +17,10 @@ class MyCart extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-              child:
-                  cart.items.isEmpty ? EmptyCart(theme: theme) : MyCartList()),
-          MyTotalPrice()
+              child: cart.items.isEmpty
+                  ? EmptyCart(theme: theme)
+                  : const MyCartList()),
+          const MyTotalPrice()
         ],
       ),
     );
@@ -50,6 +53,8 @@ class EmptyCart extends StatelessWidget {
 }
 
 class MyTotalPrice extends StatelessWidget {
+  const MyTotalPrice({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -69,6 +74,8 @@ class MyTotalPrice extends StatelessWidget {
 }
 
 class MyCartList extends StatelessWidget {
+  const MyCartList({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Cart cart = Provider.of<Cart>(context);
