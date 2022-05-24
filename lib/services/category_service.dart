@@ -5,7 +5,10 @@ class CategoryService {
   Future<List<dynamic>> firestoreCategories() async {
     try {
       List<dynamic> result = [];
-      await FirebaseFirestore.instance.collection("yama").get().then((event) {
+      await FirebaseFirestore.instance
+          .collection("category")
+          .get()
+          .then((event) {
         result = event.docs
             .map((category) => Category.fromJSON(category.data()))
             .toList();

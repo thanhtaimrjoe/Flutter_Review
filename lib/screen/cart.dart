@@ -116,7 +116,7 @@ class MyCartList extends StatelessWidget {
                 '\$${cart.items[index].product.price * cart.items[index].quantity}'),
             IconButton(
                 onPressed: () {
-                  cart.delete(cart.items[index].product.id);
+                  //cart.delete(cart.items[index].product.id);
                 },
                 icon: const Icon(Icons.delete_sharp))
           ]),

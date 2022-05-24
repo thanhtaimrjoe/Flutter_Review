@@ -9,8 +9,8 @@ class MyProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var argument = ModalRoute.of(context)!.settings.arguments as Map;
-    Product product = Product(argument['id'], argument['name'],
-        argument['price'], argument['image'], argument['category']);
+    Product product = Product(argument['categoryID'], argument['name'],
+        argument['price'], argument['image']);
     return Scaffold(
         body: CustomScrollView(
       slivers: [

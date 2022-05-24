@@ -13,7 +13,7 @@ class NewArrival extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductService productService = ProductService();
     return FutureProvider<List<dynamic>>(
-      create: (context) => productService.fetchNewArrival(),
+      create: (context) => productService.findProductsByCategoryID("Action"),
       initialData: const [],
       child: Consumer<List<dynamic>>(
         builder: (context, products, child) => SizedBox(
@@ -29,11 +29,10 @@ class NewArrival extends StatelessWidget {
                   price: products[index].price,
                   press: () {
                     Navigator.pushNamed(context, '/product', arguments: {
-                      'id': products[index].id,
+                      'categoryID': products[index].id,
                       'name': products[index].name,
                       'image': products[index].image,
                       'price': products[index].price,
-                      'category': products[index].category,
                     });
                   },
                 ),
