@@ -37,11 +37,11 @@ class MyListProductPage extends StatelessWidget {
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: size.width / (size.height / 1.5),
                       ),
                       padding: const EdgeInsets.all(10.0),
                       itemCount: products.length,
@@ -63,18 +63,12 @@ class MyListProductPage extends StatelessWidget {
                                   width: 200,
                                   height: 120,
                                 ),
-                                const SizedBox(height: 26),
                                 Expanded(
                                   child: Text(
                                     products[index].name,
                                     maxLines: 2,
                                     style: const TextStyle(fontSize: 16),
                                   ),
-                                ),
-                                Text(
-                                  '\$${products[index].price}',
-                                  style: const TextStyle(
-                                      color: Colors.red, fontSize: 16),
                                 ),
                               ]),
                         );

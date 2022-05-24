@@ -33,6 +33,7 @@ class Popular extends StatelessWidget {
                       'name': products[index].name,
                       'image': products[index].image,
                       'price': products[index].price,
+                      'category': products[index].category,
                     });
                   },
                 ),

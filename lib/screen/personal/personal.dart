@@ -1,11 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-class Option {
-  String name;
-  Icon icon;
-  Option(this.name, this.icon);
-}
+import 'package:provider/provider.dart';
+import 'package:yama_shopping/services/authentication_service.dart';
 
 class MyPersonalPage extends StatelessWidget {
   final options = [
@@ -58,6 +54,8 @@ class MyPersonalPage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
+              Provider.of<AuthenticationService>(context, listen: false)
+                  .signOut();
               //context.read<AuthenticationService>().signOut();
               Navigator.pushReplacementNamed(context, '/');
             },
@@ -71,4 +69,10 @@ class MyPersonalPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class Option {
+  String name;
+  Icon icon;
+  Option(this.name, this.icon);
 }
