@@ -27,7 +27,14 @@ class NewArrival extends StatelessWidget {
                   title: products[index].name,
                   image: products[index].image,
                   price: products[index].price,
-                  press: () {},
+                  press: () {
+                    Navigator.pushNamed(context, '/product', arguments: {
+                      'id': products[index].id,
+                      'name': products[index].name,
+                      'image': products[index].image,
+                      'price': products[index].price,
+                    });
+                  },
                 ),
               );
             },

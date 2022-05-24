@@ -24,8 +24,10 @@ class Categories extends StatelessWidget {
                 icon: categories[index].image,
                 title: categories[index].name,
                 press: () {
-                  Navigator.pushNamed(context, '/product',
-                      arguments: categories[index].id);
+                  Navigator.pushNamed(context, '/list_product', arguments: {
+                    'id': categories[index].id,
+                    'name': categories[index].name,
+                  });
                 }),
           );
         },

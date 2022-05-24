@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:yama_shopping/constants.dart';
 import 'package:yama_shopping/modal/cart.dart';
 import 'package:yama_shopping/screen/home/home.dart';
-import 'package:yama_shopping/screen/product.dart';
+import 'package:yama_shopping/screen/list_product.dart';
+import 'package:yama_shopping/screen/product/product.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
 import 'package:yama_shopping/services/category_service.dart';
 import 'screen/login.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primarySwatch: Colors.teal,
               scaffoldBackgroundColor: bgColor,
               fontFamily: "Gordita",
               textTheme:
@@ -52,7 +53,8 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => const MyLogin(),
             '/catalog': (context) => const MyHome(),
-            '/product': (context) => MyProductPage(),
+            '/list_product': (context) => MyListProductPage(),
+            '/product': (context) => const MyProductPage(),
           },
         ));
   }
