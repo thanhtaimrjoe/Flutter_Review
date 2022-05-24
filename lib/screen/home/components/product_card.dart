@@ -6,12 +6,10 @@ class ProductCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.image,
-    required this.price,
     required this.press,
   }) : super(key: key);
 
   final String title, image;
-  final int price;
   final VoidCallback press;
 
   @override
@@ -45,11 +43,6 @@ class ProductCard extends StatelessWidget {
                   maxLines: 2,
                   style: const TextStyle(color: Colors.black),
                 )),
-                const SizedBox(width: defaultPadding / 4),
-                Text(
-                  "$price円",
-                  style: Theme.of(context).textTheme.subtitle2,
-                )
               ],
             ),
           ],

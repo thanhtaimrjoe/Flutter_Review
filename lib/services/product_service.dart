@@ -19,38 +19,4 @@ class ProductService {
       return [];
     }
   }
-
-  Future<List<dynamic>> fetchPopular() async {
-    try {
-      List<dynamic> result = [];
-      await FirebaseFirestore.instance
-          .collection("popular")
-          .get()
-          .then((event) {
-        result = event.docs
-            .map((product) => Product.fromJSON(product.data()))
-            .toList();
-      });
-      return result;
-    } catch (e) {
-      return [];
-    }
-  }
-
-  Future<List<dynamic>> fetchNewArrival() async {
-    try {
-      List<dynamic> result = [];
-      await FirebaseFirestore.instance
-          .collection("new_arrival")
-          .get()
-          .then((event) {
-        result = event.docs
-            .map((product) => Product.fromJSON(product.data()))
-            .toList();
-      });
-      return result;
-    } catch (e) {
-      return [];
-    }
-  }
 }

@@ -12,7 +12,7 @@ class ProductAppBar extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var argument = ModalRoute.of(context)!.settings.arguments as Map;
     Product product = Product(argument['categoryID'], argument['name'],
-        argument['price'], argument['image']);
+        argument['image'], argument['productID']);
     return SliverAppBar(
       //title: Text(product.name),
       floating: true,

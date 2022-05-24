@@ -30,8 +30,8 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  int getTotal() => items.fold(0,
-      (total, element) => total + (element.product.price * element.quantity));
+  // int getTotal() => items.fold(0,
+  //     (total, element) => total + (element.product.price * element.quantity));
 }
 
 class CartItem {

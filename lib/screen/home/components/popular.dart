@@ -13,7 +13,7 @@ class Popular extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductService productService = ProductService();
     return FutureProvider<List<dynamic>>(
-      create: (context) => productService.findProductsByCategoryID("Romance"),
+      create: (context) => productService.findProductsByCategoryID("A2"),
       initialData: const [],
       child: Consumer<List<dynamic>>(
         builder: (context, products, child) => SizedBox(
@@ -26,13 +26,12 @@ class Popular extends StatelessWidget {
                 child: ProductCard(
                   title: products[index].name,
                   image: products[index].image,
-                  price: products[index].price,
                   press: () {
                     Navigator.pushNamed(context, '/product', arguments: {
-                      'categoryID': products[index].id,
+                      'categoryID': products[index].categoryID,
                       'name': products[index].name,
                       'image': products[index].image,
-                      'price': products[index].price,
+                      'productID': products[index].productID,
                     });
                   },
                 ),

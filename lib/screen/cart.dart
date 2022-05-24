@@ -65,7 +65,8 @@ class MyTotalPrice extends StatelessWidget {
       height: 100,
       child: Center(
         child: Text(
-          'Total: \$${cart.getTotal()}',
+          //'Total: \$${cart.getTotal()}',
+          'total',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
         ),
       ),
@@ -113,7 +114,8 @@ class MyCartList extends StatelessWidget {
               ),
             ),
             Text(
-                '\$${cart.items[index].product.price * cart.items[index].quantity}'),
+                //'\$${cart.items[index].product.price * cart.items[index].quantity}'
+                'asd'),
             IconButton(
                 onPressed: () {
                   //cart.delete(cart.items[index].product.id);
