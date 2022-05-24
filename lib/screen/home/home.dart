@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,11 +8,9 @@ import 'package:yama_shopping/screen/cart.dart';
 import 'package:yama_shopping/screen/home/components/categories.dart';
 import 'package:yama_shopping/screen/home/components/new_arrival.dart';
 import 'package:yama_shopping/screen/home/components/popular.dart';
-import 'package:yama_shopping/screen/home/components/product_card.dart';
 import 'package:yama_shopping/screen/home/components/search_form.dart';
 import 'package:yama_shopping/screen/home/components/section_title.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
-import 'package:yama_shopping/services/product_service.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);

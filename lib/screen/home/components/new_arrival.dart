@@ -13,7 +13,7 @@ class NewArrival extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductService productService = ProductService();
     return FutureProvider<List<dynamic>>(
-      create: (context) => productService.findProductsByCategoryID("A7"),
+      create: (context) => productService.fetchNewArrival(),
       initialData: const [],
       child: Consumer<List<dynamic>>(
         builder: (context, products, child) => SizedBox(
