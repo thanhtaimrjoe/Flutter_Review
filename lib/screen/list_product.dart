@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/constants.dart';
+import 'package:yama_shopping/screen/home/components/product_card.dart';
 import 'package:yama_shopping/services/product_service.dart';
 
 class MyListProductPage extends StatelessWidget {
@@ -38,39 +39,27 @@ class MyListProductPage extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                        crossAxisCount: 3,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
+                        childAspectRatio: 1 / 2,
                       ),
                       padding: const EdgeInsets.all(10.0),
                       itemCount: products.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.all(defaultPadding),
-                          decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              blurRadius: 5,
-                            )
-                          ]),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.network(
-                                  products[index].image,
-                                  width: 200,
-                                  height: 120,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    products[index].name,
-                                    maxLines: 2,
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                              ]),
-                        );
+                        return ProductCard(
+                            title: products[index].name,
+                            image: products[index].image,
+                            press: () {
+                              Navigator.pushNamed(context, '/product',
+                                  arguments: {
+                                    'categoryID': products[index].categoryID,
+                                    'name': products[index].name,
+                                    'image': products[index].image,
+                                    'productID': products[index].productID,
+                                    'overview': products[index].overview,
+                                  });
+                            });
                       },
                     ),
                   );
