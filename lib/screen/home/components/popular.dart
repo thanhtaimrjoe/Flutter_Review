@@ -17,7 +17,7 @@ class Popular extends StatelessWidget {
       initialData: const [],
       child: Consumer<List<dynamic>>(
         builder: (context, products, child) => SizedBox(
-          height: 210,
+          height: 220,
           child: ListView.builder(
             itemCount: products.length,
             itemBuilder: (context, index) {
