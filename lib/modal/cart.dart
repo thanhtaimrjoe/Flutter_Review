@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:yama_shopping/modal/product.dart';
+import 'package:yama_shopping/modal/episode.dart';
 
 class Cart with ChangeNotifier {
   List<CartItem> items = [];
 
-  int findItemById(String id) {
+  int findItemById(String episodeID) {
     var position = -1;
     for (var i = 0; i < items.length; i++) {
-      if (items[i].product.categoryID == id) {
+      if (items[i].episode.episodeID == episodeID) {
         position = i;
       }
     }
-
     return position;
   }
 
-  void add(Product newItem) {
-    int position = findItemById(newItem.categoryID);
+  void add(Episode newItem) {
+    int position = findItemById(newItem.episodeID);
     if (position != -1) {
       items[position].quantity += 1;
     } else {
@@ -25,17 +24,17 @@ class Cart with ChangeNotifier {
     }
   }
 
-  void delete(String id) {
-    items.removeWhere((element) => element.product.categoryID == id);
+  void delete(String episodeID) {
+    items.removeWhere((element) => element.episode.episodeID == episodeID);
     notifyListeners();
   }
 
-  // int getTotal() => items.fold(0,
-  //     (total, element) => total + (element.product.price * element.quantity));
+  int getTotal() => items.fold(0,
+      (total, element) => total + (element.episode.price * element.quantity));
 }
 
 class CartItem {
-  Product product;
+  Episode episode;
   int quantity;
-  CartItem(this.product, this.quantity);
+  CartItem(this.episode, this.quantity);
 }

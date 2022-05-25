@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              primarySwatch: Colors.teal,
               scaffoldBackgroundColor: bgColor,
               fontFamily: "Gordita",
+              backgroundColor: primaryColor,
               textTheme:
                   const TextTheme(bodyText2: TextStyle(color: Colors.black54))),
           initialRoute: '/',

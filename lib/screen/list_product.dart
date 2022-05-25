@@ -10,7 +10,6 @@ class MyListProductPage extends StatelessWidget {
   MyListProductPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     var argument = ModalRoute.of(context)!.settings.arguments as Map;
     String categoryID = argument['id'];
     String categoryName = argument['name'];

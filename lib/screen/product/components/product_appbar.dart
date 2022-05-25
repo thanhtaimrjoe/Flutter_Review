@@ -1,23 +1,25 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:yama_shopping/constants.dart';
 import 'package:yama_shopping/modal/product.dart';
 
 class ProductAppBar extends StatelessWidget {
   const ProductAppBar({
     Key? key,
+    required this.product,
   }) : super(key: key);
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var argument = ModalRoute.of(context)!.settings.arguments as Map;
-    Product product = Product(argument['categoryID'], argument['name'],
-        argument['image'], argument['productID']);
     return SliverAppBar(
       //title: Text(product.name),
       floating: true,
       pinned: true,
       expandedHeight: 200,
+      backgroundColor: primaryColor,
       leading: IconButton(
           onPressed: () {
             Navigator.pop(context);

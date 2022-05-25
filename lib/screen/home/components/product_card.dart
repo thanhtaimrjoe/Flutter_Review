@@ -17,34 +17,16 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: Container(
-        width: 154,
-        padding: const EdgeInsets.all(defaultPadding / 2),
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius:
-                BorderRadius.all(Radius.circular(defaultBorderRadius))),
+        width: 120,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(defaultBorderRadius))),
-              // ignore: sort_child_properties_last
-              child: Image.network(image),
-              height: 130,
-            ),
-            const SizedBox(height: defaultPadding / 2),
-            Row(
-              children: [
-                Expanded(
-                    child: Text(
-                  title,
-                  maxLines: 2,
-                  style: const TextStyle(color: Colors.black),
-                )),
-              ],
-            ),
+            Image.network(image),
+            Text(
+              title,
+              maxLines: 1,
+              style: const TextStyle(color: Colors.black),
+            )
           ],
         ),
       ),

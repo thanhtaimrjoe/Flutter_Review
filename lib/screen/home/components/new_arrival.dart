@@ -17,7 +17,7 @@ class NewArrival extends StatelessWidget {
       initialData: const [],
       child: Consumer<List<dynamic>>(
         builder: (context, products, child) => SizedBox(
-          height: 200,
+          height: 210,
           child: ListView.builder(
             itemCount: products.length,
             itemBuilder: (context, index) {
@@ -32,6 +32,7 @@ class NewArrival extends StatelessWidget {
                       'name': products[index].name,
                       'image': products[index].image,
                       'productID': products[index].productID,
+                      'overview': products[index].overview,
                     });
                   },
                 ),

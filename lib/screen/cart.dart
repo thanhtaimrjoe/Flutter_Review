@@ -10,17 +10,13 @@ class MyCartPage extends StatelessWidget {
     Cart cart = Provider.of<Cart>(context);
     final Color theme = Theme.of(context).backgroundColor;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Cart'),
-        backgroundColor: theme,
-      ),
       body: Column(
         children: [
           Expanded(
               child: cart.items.isEmpty
                   ? EmptyCart(theme: theme)
                   : const MyCartList()),
-          const MyTotalPrice()
+          if (cart.items.isNotEmpty) const MyTotalPrice()
         ],
       ),
     );
@@ -57,17 +53,18 @@ class MyTotalPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color theme = Theme.of(context).backgroundColor;
     Size size = MediaQuery.of(context).size;
     Cart cart = Provider.of<Cart>(context);
     return Container(
-      color: Colors.teal[200],
       width: size.width,
-      height: 100,
+      height: 50,
+      color: theme,
       child: Center(
         child: Text(
-          //'Total: \$${cart.getTotal()}',
-          'total',
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          'Total: \$${cart.getTotal()}',
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.white),
         ),
       ),
     );
@@ -96,7 +93,7 @@ class MyCartList extends StatelessWidget {
           ]),
           child: Row(children: [
             Image.network(
-              cart.items[index].product.image,
+              cart.items[index].episode.image,
               width: 100,
               height: 150,
             ),
@@ -104,21 +101,26 @@ class MyCartList extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    cart.items[index].product.name,
+                    cart.items[index].episode.name,
                     style: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.bold),
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  Text('Quantity: ${cart.items[index].quantity}'),
+                  Text(
+                    'Quantity: ${cart.items[index].quantity}',
+                    style: const TextStyle(color: Colors.black),
+                  ),
                 ],
               ),
             ),
             Text(
-                //'\$${cart.items[index].product.price * cart.items[index].quantity}'
-                'asd'),
+                '\$${cart.items[index].episode.price * cart.items[index].quantity}',
+                style: const TextStyle(color: Colors.red)),
             IconButton(
                 onPressed: () {
-                  //cart.delete(cart.items[index].product.id);
+                  cart.delete(cart.items[index].episode.episodeID);
                 },
                 icon: const Icon(Icons.delete_sharp))
           ]),

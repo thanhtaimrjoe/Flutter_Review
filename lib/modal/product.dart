@@ -3,11 +3,14 @@ class Product {
   final String name;
   final String image;
   final String productID;
-  Product(this.categoryID, this.name, this.image, this.productID);
+  final String overview;
+  Product(
+      this.categoryID, this.name, this.image, this.productID, this.overview);
 
   Product.fromJSON(Map<String, dynamic> parsedJson)
       : categoryID = parsedJson['categoryID'],
         name = parsedJson['name'],
         image = parsedJson['image'],
-        productID = parsedJson['productID'];
+        productID = parsedJson['productID'],
+        overview = parsedJson['overview'];
 }
