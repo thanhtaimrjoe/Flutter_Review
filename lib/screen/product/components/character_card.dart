@@ -13,14 +13,14 @@ class CharacterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          vertical: defaultPadding / 2, horizontal: defaultPadding / 4),
+      padding: const EdgeInsets.all(defaultPadding / 2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.network(
             image,
             width: 100,
+            height: 100,
           ),
           Text(name),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:yama_shopping/constants.dart';
 import 'package:yama_shopping/modal/cart.dart';
 import 'package:yama_shopping/modal/character.dart';
 import 'package:yama_shopping/modal/product.dart';
@@ -81,9 +82,12 @@ class MyProductPage extends StatelessWidget {
                   ),
                   Consumer<Character>(
                       builder: (context, character, child) => Container(
-                            color: Colors.grey[300],
-                            margin: const EdgeInsets.all(16),
-                            height: 140,
+                            color: const Color.fromARGB(255, 179, 201, 238),
+                            margin: const EdgeInsets.all(defaultPadding),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: defaultPadding / 4),
+                            width: MediaQuery.of(context).size.width,
+                            height: 141,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
