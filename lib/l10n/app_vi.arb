@@ -6,7 +6,6 @@
     "bottomBarCart": "Giỏ hàng",
     "bottomBarPersonal": "Cá nhân",
     "chapterList": "Danh sách tập",
-    "episode": "Tập {counter}",
     "story": "Câu chuyện",
     "character": "Nhân vật",
     "emptyCart": "Không có sản phẩm nào",
@@ -15,5 +14,15 @@
     "aboutMe": "Về chúng tôi",
     "signOut": "Đăng xuất",
     "loginWithGoogle": "Đăng nhập với Google",
-    "loginWithFacebook": "Đăng nhập với Facebook"
+    "loginWithFacebook": "Đăng nhập với Facebook",
+    "nofityAddToCartTitle": "Thành công",
+    "@nofityAddToCartTitle": {},
+    "nofityAddToCartContent": "Đã thêm vào giỏ hàng thành công",
+    "@nofityAddToCartContent": {},
+    "nofityAddToCartBtn": "OK",
+    "@nofityAddToCartBtn": {},
+    "cartQuantity": "Số lượng",
+    "@cartQuantity": {},
+    "cartTotal": "Tổng cộng",
+    "@cartTotal": {}
 }

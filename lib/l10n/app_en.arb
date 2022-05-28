@@ -15,8 +15,6 @@
     "@bottomBarPersonal": {},
     "chapterList": "List of chapter",
     "@chapterList": {},
-    "episode": "Episode {counter}",
-    "@episode": {},
     "story": "Story",
     "@story": {},
     "character": "Character",
@@ -34,5 +32,15 @@
     "loginWithGoogle": "Login with Google",
     "@loginWithGoogle": {},
     "loginWithFacebook": "Login with Facebook",
-    "@loginWithFacebook": {}
+    "@loginWithFacebook": {},
+    "nofityAddToCartTitle": "Success",
+    "@nofityAddToCartTitle": {},
+    "nofityAddToCartContent": "Add to cart successfully",
+    "@nofityAddToCartContent": {},
+    "nofityAddToCartBtn": "OK",
+    "@nofityAddToCartBtn": {},
+    "cartQuantity": "Quantity",
+    "@cartQuantity": {},
+    "cartTotal": "Total",
+    "@cartTotal": {}
 }

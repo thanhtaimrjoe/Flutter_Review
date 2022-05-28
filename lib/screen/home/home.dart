@@ -58,11 +58,16 @@ class _MyHomeState extends State<MyHome> {
         // ),
         bottomNavigationBar: BottomNavigationBar(
           iconSize: 36,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart), label: 'Cart'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Person'),
+                icon: const Icon(Icons.home),
+                label: AppLocalizations.of(context)!.bottomBarHome),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.shopping_cart),
+                label: AppLocalizations.of(context)!.bottomBarCart),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.person),
+                label: AppLocalizations.of(context)!.bottomBarPersonal),
           ],
           selectedItemColor: theme,
           currentIndex: _selectedItem,

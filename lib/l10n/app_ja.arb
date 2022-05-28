@@ -6,7 +6,6 @@
     "bottomBarCart": "カート",
     "bottomBarPersonal": "プロフィール",
     "chapterList": "全巻リスト",
-    "episode": "第{counter}話",
     "story": "ストーリー",
     "character": "キャラクター",
     "emptyCart": "カートには何もありません",
@@ -15,5 +14,15 @@
     "aboutMe": "私について",
     "signOut": "サインアウト",
     "loginWithGoogle": "Googleでログインする",
-    "loginWithFacebook": "Facebookでログインする"
+    "loginWithFacebook": "Facebookでログインする",
+    "nofityAddToCartTitle": "成功",
+    "@nofityAddToCartTitle": {},
+    "nofityAddToCartContent": "カートに追加しました",
+    "@nofityAddToCartContent": {},
+    "nofityAddToCartBtn": "はい",
+    "@nofityAddToCartBtn": {},
+    "cartQuantity": "数量",
+    "@cartQuantity": {},
+    "cartTotal": "合計",
+    "@cartTotal": {}
 }

@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyLogin extends StatelessWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -49,7 +50,8 @@ class MyLogin extends StatelessWidget {
                             primary: Colors.white,
                             onPrimary: Colors.black,
                             minimumSize: const Size(double.infinity, 50)),
-                        label: const Text("Sign In with Google",
+                        label: Text(
+                            AppLocalizations.of(context)!.loginWithGoogle,
                             style: TextStyle(fontSize: 18)),
                         onPressed: () async {
                           String result = await context
@@ -68,8 +70,9 @@ class MyLogin extends StatelessWidget {
                             primary: Colors.white,
                             onPrimary: Colors.black,
                             minimumSize: const Size(double.infinity, 50)),
-                        label: const Text("Sign In with Facebook",
-                            style: TextStyle(fontSize: 18)),
+                        label: Text(
+                            AppLocalizations.of(context)!.loginWithFacebook,
+                            style: const TextStyle(fontSize: 18)),
                         onPressed: () async {
                           String result = await context
                               .read<AuthenticationService>()

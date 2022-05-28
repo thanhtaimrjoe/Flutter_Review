@@ -11,6 +11,7 @@ import 'package:yama_shopping/screen/product/components/product_appbar.dart';
 import 'package:yama_shopping/screen/product/components/product_title.dart';
 import 'package:yama_shopping/services/character_service.dart';
 import 'package:yama_shopping/services/episode_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyProductPage extends StatelessWidget {
   const MyProductPage({Key? key}) : super(key: key);
@@ -41,7 +42,8 @@ class MyProductPage extends StatelessWidget {
         builder: (context, episodes, child) => CustomScrollView(
           slivers: [
             ProductAppBar(product: product),
-            if (episodes.isNotEmpty) const ProductTitle(title: "全巻リスト"),
+            if (episodes.isNotEmpty)
+              ProductTitle(title: AppLocalizations.of(context)!.chapterList),
             episodes.isEmpty
                 ? SliverToBoxAdapter(
                     child: SizedBox(
@@ -57,52 +59,64 @@ class MyProductPage extends StatelessWidget {
                                 showDialog(
                                     context: context,
                                     builder: (contex) => AlertDialog(
-                                          title: const Text("成功"),
-                                          content: const Text("カートに追加しました。"),
+                                          title: Text(
+                                              AppLocalizations.of(context)!
+                                                  .nofityAddToCartTitle),
+                                          content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .nofityAddToCartContent),
                                           actions: [
                                             ElevatedButton(
                                                 onPressed: () => Navigator.pop(
                                                     context, "OK"),
-                                                child: const Text("OK"))
+                                                child: Text(AppLocalizations.of(
+                                                        context)!
+                                                    .nofityAddToCartBtn))
                                           ],
                                         ));
                               },
                             ),
                         childCount: episodes.length)),
-            if (episodes.isNotEmpty) const ProductTitle(title: "ストーリー＆キャラクター"),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      product.overview,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
-                    ),
+            if (episodes.isNotEmpty)
+              ProductTitle(title: AppLocalizations.of(context)!.story),
+            if (episodes.isNotEmpty)
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    product.overview,
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
-                  Consumer<Character>(
-                      builder: (context, character, child) => Container(
-                            color: const Color.fromARGB(255, 179, 201, 238),
-                            margin: const EdgeInsets.all(defaultPadding),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: defaultPadding / 4),
-                            width: MediaQuery.of(context).size.width,
-                            height: 141,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: character.items.length,
-                              itemBuilder: (context, index) {
-                                return CharacterCard(
-                                  image: character.items[index]['image'],
-                                  name: character.items[index]['name'],
-                                );
-                              },
-                            ),
-                          ))
-                ],
+                ),
               ),
-            )
+            if (episodes.isNotEmpty)
+              ProductTitle(title: AppLocalizations.of(context)!.character),
+            if (episodes.isNotEmpty)
+              SliverToBoxAdapter(
+                child: Consumer<Character>(
+                    builder: (context, character, child) => Container(
+                          color: const Color.fromARGB(255, 179, 201, 238),
+                          margin: const EdgeInsets.only(
+                              bottom: defaultPadding * 2,
+                              left: defaultPadding,
+                              right: defaultPadding),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: defaultPadding / 4),
+                          width: MediaQuery.of(context).size.width,
+                          height: 141,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: character.items.length,
+                            itemBuilder: (context, index) {
+                              return CharacterCard(
+                                image: character.items[index]['image'],
+                                name: character.items[index]['name'],
+                              );
+                            },
+                          ),
+                        )),
+              )
           ],
         ),
       ),

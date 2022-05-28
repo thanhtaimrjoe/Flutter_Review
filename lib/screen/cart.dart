@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/modal/cart.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyCartPage extends StatelessWidget {
   const MyCartPage({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class EmptyCart extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          'Your cart was empty',
+          AppLocalizations.of(context)!.emptyCart,
           style: TextStyle(fontSize: 18, color: theme),
         ),
       ],
@@ -62,7 +63,8 @@ class MyTotalPrice extends StatelessWidget {
       color: theme,
       child: Center(
         child: Text(
-          'Total: \$${cart.getTotal()}',
+          // ignore: prefer_interpolation_to_compose_strings
+          AppLocalizations.of(context)!.cartTotal + ': \$${cart.getTotal()}',
           style: const TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.white),
         ),
@@ -109,7 +111,9 @@ class MyCartList extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Quantity: ${cart.items[index].quantity}',
+                    // ignore: prefer_interpolation_to_compose_strings
+                    AppLocalizations.of(context)!.cartQuantity +
+                        ': ${cart.items[index].quantity}',
                     style: const TextStyle(color: Colors.black),
                   ),
                 ],

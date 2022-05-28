@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyPersonalPage extends StatelessWidget {
   final options = [
-    Option('Change language', const Icon(Icons.language)),
-    Option('Change location', const Icon(Icons.location_on)),
-    Option('About me', const Icon(Icons.person)),
+    Option(
+        'Change information', const Icon(Icons.person), '/changeInformation'),
+    Option('Change language', const Icon(Icons.language), '/changeLanguage'),
+    Option('About me', const Icon(Icons.person), '/aboutMe'),
   ];
 
   MyPersonalPage({Key? key}) : super(key: key);
@@ -32,22 +34,33 @@ class MyPersonalPage extends StatelessWidget {
               padding: const EdgeInsets.all(24.0),
               itemCount: options.length,
               itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.all(12),
-                  color: Colors.grey[300],
-                  child: Row(
-                    //mainAxisAlignment: Main,
-                    children: [
-                      options[index].icon,
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          options[index].name,
-                        ),
-                      ),
-                      const Icon(Icons.arrow_forward_ios),
-                    ],
+                return GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    color: Colors.grey[300],
+                    child: Row(
+                      children: [
+                        options[index].icon,
+                        const SizedBox(width: 8),
+                        if (options[index].name == 'Change information')
+                          Expanded(
+                            child: Text(AppLocalizations.of(context)!
+                                .changeInformation),
+                          ),
+                        if (options[index].name == 'Change language')
+                          Expanded(
+                            child: Text(
+                                AppLocalizations.of(context)!.changeLanguage),
+                          ),
+                        if (options[index].name == 'About me')
+                          Expanded(
+                            child: Text(AppLocalizations.of(context)!.aboutMe),
+                          ),
+                        const Icon(Icons.arrow_forward_ios),
+                      ],
+                    ),
                   ),
+                  onTap: () {},
                 );
               },
             ),
@@ -56,11 +69,11 @@ class MyPersonalPage extends StatelessWidget {
             onPressed: () {
               Provider.of<AuthenticationService>(context, listen: false)
                   .signOut();
-              //context.read<AuthenticationService>().signOut();
+              context.read<AuthenticationService>().signOut();
               Navigator.pushReplacementNamed(context, '/');
             },
             // ignore: sort_child_properties_last
-            child: const Text('Sign Out'),
+            child: Text(AppLocalizations.of(context)!.signOut),
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(theme),
                 elevation: MaterialStateProperty.all(0.0)),
@@ -74,5 +87,6 @@ class MyPersonalPage extends StatelessWidget {
 class Option {
   String name;
   Icon icon;
-  Option(this.name, this.icon);
+  String route;
+  Option(this.name, this.icon, this.route);
 }
