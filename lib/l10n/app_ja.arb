@@ -1,10 +1,19 @@
 {
     "hello": "こんにちは",
-    "helloTitle": "Best manga for you",
+    "helloTitle": "みんなが読んでいる話題作！",
     "searchPlaceHolder": "漫画検索...",
-    "categorySport": "スポーツ",
-    "categoryDrama": "ドラマ",
-    "categoryFantasy": "ファンタジー",
-    "categoryLove": "Love",
-    "categoryUsual": "Usual"
+    "bottomBarHome": "ホーム",
+    "bottomBarCart": "カート",
+    "bottomBarPersonal": "プロフィール",
+    "chapterList": "全巻リスト",
+    "episode": "第{counter}話",
+    "story": "ストーリー",
+    "character": "キャラクター",
+    "emptyCart": "カートには何もありません",
+    "changeInformation": "プロフィール変更",
+    "changeLanguage": "言語変更",
+    "aboutMe": "私について",
+    "signOut": "サインアウト",
+    "loginWithGoogle": "Googleでログインする",
+    "loginWithFacebook": "Facebookでログインする"
 }

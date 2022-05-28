@@ -1,10 +1,19 @@
 {
     "hello": "Xin chào",
-    "helloTitle": "Best manga for you",
-    "searchPlaceHolder": "漫画検索...",
-    "categorySport": "スポーツ",
-    "categoryDrama": "ドラマ",
-    "categoryFantasy": "ファンタジー",
-    "categoryLove": "Love",
-    "categoryUsual": "Usual"
+    "helloTitle": "Những bộ manga hay dành cho bạn",
+    "searchPlaceHolder": "Tìm kiếm manga...",
+    "bottomBarHome": "Trang chủ",
+    "bottomBarCart": "Giỏ hàng",
+    "bottomBarPersonal": "Cá nhân",
+    "chapterList": "Danh sách tập",
+    "episode": "Tập {counter}",
+    "story": "Câu chuyện",
+    "character": "Nhân vật",
+    "emptyCart": "Không có sản phẩm nào",
+    "changeInformation": "Thay đổi thông tin",
+    "changeLanguage": "Thay đổi ngôn ngữ",
+    "aboutMe": "Về chúng tôi",
+    "signOut": "Đăng xuất",
+    "loginWithGoogle": "Đăng nhập với Google",
+    "loginWithFacebook": "Đăng nhập với Facebook"
 }

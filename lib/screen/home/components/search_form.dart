@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yama_shopping/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchForm extends StatelessWidget {
   const SearchForm({
@@ -12,7 +13,7 @@ class SearchForm extends StatelessWidget {
     return Form(
         child: TextFormField(
             decoration: InputDecoration(
-                hintText: 'Search items...',
+                hintText: AppLocalizations.of(context)!.searchPlaceHolder,
                 filled: true,
                 fillColor: Colors.white,
                 border: outlineInputBorder,

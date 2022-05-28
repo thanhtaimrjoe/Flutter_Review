@@ -30,13 +30,13 @@ class MyLogin extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/shopping-bag.png',
+                      'assets/images/avatar.png',
                       width: 150,
                       height: 150,
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'YAMA SHOPPING',
+                      'YAMABI',
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

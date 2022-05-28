@@ -98,9 +98,9 @@ class MyHomePage extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline4!.copyWith(
                         fontWeight: FontWeight.w500, color: Colors.black),
                   ),
-                  const Text(
-                    "best manga for you",
-                    style: TextStyle(fontSize: 18),
+                  Text(
+                    AppLocalizations.of(context)!.helloTitle,
+                    style: const TextStyle(fontSize: 18),
                   ),
                   const SearchForm(),
                   Categories(categories: categories),
