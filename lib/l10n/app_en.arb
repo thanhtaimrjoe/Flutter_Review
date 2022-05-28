@@ -1,0 +1,20 @@
+{
+    "hello": "Hello",
+    "@hello": {
+      "description": "The conventional newborn programmer greeting"
+    },
+    "helloTitle": "Best manga for you",
+    "@helloTitle": {},
+    "searchPlaceHolder": "Search items...",
+    "@searchPlaceHolder": {},
+    "categorySport": "Sport",
+    "@categorySport": {},
+    "categoryDrama": "Drama",
+    "@categoryDrama": {},
+    "categoryFantasy": "Fantasy",
+    "@categoryFantasy": {},
+    "categoryLove": "Love",
+    "@categoryLove": {},
+    "categoryUsual": "Usual",
+    "@categoryUsual": {}
+}

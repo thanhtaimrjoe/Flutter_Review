@@ -9,6 +9,8 @@ import 'package:yama_shopping/screen/product/product.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
 import 'package:yama_shopping/services/category_service.dart';
 import 'screen/login.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +45,17 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate
+          ],
+          supportedLocales: [
+            Locale('en', ''),
+            Locale('ja', ''),
+            Locale('vi', ''),
+          ],
           theme: ThemeData(
               scaffoldBackgroundColor: bgColor,
               fontFamily: "Gordita",
