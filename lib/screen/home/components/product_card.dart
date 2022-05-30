@@ -6,13 +6,16 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key? key,
     required this.product,
+    required this.press,
   }) : super(key: key);
 
   final Product product;
+  final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // ignore: sort_child_properties_last
       child: Container(
         margin: const EdgeInsets.all(8),
         child: Column(
@@ -26,9 +29,7 @@ class ProductCard extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () {
-        print('productID: ${product.productID}');
-      },
+      onTap: press,
     );
   }
 }

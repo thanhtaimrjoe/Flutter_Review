@@ -4,6 +4,7 @@ import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/user.dart';
 import 'package:yamabi_admin/screen/home/home.dart';
 import 'package:yamabi_admin/screen/login.dart';
+import 'package:yamabi_admin/screen/product/product.dart';
 import 'package:yamabi_admin/services/categories_service.dart';
 
 Future<void> main() async {
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const MyLoginPage(),
-          '/home': (context) => const MyHomePage()
+          '/home': (context) => const MyHomePage(),
+          '/product': (context) => const MyProduct()
         },
       ),
     );
