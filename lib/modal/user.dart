@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-class User extends ChangeNotifier {
+class User {
   String username;
   String password;
   String fullname;
@@ -13,7 +11,6 @@ class User extends ChangeNotifier {
     password = user.password;
     fullname = user.fullname;
     avatar = user.avatar;
-    notifyListeners();
   }
 
   User.fromJSON(Map<String, dynamic> parsedJSON)

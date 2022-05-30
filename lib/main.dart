@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/user.dart';
 import 'package:yamabi_admin/screen/home/home.dart';
 import 'package:yamabi_admin/screen/login.dart';
@@ -16,13 +17,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    CategoryService categoryService = CategoryService();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => User('', '', '', '')),
-        FutureProvider<List<dynamic>>(
-            create: (context) => categoryService.fetchCategories(),
-            initialData: const []),
+        Provider(create: (context) => User('', '', '', '')),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
