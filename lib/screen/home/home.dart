@@ -14,6 +14,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
+    Size size = MediaQuery.of(context).size;
     CategoryService categoryService = CategoryService();
     ProductService productService = ProductService();
     var outlineInputBorder = const OutlineInputBorder(
@@ -42,7 +43,7 @@ class MyHomePage extends StatelessWidget {
                   ? SingleChildScrollView(
                       child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: defaultPadding * 24),
+                              horizontal: defaultPadding * 14),
                           color: backgroundColor,
                           child: ListView.builder(
                             itemCount: categories.length,
@@ -54,25 +55,31 @@ class MyHomePage extends StatelessWidget {
                                       categories[index].id),
                               initialData: const [],
                               child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: defaultPadding),
+                                  margin: const EdgeInsets.only(
+                                      top: defaultPadding),
                                   padding:
                                       const EdgeInsets.symmetric(horizontal: 8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(categories[index].name,
-                                          style: const TextStyle(fontSize: 24)),
-                                      const SizedBox(height: defaultPadding),
+                                      Padding(
+                                        padding: const EdgeInsets.all(
+                                            defaultPadding / 2),
+                                        child: Text(categories[index].name,
+                                            style:
+                                                const TextStyle(fontSize: 24)),
+                                      ),
                                       Consumer<List<dynamic>>(
                                           builder: (context, products, child) =>
                                               GridView.builder(
                                                   gridDelegate:
-                                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                                      SliverGridDelegateWithFixedCrossAxisCount(
                                                           childAspectRatio:
-                                                              0.55,
-                                                          crossAxisCount: 7),
+                                                              size.height /
+                                                                  size.width *
+                                                                  1.2,
+                                                          crossAxisCount: 5),
                                                   shrinkWrap: true,
                                                   itemCount: products.length,
                                                   itemBuilder: (context,

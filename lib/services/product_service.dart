@@ -14,7 +14,6 @@ class ProductService {
             .map((category) => Product.fromJSON(category.data()))
             .toList();
       });
-      print('result: ${result.length}');
       return result;
     } catch (e) {
       return [];

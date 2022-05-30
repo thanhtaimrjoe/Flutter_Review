@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
 
 class ProductCard extends StatelessWidget {
@@ -14,11 +15,10 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       child: Container(
         margin: const EdgeInsets.all(8),
-        width: 150,
         child: Column(
           children: [
-            Image.network(product.image, width: 150),
-            const SizedBox(height: 15),
+            Image.network(product.image, width: double.infinity),
+            const SizedBox(height: defaultPadding / 4),
             Text(
               product.name,
               maxLines: 1,
