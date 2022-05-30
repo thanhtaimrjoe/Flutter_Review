@@ -4,7 +4,6 @@ import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/user.dart';
 import 'package:yamabi_admin/screen/home/components/appbar.dart';
 import 'package:yamabi_admin/screen/home/components/view_page.dart';
-import 'package:yamabi_admin/screen/product/product.dart';
 import 'package:yamabi_admin/services/categories_service.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -14,10 +13,6 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
     CategoryService categoryService = CategoryService();
-
-    var outlineInputBorder = const OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.all(Radius.circular(5.0)));
     return FutureProvider<List<dynamic>>(
       create: (context) => categoryService.fetchCategories(),
       initialData: const [],
@@ -28,8 +23,8 @@ class MyHomePage extends StatelessWidget {
             backgroundColor: primaryColor,
             automaticallyImplyLeading: false,
             elevation: 0,
-            toolbarHeight: 130.0,
-            title: MyAppBar(outlineInputBorder: outlineInputBorder),
+            toolbarHeight: 100.0,
+            title: const MyAppBar(),
             bottom: const TabBar(tabs: [
               Tab(text: 'View'),
               Tab(text: 'Create'),

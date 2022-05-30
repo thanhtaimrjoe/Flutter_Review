@@ -19,4 +19,20 @@ class ProductService {
       return [];
     }
   }
+
+  Future<String> updateProduct(Product product) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("product")
+          .doc('2PO5Wdn5OlLFO1oHpGgj')
+          .update({
+        'productID': product.productID,
+        'name': product.name,
+        'overview': product.overview,
+      });
+      return 'Update successfully';
+    } catch (error) {
+      return "Error adding document: $error";
+    }
+  }
 }
