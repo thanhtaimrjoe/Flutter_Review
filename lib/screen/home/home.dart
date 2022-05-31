@@ -31,7 +31,7 @@ class MyHomePage extends StatelessWidget {
             ]),
           ),
           body: TabBarView(children: [
-            const MyViewPage(),
+            MyViewPage(),
             Center(
                 child: ElevatedButton(
               child: Text('Go to nested page'),

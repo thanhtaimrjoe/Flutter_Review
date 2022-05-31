@@ -10,11 +10,9 @@ class ProductService {
           .where('categoryID', isEqualTo: categoryID)
           .get()
           .then((event) {
-        result = event.docs.map((category) {
-          Product product = Product.fromJSON(category.data());
-          product.setDocID(category.id);
-          return product;
-        }).toList();
+        result = event.docs
+            .map((category) => Product.fromJSON(category.data()))
+            .toList();
       });
       return result;
     } catch (e) {
@@ -26,7 +24,7 @@ class ProductService {
     try {
       await FirebaseFirestore.instance
           .collection("product")
-          .doc(product.docID)
+          .doc('2PO5Wdn5OlLFO1oHpGgj')
           .update({
         'productID': product.productID,
         'name': product.name,
