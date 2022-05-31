@@ -4,9 +4,14 @@ class Product {
   final String image;
   final String overview;
   final String productID;
+  String docID = '';
 
-  Product(
-      this.categoryID, this.name, this.image, this.overview, this.productID);
+  void setDocID(String newDocID) {
+    docID = newDocID;
+  }
+
+  Product(this.categoryID, this.name, this.image, this.overview, this.productID,
+      this.docID);
 
   Product.fromJSON(Map<String, dynamic> parsedJSON)
       : categoryID = parsedJSON['categoryID'],
