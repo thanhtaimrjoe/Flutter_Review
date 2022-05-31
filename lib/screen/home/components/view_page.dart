@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yamabi_admin/constants.dart';
-import 'package:yamabi_admin/screen/home/components/product_card.dart';
+import 'package:yamabi_admin/screen/home/components/product_list.dart';
 import 'package:yamabi_admin/services/product_service.dart';
 
 class MyViewPage extends StatelessWidget {
@@ -13,18 +13,17 @@ class MyViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _categoriesStream =
+    final Stream<QuerySnapshot> categoriesStream =
         FirebaseFirestore.instance.collection('category').snapshots();
-    Size size = MediaQuery.of(context).size;
     ProductService productService = ProductService();
     return StreamBuilder<QuerySnapshot>(
-        stream: _categoriesStream,
+        stream: categoriesStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Center(child: Text('Something went wrong'));
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading');
+            return const Center(child: SpinKitCubeGrid(color: primaryColor));
           }
           return SingleChildScrollView(
               child: Container(
@@ -50,28 +49,7 @@ class MyViewPage extends StatelessWidget {
                                   child: Text(document['name'],
                                       style: const TextStyle(fontSize: 24)),
                                 ),
-                                Consumer<List<dynamic>>(
-                                    builder: (context, products, child) =>
-                                        GridView.builder(
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    childAspectRatio:
-                                                        size.height /
-                                                            size.width *
-                                                            1.2,
-                                                    crossAxisCount: 5),
-                                            shrinkWrap: true,
-                                            itemCount: products.length,
-                                            itemBuilder: (context, index) =>
-                                                ProductCard(
-                                                  product: products[index],
-                                                  press: () {
-                                                    Navigator.pushNamed(
-                                                        context, '/product',
-                                                        arguments:
-                                                            products[index]);
-                                                  },
-                                                )))
+                                ProductList(categoryID: document['id']),
                               ],
                             )),
                       );
