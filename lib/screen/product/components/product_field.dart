@@ -38,7 +38,7 @@ class ProductField extends StatelessWidget {
             maxLines: maxLine,
             decoration: InputDecoration(
                 filled: true,
-                fillColor: whiteColor,
+                fillColor: secondaryColor,
                 border: outlineInputBorder),
           ))
         ],

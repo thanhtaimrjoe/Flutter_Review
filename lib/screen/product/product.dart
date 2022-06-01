@@ -3,6 +3,7 @@ import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/home/components/appbar.dart';
 import 'package:yamabi_admin/screen/product/components/product_button.dart';
+import 'package:yamabi_admin/screen/product/components/product_field.dart';
 import 'package:yamabi_admin/screen/product/components/product_information.dart';
 
 class MyProduct extends StatelessWidget {
@@ -21,6 +22,8 @@ class MyProduct extends StatelessWidget {
         '');
     //final product = arguments as Product;
     Size size = MediaQuery.of(context).size;
+    TextEditingController characterName = TextEditingController(text: 'Luffy');
+    TextEditingController characterPrice = TextEditingController(text: '30');
 
     return Scaffold(
         appBar: AppBar(
@@ -29,37 +32,64 @@ class MyProduct extends StatelessWidget {
             elevation: 0,
             toolbarHeight: 130.0,
             title: const MyAppBar()),
-        body: Container(
-          width: size.width,
-          color: backgroundColor,
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding * 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(defaultPadding / 2),
-                child: Text(
-                  'Manga information',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        body: SingleChildScrollView(
+          child: Container(
+            width: size.width,
+            color: backgroundColor,
+            padding:
+                const EdgeInsets.symmetric(horizontal: defaultPadding * 18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(defaultPadding / 2),
+                  child: Text(
+                    'Manga information',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              ProductInformation(product: product),
-              const SizedBox(height: defaultPadding),
-              Padding(
-                padding: const EdgeInsets.all(defaultPadding / 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'List of chapter',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    ProductButton(title: 'Create new chapter', press: () {})
-                  ],
+                ProductInformation(product: product),
+                const SizedBox(height: defaultPadding),
+                Padding(
+                  padding: const EdgeInsets.all(defaultPadding / 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'List of chapter',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      ProductButton(title: 'Create new chapter', press: () {})
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  color: thirdColor,
+                  child: Row(children: [
+                    Image.network(product.image, width: 100),
+                    const SizedBox(width: defaultPadding * 2),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProductField(
+                            width: 500,
+                            title: 'Name',
+                            maxLine: 1,
+                            controller: characterName),
+                        ProductField(
+                            width: 300,
+                            title: 'Price',
+                            maxLine: 1,
+                            controller: characterPrice),
+                      ],
+                    )
+                    //ProductField(width: double.infinity, title: title, maxLine: maxLine, controller: controller)
+                  ]),
+                )
+              ],
+            ),
           ),
         ));
   }

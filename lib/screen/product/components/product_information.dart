@@ -22,92 +22,87 @@ class ProductInformation extends StatelessWidget {
     TextEditingController overview =
         TextEditingController(text: product.overview);
     return Container(
-      color: Colors.amber,
-      child: Column(
+      color: thirdColor,
+      padding: const EdgeInsets.all(defaultPadding / 2),
+      child: Row(
         children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 300,
-                child: Image.network(product.image, height: 250),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          SizedBox(
+            width: 300,
+            child: Image.network(product.image, height: 300),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProductField(
+                    title: 'ProductID',
+                    width: 400,
+                    maxLine: 1,
+                    controller: productID),
+                ProductField(
+                    title: 'Name',
+                    width: double.infinity,
+                    maxLine: 1,
+                    controller: name),
+                ProductField(
+                    title: 'Overview',
+                    width: double.infinity,
+                    maxLine: 5,
+                    controller: overview),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ProductField(
-                        title: 'ProductID',
-                        width: 400,
-                        maxLine: 1,
-                        controller: productID),
-                    ProductField(
-                        title: 'Name',
-                        width: double.infinity,
-                        maxLine: 1,
-                        controller: name),
-                    ProductField(
-                        title: 'Overview',
-                        width: double.infinity,
-                        maxLine: 5,
-                        controller: overview),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(defaultPadding / 2),
-                          child: ProductButton(
-                              title: 'Save',
-                              press: () async {
-                                Product updatedProduct = Product(
-                                    'A1',
-                                    name.text,
-                                    'none',
-                                    overview.text,
-                                    productID.text,
-                                    product.docID);
-                                String result = await productService
-                                    .updateProduct(updatedProduct);
-                                if (result == 'Update successfully') {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: const Text('Success'),
-                                            content: Text(result),
-                                            actions: [
-                                              ElevatedButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          context, 'OK'),
-                                                  child: const Text('OK'))
-                                            ],
-                                          ));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: const Text('Fail'),
-                                            content: Text(result),
-                                            actions: [
-                                              ElevatedButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          context, 'OK'),
-                                                  child: const Text('OK'))
-                                            ],
-                                          ));
-                                }
-                              }),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(defaultPadding / 2),
-                          child: ProductButton(title: 'Cancel', press: () {}),
-                        ),
-                      ],
-                    )
+                    Padding(
+                      padding: const EdgeInsets.all(defaultPadding / 2),
+                      child: ProductButton(
+                          title: 'Save',
+                          press: () async {
+                            Product updatedProduct = Product(
+                                'A1',
+                                name.text,
+                                'none',
+                                overview.text,
+                                productID.text,
+                                product.docID);
+                            String result = await productService
+                                .updateProduct(updatedProduct);
+                            if (result == 'Update successfully') {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text('Success'),
+                                        content: Text(result),
+                                        actions: [
+                                          ElevatedButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: const Text('OK'))
+                                        ],
+                                      ));
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text('Fail'),
+                                        content: Text(result),
+                                        actions: [
+                                          ElevatedButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: const Text('OK'))
+                                        ],
+                                      ));
+                            }
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(defaultPadding / 2),
+                      child: ProductButton(title: 'Cancel', press: () {}),
+                    ),
                   ],
-                ),
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         ],
       ),

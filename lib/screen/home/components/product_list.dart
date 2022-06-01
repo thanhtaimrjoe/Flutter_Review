@@ -32,8 +32,8 @@ class ProductList extends StatelessWidget {
           }
           return GridView(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: size.height / size.width * 1.2,
-                crossAxisCount: 6,
+                childAspectRatio: size.height / size.width * 1.1,
+                crossAxisCount: 5,
               ),
               shrinkWrap: true,
               children: snapshot.data!.docs.map((document) {
