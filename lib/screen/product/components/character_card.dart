@@ -3,7 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/character.dart';
-import 'package:yamabi_admin/screen/product/components/product_field.dart';
+import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 
 class CharacterCard extends StatelessWidget {
   const CharacterCard({Key? key, required this.character}) : super(key: key);
@@ -23,11 +23,13 @@ class CharacterCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProductField(
+            FieldTemplete(
                 width: 500,
                 title: 'Name',
                 maxLine: 1,
-                controller: characterName),
+                controller: characterName,
+                validate: false,
+                errorMsg: ''),
           ],
         ),
       ]),

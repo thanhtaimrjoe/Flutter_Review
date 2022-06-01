@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/episode.dart';
-import 'package:yamabi_admin/screen/product/components/chapter_card.dart';
+import 'package:yamabi_admin/screen/product/components/episode_card.dart';
 import 'package:yamabi_admin/services/episode_service.dart';
 
 class EpisodeList extends StatelessWidget {

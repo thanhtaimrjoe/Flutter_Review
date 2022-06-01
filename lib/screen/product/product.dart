@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:yamabi_admin/constants.dart';
@@ -6,8 +10,10 @@ import 'package:yamabi_admin/modal/character.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/home/components/appbar.dart';
 import 'package:yamabi_admin/screen/product/components/character_card.dart';
+import 'package:yamabi_admin/screen/product/components/episode_dialog.dart';
 import 'package:yamabi_admin/screen/product/components/episode_list.dart';
 import 'package:yamabi_admin/screen/product/components/product_button.dart';
+import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/screen/product/components/product_information.dart';
 import 'package:yamabi_admin/services/character_service.dart';
 
@@ -59,11 +65,20 @@ class MyProduct extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'List of chapter',
+                        'List of episode',
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      ProductButton(title: 'Create new chapter', press: () {})
+                      ProductButton(
+                          title: 'Create new episode',
+                          press: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return EpisodeDialog(
+                                      productID: product.productID);
+                                });
+                          })
                     ],
                   ),
                 ),

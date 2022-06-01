@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/episode.dart';
-import 'package:yamabi_admin/screen/product/components/product_field.dart';
+import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 
 class EpisodeCard extends StatelessWidget {
   const EpisodeCard({
@@ -26,16 +26,20 @@ class EpisodeCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProductField(
+            FieldTemplete(
                 width: 500,
                 title: 'Name',
                 maxLine: 1,
-                controller: characterName),
-            ProductField(
+                controller: characterName,
+                validate: false,
+                errorMsg: ''),
+            FieldTemplete(
                 width: 300,
                 title: 'Price',
                 maxLine: 1,
-                controller: characterPrice),
+                controller: characterPrice,
+                validate: false,
+                errorMsg: ''),
           ],
         ),
       ]),

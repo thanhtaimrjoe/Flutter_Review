@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 
-class ProductField extends StatelessWidget {
-  const ProductField({
+class FieldTemplete extends StatelessWidget {
+  FieldTemplete({
     Key? key,
     required this.width,
     required this.title,
     required this.maxLine,
     required this.controller,
+    required this.validate,
+    required this.errorMsg,
   }) : super(key: key);
 
   final String title;
   final double width;
   final int maxLine;
   final TextEditingController controller;
+  bool validate;
+  String errorMsg;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class ProductField extends StatelessWidget {
             controller: controller,
             maxLines: maxLine,
             decoration: InputDecoration(
+                errorText: validate ? errorMsg : null,
                 filled: true,
                 fillColor: secondaryColor,
                 border: outlineInputBorder),

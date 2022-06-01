@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/product/components/product_button.dart';
-import 'package:yamabi_admin/screen/product/components/product_field.dart';
+import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/services/product_service.dart';
 
 class ProductInformation extends StatelessWidget {
@@ -90,21 +90,27 @@ class ProductInformation extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProductField(
+                FieldTemplete(
                     title: 'ProductID',
                     width: 400,
                     maxLine: 1,
-                    controller: productID),
-                ProductField(
+                    controller: productID,
+                    validate: false,
+                    errorMsg: ''),
+                FieldTemplete(
                     title: 'Name',
                     width: double.infinity,
                     maxLine: 1,
-                    controller: name),
-                ProductField(
+                    controller: name,
+                    validate: false,
+                    errorMsg: ''),
+                FieldTemplete(
                     title: 'Overview',
                     width: double.infinity,
                     maxLine: 5,
-                    controller: overview),
+                    controller: overview,
+                    validate: false,
+                    errorMsg: ''),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
