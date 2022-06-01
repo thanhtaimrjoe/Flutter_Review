@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/user.dart';
+import 'package:yamabi_admin/routes/route_names.dart';
 import 'package:yamabi_admin/services/user_service.dart';
 
 class MyLoginPage extends StatefulWidget {
@@ -94,7 +95,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                       user.addUser(result);
                                       // ignore: use_build_context_synchronously
                                       Navigator.pushReplacementNamed(
-                                          context, '/home',
+                                          context, RoutesName.HOME_PAGE,
                                           arguments: result);
                                     } else {
                                       setState(() {

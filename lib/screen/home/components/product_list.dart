@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
+import 'package:yamabi_admin/routes/route_names.dart';
 import 'package:yamabi_admin/screen/home/components/product_card.dart';
 
 class ProductList extends StatelessWidget {
@@ -41,12 +42,15 @@ class ProductList extends StatelessWidget {
                     document['name'],
                     document['image'],
                     document['overview'],
-                    document['productID']);
+                    document['productID'],
+                    document.id);
                 return ProductCard(
                   product: product,
                   press: () {
-                    Navigator.pushNamed(context, '/product',
-                        arguments: product);
+                    Navigator.pushNamed(
+                      context, RoutesName.PRODUCT_DETAIL,
+                      //arguments: product
+                    );
                   },
                 );
               }).toList());

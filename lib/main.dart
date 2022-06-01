@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/user.dart';
+import 'package:yamabi_admin/routes/route_names.dart';
+import 'package:yamabi_admin/routes/router.dart';
 import 'package:yamabi_admin/screen/home/home.dart';
-import 'package:yamabi_admin/screen/login.dart';
+import 'package:yamabi_admin/screen/login/login.dart';
 import 'package:yamabi_admin/screen/product/product.dart';
+import 'package:yamabi_admin/screen/templete/templete.dart';
 import 'package:yamabi_admin/services/categories_service.dart';
 
 Future<void> main() async {
@@ -24,12 +27,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const MyLoginPage(),
-          '/home': (context) => const MyHomePage(),
-          '/product': (context) => const MyProduct()
-        },
+        builder: (context, child) => MyTemplete(widget: child!),
+        onGenerateRoute: RouteGenerator.generateRoute,
+        initialRoute: RoutesName.LOGIN_PAGE,
       ),
     );
   }

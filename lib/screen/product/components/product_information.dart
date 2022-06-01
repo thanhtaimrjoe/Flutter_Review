@@ -65,8 +65,8 @@ class ProductInformation extends StatelessWidget {
             children: [
               ElevatedButton(
                   onPressed: () async {
-                    Product updatedProduct = Product(
-                        'A1', name.text, 'none', overview.text, productID.text);
+                    Product updatedProduct = Product('A1', name.text, 'none',
+                        overview.text, productID.text, product.docID);
                     String result =
                         await productService.updateProduct(updatedProduct);
                     if (result == 'Update successfully') {

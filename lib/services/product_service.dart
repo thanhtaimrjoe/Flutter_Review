@@ -24,7 +24,7 @@ class ProductService {
     try {
       await FirebaseFirestore.instance
           .collection("product")
-          .doc('2PO5Wdn5OlLFO1oHpGgj')
+          .doc(product.docID)
           .update({
         'productID': product.productID,
         'name': product.name,
