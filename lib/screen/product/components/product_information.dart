@@ -1,3 +1,8 @@
+import 'dart:html';
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
@@ -28,7 +33,58 @@ class ProductInformation extends StatelessWidget {
         children: [
           SizedBox(
             width: 300,
-            child: Image.network(product.image, height: 300),
+            child: Column(
+              children: [
+                Image.network(product.image, height: 300),
+                ProductButton(
+                    title: 'Choose image',
+                    press: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+                      if (result != null) {
+                        //Single file
+                        // File file = File(result.files.single.path);
+                        // print('file path: ${result.files.single.path}');
+                        //Load result and file details
+                        // PlatformFile file = result.files.first;
+                        // print(file.name);
+                        // print(file.bytes);
+                        // print(file.size);
+                        // print(file.extension);
+                        // print(file.path);
+
+                        //Pick and upload a file to Firebase Storage with Flutter Web
+                        Uint8List? fileBytes = result.files.first.bytes;
+                        String fileName = result.files.first.name;
+
+                        //Upload file
+                        final uploadTask = await FirebaseStorage.instance
+                            .ref('flutter_web/$fileName')
+                            .putData(fileBytes!);
+                        switch (uploadTask.state) {
+                          case TaskState.running:
+                            final progress = 100.0 *
+                                (uploadTask.bytesTransferred /
+                                    uploadTask.totalBytes);
+                            print("Upload is $progress% complete.");
+                            break;
+                          case TaskState.success:
+                            print('Upload successfully');
+                            break;
+                          case TaskState.paused:
+                            // TODO: Handle this case.
+                            break;
+                          case TaskState.canceled:
+                            // TODO: Handle this case.
+                            break;
+                          case TaskState.error:
+                            // TODO: Handle this case.
+                            break;
+                        }
+                      }
+                    })
+              ],
+            ),
           ),
           Expanded(
             child: Column(
