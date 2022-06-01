@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
+import 'package:yamabi_admin/screen/product/components/product_button.dart';
 import 'package:yamabi_admin/screen/product/components/product_field.dart';
 import 'package:yamabi_admin/services/product_service.dart';
 
@@ -20,19 +21,17 @@ class ProductInformation extends StatelessWidget {
     TextEditingController name = TextEditingController(text: product.name);
     TextEditingController overview =
         TextEditingController(text: product.overview);
-    return Column(
-      children: [
-        Row(
-          children: [
-            SizedBox(
-              width: 300,
-              child: Image.network(product.image, height: 250),
-            ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                color: Colors.orange[100],
-                padding: const EdgeInsets.all(defaultPadding),
+    return Container(
+      color: Colors.amber,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 300,
+                child: Image.network(product.image, height: 250),
+              ),
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -51,68 +50,67 @@ class ProductInformation extends StatelessWidget {
                         width: double.infinity,
                         maxLine: 5,
                         controller: overview),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(defaultPadding / 2),
+                          child: ProductButton(
+                              title: 'Save',
+                              press: () async {
+                                Product updatedProduct = Product(
+                                    'A1',
+                                    name.text,
+                                    'none',
+                                    overview.text,
+                                    productID.text,
+                                    product.docID);
+                                String result = await productService
+                                    .updateProduct(updatedProduct);
+                                if (result == 'Update successfully') {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: const Text('Success'),
+                                            content: Text(result),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          context, 'OK'),
+                                                  child: const Text('OK'))
+                                            ],
+                                          ));
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: const Text('Fail'),
+                                            content: Text(result),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          context, 'OK'),
+                                                  child: const Text('OK'))
+                                            ],
+                                          ));
+                                }
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(defaultPadding / 2),
+                          child: ProductButton(title: 'Cancel', press: () {}),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: defaultPadding),
-        Container(
-          margin: const EdgeInsets.only(left: defaultPadding * 50),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                  onPressed: () async {
-                    Product updatedProduct = Product('A1', name.text, 'none',
-                        overview.text, productID.text, product.docID);
-                    String result =
-                        await productService.updateProduct(updatedProduct);
-                    if (result == 'Update successfully') {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: const Text('Success'),
-                                content: Text(result),
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'OK'),
-                                      child: const Text('OK'))
-                                ],
-                              ));
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: const Text('Fail'),
-                                content: Text(result),
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'OK'),
-                                      child: const Text('OK'))
-                                ],
-                              ));
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: primaryColor,
-                      padding: const EdgeInsets.all(defaultPadding + 2)),
-                  child: const Text('Save')),
-              ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: primaryColor,
-                      padding: const EdgeInsets.all(defaultPadding + 2)),
-                  child: const Text('Cancel')),
             ],
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

@@ -20,7 +20,10 @@ class ProductCard extends StatelessWidget {
         margin: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Image.network(product.image, width: double.infinity),
+            Image.network(
+              product.image,
+              width: double.infinity,
+            ),
             const SizedBox(height: defaultPadding / 4),
             Text(
               product.name,

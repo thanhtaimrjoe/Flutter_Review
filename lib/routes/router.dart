@@ -8,13 +8,15 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutesName.LOGIN_PAGE:
-        return GeneratePageRoute(MyLoginPage(), RoutesName.LOGIN_PAGE);
+        return GeneratePageRoute(const MyLoginPage(), RoutesName.LOGIN_PAGE);
       case RoutesName.HOME_PAGE:
-        return GeneratePageRoute(MyHomePage(), RoutesName.HOME_PAGE);
+        return GeneratePageRoute(const MyHomePage(), RoutesName.HOME_PAGE);
       case RoutesName.PRODUCT_DETAIL:
-        return GeneratePageRoute(MyProduct(), RoutesName.PRODUCT_DETAIL);
+        final data = settings.arguments;
+        return GeneratePageRoute(
+            MyProduct(arguments: data), RoutesName.PRODUCT_DETAIL);
       default:
-        return GeneratePageRoute(MyLoginPage(), RoutesName.LOGIN_PAGE);
+        return GeneratePageRoute(const MyLoginPage(), RoutesName.LOGIN_PAGE);
     }
   }
 }

@@ -28,7 +28,7 @@ class MyViewPage extends StatelessWidget {
           return SingleChildScrollView(
               child: Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding * 14),
+                      horizontal: defaultPadding * 24),
                   color: backgroundColor,
                   child: ListView(
                     shrinkWrap: true,

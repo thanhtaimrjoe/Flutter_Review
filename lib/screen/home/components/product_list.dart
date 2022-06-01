@@ -33,7 +33,7 @@ class ProductList extends StatelessWidget {
           return GridView(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: size.height / size.width * 1.2,
-                crossAxisCount: 5,
+                crossAxisCount: 6,
               ),
               shrinkWrap: true,
               children: snapshot.data!.docs.map((document) {
@@ -47,10 +47,8 @@ class ProductList extends StatelessWidget {
                 return ProductCard(
                   product: product,
                   press: () {
-                    Navigator.pushNamed(
-                      context, RoutesName.PRODUCT_DETAIL,
-                      //arguments: product
-                    );
+                    Navigator.pushNamed(context, RoutesName.PRODUCT_DETAIL,
+                        arguments: product);
                   },
                 );
               }).toList());

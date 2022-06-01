@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:provider/provider.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/user.dart';
 import 'package:yamabi_admin/routes/route_names.dart';
 import 'package:yamabi_admin/routes/router.dart';
-import 'package:yamabi_admin/screen/home/home.dart';
-import 'package:yamabi_admin/screen/login/login.dart';
-import 'package:yamabi_admin/screen/product/product.dart';
 import 'package:yamabi_admin/screen/templete/templete.dart';
-import 'package:yamabi_admin/services/categories_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setUrlStrategy(PathUrlStrategy());
   runApp(const MyApp());
 }
 
