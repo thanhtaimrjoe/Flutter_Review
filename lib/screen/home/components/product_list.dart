@@ -5,6 +5,7 @@ import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/routes/route_names.dart';
 import 'package:yamabi_admin/screen/home/components/product_card.dart';
+import 'package:yamabi_admin/services/product_service.dart';
 
 class ProductList extends StatelessWidget {
   const ProductList({
@@ -17,12 +18,9 @@ class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final Stream<QuerySnapshot> productsStream = FirebaseFirestore.instance
-        .collection('product')
-        .where('categoryID', isEqualTo: categoryID)
-        .snapshots();
+    ProductService productService = ProductService();
     return StreamBuilder(
-        stream: productsStream,
+        stream: productService.fetchRealtimeProducts(categoryID),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Center(child: Text('Something went wrong'));

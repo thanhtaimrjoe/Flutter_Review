@@ -12,33 +12,28 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
-    CategoryService categoryService = CategoryService();
-    return FutureProvider<List<dynamic>>(
-      create: (context) => categoryService.fetchCategories(),
-      initialData: const [],
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: primaryColor,
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            toolbarHeight: 100.0,
-            title: const MyAppBar(),
-            bottom: const TabBar(tabs: [
-              Tab(text: 'View'),
-              Tab(text: 'Create'),
-            ]),
-          ),
-          body: TabBarView(children: [
-            const MyViewPage(),
-            Center(
-                child: ElevatedButton(
-              child: Text('Go to nested page'),
-              onPressed: () {},
-            )),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          toolbarHeight: 100.0,
+          title: const MyAppBar(),
+          bottom: const TabBar(tabs: [
+            Tab(text: 'View'),
+            Tab(text: 'Create'),
           ]),
         ),
+        body: TabBarView(children: [
+          const MyViewPage(),
+          Center(
+              child: ElevatedButton(
+            child: Text('Go to nested page'),
+            onPressed: () {},
+          )),
+        ]),
       ),
     );
   }

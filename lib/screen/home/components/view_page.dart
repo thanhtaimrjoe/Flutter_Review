@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/screen/home/components/product_list.dart';
+import 'package:yamabi_admin/services/categories_service.dart';
 import 'package:yamabi_admin/services/product_service.dart';
 
 class MyViewPage extends StatelessWidget {
@@ -13,11 +14,9 @@ class MyViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> categoriesStream =
-        FirebaseFirestore.instance.collection('category').snapshots();
-    ProductService productService = ProductService();
+    CategoryService categoryService = CategoryService();
     return StreamBuilder<QuerySnapshot>(
-        stream: categoriesStream,
+        stream: categoryService.fetchRealtimeCategories(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Center(child: Text('Something went wrong'));
@@ -33,26 +32,21 @@ class MyViewPage extends StatelessWidget {
                   child: ListView(
                     shrinkWrap: true,
                     children: snapshot.data!.docs.map((document) {
-                      return FutureProvider<List<dynamic>>(
-                        create: (context) => productService
-                            .fetchProductsByCategoryID(document['id']),
-                        initialData: const [],
-                        child: Container(
-                            margin: const EdgeInsets.only(top: defaultPadding),
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.all(defaultPadding / 2),
-                                  child: Text(document['name'],
-                                      style: const TextStyle(fontSize: 24)),
-                                ),
-                                ProductList(categoryID: document['id']),
-                              ],
-                            )),
-                      );
+                      return Container(
+                          margin: const EdgeInsets.only(top: defaultPadding),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.all(defaultPadding / 2),
+                                child: Text(document['name'],
+                                    style: const TextStyle(fontSize: 24)),
+                              ),
+                              ProductList(categoryID: document['id']),
+                            ],
+                          ));
                     }).toList(),
                   )));
         });
