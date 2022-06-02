@@ -4,9 +4,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yamabi_admin/constants.dart';
+import 'package:yamabi_admin/modal/character.dart';
 import 'package:yamabi_admin/modal/episode.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
+import 'package:yamabi_admin/services/character_service.dart';
 import 'package:yamabi_admin/services/episode_service.dart';
 
 class CharacterDialog extends StatefulWidget {
@@ -25,19 +27,17 @@ class _CharacterDialogState extends State<CharacterDialog> {
   PlatformFile imgFile =
       PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
   bool nameValidate = false;
-  bool priceValidate = false;
   @override
   Widget build(BuildContext context) {
-    EpisodeService episodeService = EpisodeService();
+    CharacterService characterService = CharacterService();
     Size size = MediaQuery.of(context).size;
     TextEditingController nameController = TextEditingController();
-    TextEditingController priceController = TextEditingController();
     return Dialog(
         elevation: 16,
         child: Container(
           padding: const EdgeInsets.all(defaultPadding),
           width: size.width / 2.6,
-          height: 350,
+          height: 260,
           color: thirdColor,
           child: Row(children: [
             Column(
@@ -45,10 +45,11 @@ class _CharacterDialogState extends State<CharacterDialog> {
               children: [
                 if (imgFile.bytes!.isEmpty)
                   Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: defaultPadding / 2),
                       color: whiteColor,
-                      child: Image.asset('/images/no-image.png', width: 170)),
+                      child: Image.asset(
+                        '/images/no-image-avatar.png',
+                        width: 170,
+                      )),
                 if (imgFile.bytes!.isNotEmpty)
                   Image.memory(Uint8List.fromList(imgFile.bytes!), width: 170),
                 ButtonTemplete(
@@ -76,13 +77,6 @@ class _CharacterDialogState extends State<CharacterDialog> {
                     controller: nameController,
                     validate: nameValidate,
                     errorMsg: 'Input invalid name'),
-                FieldTemplete(
-                    width: 300,
-                    title: 'Price',
-                    maxLine: 1,
-                    controller: priceController,
-                    validate: priceValidate,
-                    errorMsg: 'Input invalid price'),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: defaultPadding * 6.5,
@@ -90,19 +84,13 @@ class _CharacterDialogState extends State<CharacterDialog> {
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
-                        String episodeID = widget.productID + const Uuid().v1();
-                        String fileName = episodeID + imgFile.name;
-                        int episodePrice = 0;
+                        String fileName =
+                            widget.productID + const Uuid().v1() + imgFile.name;
+                        String docID = widget.productID + const Uuid().v1();
                         bool result = false;
                         if (nameController.text.isEmpty) {
                           setState(() {
                             nameValidate = true;
-                          });
-                          result = true;
-                        }
-                        if (priceController.text.isEmpty) {
-                          setState(() {
-                            priceValidate = true;
                           });
                           result = true;
                         }
@@ -122,18 +110,10 @@ class _CharacterDialogState extends State<CharacterDialog> {
                                             })
                                       ]));
                         }
-                        try {
-                          episodePrice = int.parse(priceController.text);
-                        } catch (e) {
-                          setState(() {
-                            priceValidate = true;
-                          });
-                          result = true;
-                        }
                         if (result == false) {
                           //Upload file
                           final uploadTask = await FirebaseStorage.instance
-                              .ref('episodes/$fileName')
+                              .ref('characters/$fileName')
                               .putData(
                                   imgFile.bytes!,
                                   SettableMetadata(
@@ -143,15 +123,12 @@ class _CharacterDialogState extends State<CharacterDialog> {
                             case TaskState.success:
                               String imageURL =
                                   await uploadTask.ref.getDownloadURL();
-                              Episode episode = Episode(
-                                  episodeID,
-                                  nameController.text,
-                                  imageURL,
-                                  episodePrice,
-                                  widget.productID);
+                              Character character =
+                                  Character(nameController.text, imageURL);
                               String result =
-                                  await episodeService.addNewEpisode(episode);
-                              if (result == 'Add New Episode successfully') {
+                                  await characterService.addNewCharacter(
+                                      character, widget.productID, docID);
+                              if (result == 'Add New Character successfully') {
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(

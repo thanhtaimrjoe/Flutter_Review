@@ -10,10 +10,10 @@ import 'package:yamabi_admin/modal/character.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/home/components/appbar.dart';
 import 'package:yamabi_admin/screen/product/components/character_card.dart';
+import 'package:yamabi_admin/screen/product/components/character_dialog.dart';
 import 'package:yamabi_admin/screen/product/components/episode_dialog.dart';
 import 'package:yamabi_admin/screen/product/components/episode_list.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
-import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/screen/product/components/product_information.dart';
 import 'package:yamabi_admin/services/character_service.dart';
 
@@ -24,14 +24,14 @@ class MyProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Product product = Product(
-    //     'A1',
-    //     'ワンピース',
-    //     'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%2Fproducts%2F%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9%2Fonepiece001.jpg?alt=media&token=8143c2f9-2130-43e8-8ae7-6905664df4a6',
-    //     'overview',
-    //     'A11',
-    //     '');
-    final product = arguments as Product;
+    Product product = Product(
+        'A1',
+        'ワンピース',
+        'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%2Fproducts%2F%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9%2Fonepiece001.jpg?alt=media&token=8143c2f9-2130-43e8-8ae7-6905664df4a6',
+        'overview',
+        'A11',
+        '');
+    // final product = arguments as Product;
     CharacterService characterService = CharacterService();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -95,12 +95,13 @@ class MyProduct extends StatelessWidget {
                       ),
                       ButtonTemplete(
                           title: 'Create new character',
-                          press: () async {
-                            Character character = Character('Xoro',
-                                'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%2Fproducts%2F%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9%2Fonepiece_character2.jpg?alt=media&token=a63f5554-349a-4c92-8759-926bdb6360f1');
-                            String result = await characterService
-                                .addNewCharacter(character, product.productID);
-                            print('result: $result');
+                          press: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CharacterDialog(
+                                      productID: product.productID);
+                                });
                           })
                     ],
                   ),

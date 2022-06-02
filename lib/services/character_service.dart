@@ -9,12 +9,10 @@ class CharacterService {
         .snapshots();
   }
 
-  Future<String> addNewCharacter(Character character, String productID) async {
+  Future<String> addNewCharacter(
+      Character character, String productID, String docID) async {
     try {
-      await FirebaseFirestore.instance
-          .collection("character")
-          .doc(productID + 'asdqwe')
-          .set({
+      await FirebaseFirestore.instance.collection("character").doc(docID).set({
         'productID': productID,
         'image': character.image,
         'name': character.name,
