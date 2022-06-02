@@ -4,13 +4,14 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/services/product_service.dart';
 
-class ProductInformation extends StatelessWidget {
+class ProductInformation extends StatefulWidget {
   const ProductInformation({
     Key? key,
     required this.product,
@@ -19,68 +20,47 @@ class ProductInformation extends StatelessWidget {
   final Product product;
 
   @override
+  State<ProductInformation> createState() => _ProductInformationState();
+}
+
+class _ProductInformationState extends State<ProductInformation> {
+  PlatformFile imgFile =
+      PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
+  bool nameValidate = false;
+  bool overviewValidate = false;
+  @override
   Widget build(BuildContext context) {
     ProductService productService = ProductService();
-    TextEditingController productID =
-        TextEditingController(text: product.productID);
-    TextEditingController name = TextEditingController(text: product.name);
-    TextEditingController overview =
-        TextEditingController(text: product.overview);
+    TextEditingController productIDController =
+        TextEditingController(text: widget.product.productID);
+    TextEditingController nameController =
+        TextEditingController(text: widget.product.name);
+    TextEditingController overviewController =
+        TextEditingController(text: widget.product.overview);
     return Container(
       color: thirdColor,
       padding: const EdgeInsets.all(defaultPadding / 2),
       child: Row(
         children: [
-          SizedBox(
-            width: 300,
+          Container(
+            margin: const EdgeInsets.all(defaultPadding / 2),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.network(product.image, height: 300),
+                if (imgFile.bytes!.isEmpty)
+                  Image.network(widget.product.image, height: 280),
+                if (imgFile.bytes!.isNotEmpty)
+                  Image.memory(Uint8List.fromList(imgFile.bytes!), height: 280),
+                const SizedBox(height: defaultPadding / 2),
                 ButtonTemplete(
                     title: 'Choose image',
                     press: () async {
                       FilePickerResult? result =
                           await FilePicker.platform.pickFiles();
                       if (result != null) {
-                        //Single file
-                        // File file = File(result.files.single.path);
-                        // print('file path: ${result.files.single.path}');
-                        //Load result and file details
-                        // PlatformFile file = result.files.first;
-                        // print(file.name);
-                        // print(file.bytes);
-                        // print(file.size);
-                        // print(file.extension);
-                        // print(file.path);
-
-                        //Pick and upload a file to Firebase Storage with Flutter Web
-                        Uint8List? fileBytes = result.files.first.bytes;
-                        String fileName = result.files.first.name;
-
-                        //Upload file
-                        final uploadTask = await FirebaseStorage.instance
-                            .ref('flutter_web/$fileName')
-                            .putData(fileBytes!);
-                        switch (uploadTask.state) {
-                          case TaskState.running:
-                            final progress = 100.0 *
-                                (uploadTask.bytesTransferred /
-                                    uploadTask.totalBytes);
-                            print("Upload is $progress% complete.");
-                            break;
-                          case TaskState.success:
-                            print('Upload successfully');
-                            break;
-                          case TaskState.paused:
-                            // TODO: Handle this case.
-                            break;
-                          case TaskState.canceled:
-                            // TODO: Handle this case.
-                            break;
-                          case TaskState.error:
-                            // TODO: Handle this case.
-                            break;
-                        }
+                        setState(() {
+                          imgFile = result.files.first;
+                        });
                       }
                     })
               ],
@@ -94,21 +74,21 @@ class ProductInformation extends StatelessWidget {
                     title: 'ProductID',
                     width: 400,
                     maxLine: 1,
-                    controller: productID,
+                    controller: productIDController,
                     validate: false,
                     errorMsg: ''),
                 FieldTemplete(
                     title: 'Name',
                     width: double.infinity,
                     maxLine: 1,
-                    controller: name,
+                    controller: nameController,
                     validate: false,
                     errorMsg: ''),
                 FieldTemplete(
                     title: 'Overview',
                     width: double.infinity,
                     maxLine: 5,
-                    controller: overview,
+                    controller: overviewController,
                     validate: false,
                     errorMsg: ''),
                 Row(
@@ -119,41 +99,87 @@ class ProductInformation extends StatelessWidget {
                       child: ButtonTemplete(
                           title: 'Save',
                           press: () async {
-                            Product updatedProduct = Product(
-                                'A1',
-                                name.text,
-                                'none',
-                                overview.text,
-                                productID.text,
-                                product.docID);
-                            String result = await productService
-                                .updateProduct(updatedProduct);
-                            if (result == 'Update successfully') {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: const Text('Success'),
-                                        content: Text(result),
-                                        actions: [
-                                          ElevatedButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, 'OK'),
-                                              child: const Text('OK'))
-                                        ],
-                                      ));
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: const Text('Fail'),
-                                        content: Text(result),
-                                        actions: [
-                                          ElevatedButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, 'OK'),
-                                              child: const Text('OK'))
-                                        ],
-                                      ));
+                            String fileName = widget.product.productID +
+                                const Uuid().v1() +
+                                imgFile.name;
+                            bool result = false;
+                            if (nameController.text.isEmpty) {
+                              setState(() {
+                                nameValidate = true;
+                              });
+                              result = true;
+                            }
+                            if (overviewController.text.isEmpty) {
+                              setState(() {
+                                overviewValidate = true;
+                              });
+                              result = true;
+                            }
+                            if (result == false) {
+                              String imageURL = '';
+                              if (imgFile.bytes!.isNotEmpty) {
+                                //Upload file
+                                final uploadTask = await FirebaseStorage
+                                    .instance
+                                    .ref('product/$fileName')
+                                    .putData(
+                                        imgFile.bytes!,
+                                        SettableMetadata(
+                                            contentType:
+                                                'image/${imgFile.extension}'));
+                                switch (uploadTask.state) {
+                                  case TaskState.success:
+                                    imageURL =
+                                        await uploadTask.ref.getDownloadURL();
+                                    break;
+                                  case TaskState.paused:
+                                    break;
+                                  case TaskState.running:
+                                    break;
+                                  case TaskState.canceled:
+                                    break;
+                                  case TaskState.error:
+                                    break;
+                                }
+                              }
+                              Product updatedProduct = Product(
+                                  widget.product.categoryID,
+                                  nameController.text,
+                                  imageURL,
+                                  overviewController.text,
+                                  widget.product.productID,
+                                  widget.product.docID);
+                              String result = await productService
+                                  .updateProduct(updatedProduct);
+                              if (result == 'Update successfully') {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                            title: const Text('Success'),
+                                            content: Text(result),
+                                            actions: [
+                                              ButtonTemplete(
+                                                  title: 'OK',
+                                                  press: () {
+                                                    Navigator.pop(
+                                                        context, 'OK');
+                                                  })
+                                            ]));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                            title: const Text('Fail'),
+                                            content: Text(result),
+                                            actions: [
+                                              ButtonTemplete(
+                                                  title: 'OK',
+                                                  press: () {
+                                                    Navigator.pop(
+                                                        context, 'OK');
+                                                  })
+                                            ]));
+                              }
                             }
                           }),
                     ),

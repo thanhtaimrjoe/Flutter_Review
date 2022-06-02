@@ -15,7 +15,7 @@ class ProductService {
           .collection("product")
           .doc(product.docID)
           .update({
-        'productID': product.productID,
+        'image': product.image,
         'name': product.name,
         'overview': product.overview,
       });
