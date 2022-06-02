@@ -94,7 +94,14 @@ class MyProduct extends StatelessWidget {
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       ButtonTemplete(
-                          title: 'Create new character', press: () {})
+                          title: 'Create new character',
+                          press: () async {
+                            Character character = Character('Xoro',
+                                'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%2Fproducts%2F%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9%2Fonepiece_character2.jpg?alt=media&token=a63f5554-349a-4c92-8759-926bdb6360f1');
+                            String result = await characterService
+                                .addNewCharacter(character, product.productID);
+                            print('result: $result');
+                          })
                     ],
                   ),
                 ),
@@ -110,13 +117,11 @@ class MyProduct extends StatelessWidget {
                       return const Center(
                           child: SpinKitCubeGrid(color: primaryColor));
                     }
-                    List<dynamic> characters =
-                        snapshot.data!.docs[0].get('items');
                     return ListView(
                       shrinkWrap: true,
-                      children: characters.map((item) {
+                      children: snapshot.data!.docs.map((document) {
                         Character character =
-                            Character(item['name'], item['image']);
+                            Character(document['name'], document['image']);
                         return Padding(
                           padding: const EdgeInsets.only(top: defaultPadding),
                           child: CharacterCard(character: character),

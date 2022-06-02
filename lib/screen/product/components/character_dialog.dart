@@ -9,8 +9,8 @@ import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/services/episode_service.dart';
 
-class EpisodeDialog extends StatefulWidget {
-  const EpisodeDialog({
+class CharacterDialog extends StatefulWidget {
+  const CharacterDialog({
     Key? key,
     required this.productID,
   }) : super(key: key);
@@ -18,10 +18,10 @@ class EpisodeDialog extends StatefulWidget {
   final String productID;
 
   @override
-  State<EpisodeDialog> createState() => _EpisodeDialogState();
+  State<CharacterDialog> createState() => _CharacterDialogState();
 }
 
-class _EpisodeDialogState extends State<EpisodeDialog> {
+class _CharacterDialogState extends State<CharacterDialog> {
   PlatformFile imgFile =
       PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
   bool nameValidate = false;
