@@ -2,19 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yama_shopping/modal/character.dart';
 
 class CharacterService {
-  Future<Character> findCharactersByProductID(String productID) async {
-    Character result = Character(productID, []);
+  Future<List<dynamic>> findCharactersByProductID(String productID) async {
     try {
+      List<dynamic> result = [];
       await FirebaseFirestore.instance
           .collection("character")
           .where('productID', isEqualTo: productID)
           .get()
           .then((event) {
-        result = Character.fromJSON(event.docs[0].data());
+        result = event.docs
+            .map((character) => Character.fromJSON(character.data()))
+            .toList();
       });
       return result;
     } catch (e) {
-      return result;
+      return [];
     }
   }
 }

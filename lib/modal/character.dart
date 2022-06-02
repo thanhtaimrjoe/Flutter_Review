@@ -1,9 +1,11 @@
 class Character {
   final String productID;
-  final List<dynamic> items;
-  Character(this.productID, this.items);
+  final String name;
+  final String image;
+  Character(this.productID, this.name, this.image);
 
   Character.fromJSON(Map<String, dynamic> parsedJson)
       : productID = parsedJson['productID'],
-        items = parsedJson['items'];
+        name = parsedJson['name'],
+        image = parsedJson['image'];
 }

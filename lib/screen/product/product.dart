@@ -33,10 +33,10 @@ class MyProductPage extends StatelessWidget {
               episodeService.findEpisodesByProductID(product.productID),
           initialData: const [],
         ),
-        FutureProvider<Character>(
-            create: (context) =>
-                characterService.findCharactersByProductID(product.productID),
-            initialData: Character(product.productID, []))
+        // FutureProvider<List<dynamic>>(
+        //     create: (context) =>
+        //         characterService.findCharactersByProductID(product.productID),
+        //     initialData: const [])
       ],
       child: Consumer<List<dynamic>>(
         builder: (context, episodes, child) => CustomScrollView(
@@ -93,29 +93,34 @@ class MyProductPage extends StatelessWidget {
               ProductTitle(title: AppLocalizations.of(context)!.character),
             if (episodes.isNotEmpty)
               SliverToBoxAdapter(
-                child: Consumer<Character>(
-                    builder: (context, character, child) => Container(
-                          color: const Color.fromARGB(255, 179, 201, 238),
-                          margin: const EdgeInsets.only(
-                              bottom: defaultPadding * 2,
-                              left: defaultPadding,
-                              right: defaultPadding),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: defaultPadding / 4),
-                          width: MediaQuery.of(context).size.width,
-                          height: 141,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: character.items.length,
-                            itemBuilder: (context, index) {
-                              return CharacterCard(
-                                image: character.items[index]['image'],
-                                name: character.items[index]['name'],
-                              );
-                            },
-                          ),
-                        )),
+                child: FutureProvider<List<dynamic>>(
+                  create: (context) => characterService
+                      .findCharactersByProductID(product.productID),
+                  initialData: const [],
+                  child: Consumer<List<dynamic>>(
+                      builder: (context, character, child) => Container(
+                            color: const Color.fromARGB(255, 179, 201, 238),
+                            margin: const EdgeInsets.only(
+                                bottom: defaultPadding * 2,
+                                left: defaultPadding,
+                                right: defaultPadding),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: defaultPadding / 4),
+                            width: MediaQuery.of(context).size.width,
+                            height: 141,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: character.length,
+                              itemBuilder: (context, index) {
+                                return CharacterCard(
+                                  image: character[index].image,
+                                  name: character[index].name,
+                                );
+                              },
+                            ),
+                          )),
+                ),
               )
           ],
         ),
