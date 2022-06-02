@@ -12,7 +12,7 @@ import 'package:yamabi_admin/screen/home/components/appbar.dart';
 import 'package:yamabi_admin/screen/product/components/character_card.dart';
 import 'package:yamabi_admin/screen/product/components/episode_dialog.dart';
 import 'package:yamabi_admin/screen/product/components/episode_list.dart';
-import 'package:yamabi_admin/screen/product/components/product_button.dart';
+import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/screen/product/components/product_information.dart';
 import 'package:yamabi_admin/services/character_service.dart';
@@ -69,7 +69,7 @@ class MyProduct extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      ProductButton(
+                      ButtonTemplete(
                           title: 'Create new episode',
                           press: () {
                             showDialog(
@@ -93,7 +93,8 @@ class MyProduct extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      ProductButton(title: 'Create new character', press: () {})
+                      ButtonTemplete(
+                          title: 'Create new character', press: () {})
                     ],
                   ),
                 ),

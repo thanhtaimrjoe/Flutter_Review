@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
-import 'package:yamabi_admin/screen/product/components/product_button.dart';
+import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/services/product_service.dart';
 
@@ -36,7 +36,7 @@ class ProductInformation extends StatelessWidget {
             child: Column(
               children: [
                 Image.network(product.image, height: 300),
-                ProductButton(
+                ButtonTemplete(
                     title: 'Choose image',
                     press: () async {
                       FilePickerResult? result =
@@ -116,7 +116,7 @@ class ProductInformation extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(defaultPadding / 2),
-                      child: ProductButton(
+                      child: ButtonTemplete(
                           title: 'Save',
                           press: () async {
                             Product updatedProduct = Product(
@@ -159,7 +159,7 @@ class ProductInformation extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(defaultPadding / 2),
-                      child: ProductButton(title: 'Cancel', press: () {}),
+                      child: ButtonTemplete(title: 'Cancel', press: () {}),
                     ),
                   ],
                 )

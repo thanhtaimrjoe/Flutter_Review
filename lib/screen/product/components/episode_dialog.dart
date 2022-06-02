@@ -7,8 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/episode.dart';
-import 'package:yamabi_admin/screen/product/components/product_button.dart';
+import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
+import 'package:yamabi_admin/services/episode_service.dart';
 
 class EpisodeDialog extends StatefulWidget {
   const EpisodeDialog({
@@ -23,11 +24,13 @@ class EpisodeDialog extends StatefulWidget {
 }
 
 class _EpisodeDialogState extends State<EpisodeDialog> {
-  Uint8List fileBytes = Uint8List.fromList([]);
+  PlatformFile imgFile =
+      PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
   bool nameValidate = false;
   bool priceValidate = false;
   @override
   Widget build(BuildContext context) {
+    EpisodeService episodeService = EpisodeService();
     Size size = MediaQuery.of(context).size;
     TextEditingController episodeName = TextEditingController();
     TextEditingController episodePrice = TextEditingController();
@@ -42,21 +45,22 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (fileBytes.isEmpty)
-                  Image.network(
-                      'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%2Fproducts%2F%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9%2Fonepiece001.jpg?alt=media&token=8143c2f9-2130-43e8-8ae7-6905664df4a6',
-                      width: 170),
-                //if (fileBytes!.isNotEmpty) Text('Hello not empty'),
-                if (fileBytes.isNotEmpty)
-                  Image.memory(Uint8List.fromList(fileBytes), width: 170),
-                ProductButton(
+                if (imgFile.bytes!.isEmpty)
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: defaultPadding / 2),
+                      color: whiteColor,
+                      child: Image.asset('/images/no-image.png', width: 170)),
+                if (imgFile.bytes!.isNotEmpty)
+                  Image.memory(Uint8List.fromList(imgFile.bytes!), width: 170),
+                ButtonTemplete(
                     title: 'Choose Image',
                     press: () async {
                       FilePickerResult? result =
                           await FilePicker.platform.pickFiles();
                       if (result != null) {
                         setState(() {
-                          fileBytes = result.files.first.bytes!;
+                          imgFile = result.files.first;
                         });
                       }
                     })
@@ -85,11 +89,11 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: defaultPadding * 6.5,
                       vertical: defaultPadding),
-                  child: ProductButton(
+                  child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
                         String episodeID = widget.productID + const Uuid().v1();
-                        String fileName = episodeID;
+                        String fileName = episodeID + imgFile.name;
                         bool result = false;
                         if (episodeName.text.isEmpty) {
                           setState(() {
@@ -103,16 +107,72 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                           });
                           result = true;
                         }
+                        if (imgFile.bytes!.isEmpty) {
+                          result = true;
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                      title: const Text('Invalidate'),
+                                      content:
+                                          const Text('Please choose a image'),
+                                      actions: [
+                                        ButtonTemplete(
+                                            title: 'OK',
+                                            press: () {
+                                              Navigator.pop(context, 'OK');
+                                            })
+                                      ]));
+                        }
                         if (result == false) {
                           //Upload file
                           final uploadTask = await FirebaseStorage.instance
                               .ref('episodes/$fileName')
-                              .putData(fileBytes);
+                              .putData(
+                                  imgFile.bytes!,
+                                  SettableMetadata(
+                                      contentType:
+                                          'image/${imgFile.extension}'));
                           switch (uploadTask.state) {
                             case TaskState.success:
-                              String image =
+                              String imageURL =
                                   await uploadTask.ref.getDownloadURL();
-                              print('URL: $image');
+                              Episode episode = Episode(
+                                  episodeID,
+                                  episodeName.text,
+                                  imageURL,
+                                  800,
+                                  widget.productID);
+                              String result =
+                                  await episodeService.addNewEpisode(episode);
+                              if (result == 'Add New Episode successfully') {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                            title: const Text('Success'),
+                                            content: Text(result),
+                                            actions: [
+                                              ButtonTemplete(
+                                                  title: 'OK',
+                                                  press: () {
+                                                    Navigator.pop(
+                                                        context, 'OK');
+                                                  })
+                                            ]));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                            title: const Text('Fail'),
+                                            content: Text(result),
+                                            actions: [
+                                              ButtonTemplete(
+                                                  title: 'OK',
+                                                  press: () {
+                                                    Navigator.pop(
+                                                        context, 'OK');
+                                                  })
+                                            ]));
+                              }
                               break;
                             case TaskState.paused:
                               break;

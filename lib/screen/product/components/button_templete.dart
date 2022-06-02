@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 
-class ProductButton extends StatelessWidget {
-  const ProductButton({
+class ButtonTemplete extends StatelessWidget {
+  const ButtonTemplete({
     Key? key,
     required this.title,
     required this.press,
