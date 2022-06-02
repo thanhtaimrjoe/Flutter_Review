@@ -5,43 +5,46 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/episode.dart';
+import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
-import 'package:yamabi_admin/services/episode_service.dart';
+import 'package:yamabi_admin/services/product_service.dart';
 
-class EpisodeDialog extends StatefulWidget {
-  const EpisodeDialog({
+class ProductDialog extends StatefulWidget {
+  const ProductDialog({
     Key? key,
-    required this.productID,
+    required this.categories,
   }) : super(key: key);
 
-  final String productID;
+  final List<dynamic> categories;
 
   @override
-  State<EpisodeDialog> createState() => _EpisodeDialogState();
+  State<ProductDialog> createState() => _ProductDialogState();
 }
 
-class _EpisodeDialogState extends State<EpisodeDialog> {
+class _ProductDialogState extends State<ProductDialog> {
   PlatformFile imgFile =
       PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
+  bool productIDValidate = false;
   bool nameValidate = false;
-  bool priceValidate = false;
+  bool overviewValidate = false;
+  String categoryID = 'A1';
   @override
   Widget build(BuildContext context) {
-    EpisodeService episodeService = EpisodeService();
-    Size size = MediaQuery.of(context).size;
+    ProductService productService = ProductService();
+    TextEditingController productIDController = TextEditingController();
     TextEditingController nameController = TextEditingController();
-    TextEditingController priceController = TextEditingController();
+    TextEditingController overviewController = TextEditingController();
     return Dialog(
         elevation: 16,
         child: Container(
           padding: const EdgeInsets.all(defaultPadding),
           width: 730,
-          height: 350,
+          height: 440,
           color: thirdColor,
           child: Row(children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (imgFile.bytes!.isEmpty)
                   Container(
@@ -51,6 +54,7 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                       child: Image.asset('/images/no-image.png', width: 170)),
                 if (imgFile.bytes!.isNotEmpty)
                   Image.memory(Uint8List.fromList(imgFile.bytes!), width: 170),
+                const SizedBox(height: defaultPadding),
                 ButtonTemplete(
                     title: 'Choose Image',
                     press: () async {
@@ -69,6 +73,46 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  padding: const EdgeInsets.all(defaultPadding / 2),
+                  width: 250,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: defaultPadding / 2,
+                              vertical: defaultPadding),
+                          width: 80,
+                          child: const Center(child: Text('Category'))),
+                      const SizedBox(width: defaultPadding),
+                      Expanded(
+                        child: DropdownButton(
+                          value: categoryID,
+                          elevation: 0,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              categoryID = newValue!;
+                            });
+                          },
+                          items: widget.categories
+                              .map<DropdownMenuItem<String>>((category) {
+                            return DropdownMenuItem<String>(
+                                value: category['id'],
+                                child: Text(category['name']));
+                          }).toList(),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                FieldTemplete(
+                    width: 500,
+                    title: 'ProductID',
+                    maxLine: 1,
+                    controller: productIDController,
+                    validate: nameValidate,
+                    errorMsg: 'Input invalid product ID'),
                 FieldTemplete(
                     width: 500,
                     title: 'Name',
@@ -77,12 +121,12 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                     validate: nameValidate,
                     errorMsg: 'Input invalid name'),
                 FieldTemplete(
-                    width: 300,
-                    title: 'Price',
+                    width: 500,
+                    title: 'Overview',
                     maxLine: 1,
-                    controller: priceController,
-                    validate: priceValidate,
-                    errorMsg: 'Input invalid price'),
+                    controller: overviewController,
+                    validate: overviewValidate,
+                    errorMsg: 'Input invalid overview'),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: defaultPadding * 6.5,
@@ -90,21 +134,27 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
-                        String episodeID = widget.productID + const Uuid().v1();
-                        String fileName = episodeID + imgFile.name;
+                        String fileName = productIDController.text +
+                            const Uuid().v1() +
+                            imgFile.name;
                         String docID =
-                            '${widget.productID}_${const Uuid().v1()}';
-                        int episodePrice = 0;
+                            '${productIDController.text}_${const Uuid().v1()}';
                         bool result = false;
+                        if (productIDController.text.isEmpty) {
+                          setState(() {
+                            productIDValidate = true;
+                          });
+                          result = true;
+                        }
                         if (nameController.text.isEmpty) {
                           setState(() {
                             nameValidate = true;
                           });
                           result = true;
                         }
-                        if (priceController.text.isEmpty) {
+                        if (overviewController.text.isEmpty) {
                           setState(() {
-                            priceValidate = true;
+                            overviewValidate = true;
                           });
                           result = true;
                         }
@@ -124,18 +174,10 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                                             })
                                       ]));
                         }
-                        try {
-                          episodePrice = int.parse(priceController.text);
-                        } catch (e) {
-                          setState(() {
-                            priceValidate = true;
-                          });
-                          result = true;
-                        }
                         if (result == false) {
                           //Upload file
                           final uploadTask = await FirebaseStorage.instance
-                              .ref('episodes/$fileName')
+                              .ref('products/$fileName')
                               .putData(
                                   imgFile.bytes!,
                                   SettableMetadata(
@@ -145,15 +187,16 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                             case TaskState.success:
                               String imageURL =
                                   await uploadTask.ref.getDownloadURL();
-                              Episode episode = Episode(
-                                  episodeID,
+                              Product product = Product(
+                                  categoryID,
                                   nameController.text,
                                   imageURL,
-                                  episodePrice,
-                                  widget.productID);
-                              String result = await episodeService
-                                  .addNewEpisode(episode, docID);
-                              if (result == 'Add New Episode successfully') {
+                                  overviewController.text,
+                                  productIDController.text,
+                                  docID);
+                              String result =
+                                  await productService.addNewProduct(product);
+                              if (result == 'Add new product successfully') {
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(

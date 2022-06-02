@@ -24,4 +24,22 @@ class ProductService {
       return "Error adding document: $error";
     }
   }
+
+  Future<String> addNewProduct(Product product) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("product")
+          .doc(product.docID)
+          .set({
+        'categoryID': product.categoryID,
+        'image': product.image,
+        'name': product.name,
+        'overview': product.overview,
+        'productID': product.productID
+      });
+      return 'Add new product successfully';
+    } catch (error) {
+      return "Error adding document: $error";
+    }
+  }
 }

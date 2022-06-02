@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/character.dart';
-import 'package:yamabi_admin/modal/episode.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/services/character_service.dart';
-import 'package:yamabi_admin/services/episode_service.dart';
 
 class CharacterDialog extends StatefulWidget {
   const CharacterDialog({
@@ -30,13 +28,12 @@ class _CharacterDialogState extends State<CharacterDialog> {
   @override
   Widget build(BuildContext context) {
     CharacterService characterService = CharacterService();
-    Size size = MediaQuery.of(context).size;
     TextEditingController nameController = TextEditingController();
     return Dialog(
         elevation: 16,
         child: Container(
           padding: const EdgeInsets.all(defaultPadding),
-          width: size.width / 2.6,
+          width: 730,
           height: 260,
           color: thirdColor,
           child: Row(children: [
@@ -86,7 +83,8 @@ class _CharacterDialogState extends State<CharacterDialog> {
                       press: () async {
                         String fileName =
                             widget.productID + const Uuid().v1() + imgFile.name;
-                        String docID = widget.productID + const Uuid().v1();
+                        String docID =
+                            '${widget.productID}_${const Uuid().v1()}';
                         bool result = false;
                         if (nameController.text.isEmpty) {
                           setState(() {

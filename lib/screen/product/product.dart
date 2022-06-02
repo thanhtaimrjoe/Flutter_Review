@@ -1,21 +1,13 @@
-import 'dart:typed_data';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:yamabi_admin/constants.dart';
-import 'package:yamabi_admin/modal/character.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/home/components/appbar.dart';
-import 'package:yamabi_admin/screen/product/components/character_card.dart';
 import 'package:yamabi_admin/screen/product/components/character_dialog.dart';
+import 'package:yamabi_admin/screen/product/components/character_list.dart';
 import 'package:yamabi_admin/screen/product/components/episode_dialog.dart';
 import 'package:yamabi_admin/screen/product/components/episode_list.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/product_information.dart';
-import 'package:yamabi_admin/services/character_service.dart';
 
 class MyProduct extends StatelessWidget {
   const MyProduct({Key? key, this.arguments}) : super(key: key);
@@ -32,14 +24,13 @@ class MyProduct extends StatelessWidget {
     //     'A11',
     //     '');
     final product = arguments as Product;
-    CharacterService characterService = CharacterService();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
             backgroundColor: primaryColor,
             automaticallyImplyLeading: false,
             elevation: 0,
-            toolbarHeight: 130.0,
+            toolbarHeight: 100.0,
             title: const MyAppBar()),
         body: SingleChildScrollView(
           child: Container(
@@ -106,31 +97,7 @@ class MyProduct extends StatelessWidget {
                     ],
                   ),
                 ),
-                StreamBuilder<QuerySnapshot>(
-                  stream: characterService
-                      .fetchRealtimeCharacters(product.productID),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(child: Text('Something went wrong'));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                          child: SpinKitCubeGrid(color: primaryColor));
-                    }
-                    return ListView(
-                      shrinkWrap: true,
-                      children: snapshot.data!.docs.map((document) {
-                        Character character =
-                            Character(document['name'], document['image']);
-                        return Padding(
-                          padding: const EdgeInsets.only(top: defaultPadding),
-                          child: CharacterCard(character: character),
-                        );
-                      }).toList(),
-                    );
-                  },
-                )
+                CharacterList(productID: product.productID)
               ],
             ),
           ),

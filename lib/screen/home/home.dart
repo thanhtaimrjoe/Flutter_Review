@@ -4,7 +4,6 @@ import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/user.dart';
 import 'package:yamabi_admin/screen/home/components/appbar.dart';
 import 'package:yamabi_admin/screen/home/components/view_page.dart';
-import 'package:yamabi_admin/services/categories_service.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -21,19 +20,8 @@ class MyHomePage extends StatelessWidget {
           elevation: 0,
           toolbarHeight: 100.0,
           title: const MyAppBar(),
-          bottom: const TabBar(tabs: [
-            Tab(text: 'View'),
-            Tab(text: 'Create'),
-          ]),
         ),
-        body: TabBarView(children: [
-          const MyViewPage(),
-          Center(
-              child: ElevatedButton(
-            child: Text('Go to nested page'),
-            onPressed: () {},
-          )),
-        ]),
+        body: const MyViewPage(),
       ),
     );
   }

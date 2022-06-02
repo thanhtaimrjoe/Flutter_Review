@@ -9,9 +9,9 @@ class EpisodeService {
         .snapshots();
   }
 
-  Future<String> addNewEpisode(Episode episode) async {
+  Future<String> addNewEpisode(Episode episode, String docID) async {
     try {
-      await FirebaseFirestore.instance.collection("episode").add({
+      await FirebaseFirestore.instance.collection("episode").doc(docID).set({
         'episodeID': episode.episodeID,
         'image': episode.image,
         'name': episode.name,

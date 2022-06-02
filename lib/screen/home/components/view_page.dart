@@ -1,8 +1,14 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:yamabi_admin/constants.dart';
+import 'package:yamabi_admin/modal/category.dart';
+import 'package:yamabi_admin/screen/home/components/category_dialog.dart';
+import 'package:yamabi_admin/screen/home/components/product_dialog.dart';
 import 'package:yamabi_admin/screen/home/components/product_list.dart';
+import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/services/categories_service.dart';
 
 class MyViewPage extends StatelessWidget {
@@ -25,27 +31,58 @@ class MyViewPage extends StatelessWidget {
           return SingleChildScrollView(
               child: Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding * 24),
+                      horizontal: defaultPadding * 24,
+                      vertical: defaultPadding),
                   color: backgroundColor,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: snapshot.data!.docs.map((document) {
-                      return Container(
-                          margin: const EdgeInsets.only(top: defaultPadding),
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.all(defaultPadding / 2),
-                                child: Text(document['name'],
-                                    style: const TextStyle(fontSize: 24)),
-                              ),
-                              ProductList(categoryID: document['id']),
-                            ],
-                          ));
-                    }).toList(),
+                  child: Column(
+                    children: [
+                      Row(children: [
+                        ButtonTemplete(
+                            title: 'Create new category',
+                            press: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const CategoryDialog();
+                                  });
+                            }),
+                        const SizedBox(width: defaultPadding),
+                        ButtonTemplete(
+                            title: 'Create new product',
+                            press: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    List<dynamic> categories =
+                                        snapshot.data!.docs;
+                                    return ProductDialog(
+                                        categories: categories);
+                                  });
+                            }),
+                      ]),
+                      ListView(
+                        shrinkWrap: true,
+                        children: snapshot.data!.docs.map((document) {
+                          return Container(
+                              margin:
+                                  const EdgeInsets.only(top: defaultPadding),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(
+                                        defaultPadding / 2),
+                                    child: Text(document['name'],
+                                        style: const TextStyle(fontSize: 24)),
+                                  ),
+                                  ProductList(categoryID: document['id']),
+                                ],
+                              ));
+                        }).toList(),
+                      ),
+                    ],
                   )));
         });
   }
