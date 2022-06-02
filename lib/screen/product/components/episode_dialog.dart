@@ -36,7 +36,7 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
         elevation: 16,
         child: Container(
           padding: const EdgeInsets.all(defaultPadding),
-          width: size.width / 2.6,
+          width: 730,
           height: 350,
           color: thirdColor,
           child: Row(children: [
