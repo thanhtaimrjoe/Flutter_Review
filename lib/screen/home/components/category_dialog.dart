@@ -134,6 +134,8 @@ class _CategoryDialogState extends State<CategoryDialog> {
                                                       press: () {
                                                         Navigator.pop(
                                                             context, 'OK');
+                                                        Navigator.pop(
+                                                            context, 'OK');
                                                       })
                                                 ]));
                                   } else {

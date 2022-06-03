@@ -197,6 +197,8 @@ class _ProductDialogState extends State<ProductDialog> {
                                                   press: () {
                                                     Navigator.pop(
                                                         context, 'OK');
+                                                    Navigator.pop(
+                                                        context, 'OK');
                                                   })
                                             ]));
                               } else {
