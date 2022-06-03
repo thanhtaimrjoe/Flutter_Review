@@ -6,9 +6,9 @@ class CategoryService {
     return FirebaseFirestore.instance.collection('category').snapshots();
   }
 
-  Future<String> addNewCategory(Category category, String docID) async {
+  Future<String> addNewCategory(Category category) async {
     try {
-      await FirebaseFirestore.instance.collection("category").doc(docID).set({
+      await FirebaseFirestore.instance.collection("category").add({
         'id': category.id,
         'image': category.image,
         'name': category.name,

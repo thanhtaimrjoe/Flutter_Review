@@ -21,12 +21,10 @@ class CategoryDialog extends StatefulWidget {
 class _CategoryDialogState extends State<CategoryDialog> {
   PlatformFile imgFile =
       PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
-  bool categoryIDValidate = false;
   bool nameValidate = false;
   @override
   Widget build(BuildContext context) {
     CategoryService categoryService = CategoryService();
-    TextEditingController categoryIDController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     return Dialog(
         elevation: 16,
@@ -69,13 +67,6 @@ class _CategoryDialogState extends State<CategoryDialog> {
                   children: [
                     FieldTemplete(
                         width: 500,
-                        title: 'ID',
-                        maxLine: 1,
-                        controller: categoryIDController,
-                        validate: categoryIDValidate,
-                        errorMsg: 'Input invalid category ID'),
-                    FieldTemplete(
-                        width: 500,
                         title: 'Name',
                         maxLine: 1,
                         controller: nameController,
@@ -88,18 +79,9 @@ class _CategoryDialogState extends State<CategoryDialog> {
                       child: ButtonTemplete(
                           title: 'Confirm',
                           press: () async {
-                            String fileName = categoryIDController.text +
-                                const Uuid().v1() +
-                                imgFile.name;
-                            String docID =
-                                '${categoryIDController.text}_${const Uuid().v1()}';
+                            String categoryID = const Uuid().v1();
+                            String fileName = categoryID;
                             bool result = false;
-                            if (categoryIDController.text.isEmpty) {
-                              setState(() {
-                                categoryIDValidate = true;
-                              });
-                              result = true;
-                            }
                             if (nameController.text.isEmpty) {
                               setState(() {
                                 nameValidate = true;
@@ -135,12 +117,10 @@ class _CategoryDialogState extends State<CategoryDialog> {
                                 case TaskState.success:
                                   String imageURL =
                                       await uploadTask.ref.getDownloadURL();
-                                  Category category = Category(
-                                      categoryIDController.text,
-                                      nameController.text,
-                                      imageURL);
+                                  Category category = Category(categoryID,
+                                      nameController.text, imageURL);
                                   String result = await categoryService
-                                      .addNewCategory(category, docID);
+                                      .addNewCategory(category);
                                   if (result ==
                                       'Add new category successfully') {
                                     showDialog(
