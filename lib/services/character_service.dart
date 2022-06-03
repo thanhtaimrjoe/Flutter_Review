@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:yamabi_admin/modal/character.dart';
 
 class CharacterService {
@@ -23,13 +24,14 @@ class CharacterService {
     }
   }
 
-  Future<String> deleteCharacter(String characterID) async {
+  Future<String> deleteCharacter(String characterID, String imageURL) async {
     try {
       await FirebaseFirestore.instance
           .collection("character")
           .where('characterID', isEqualTo: characterID)
           .get()
           .then((events) => events.docs[0].reference.delete());
+      FirebaseStorage.instance.refFromURL(imageURL).delete();
       return 'Delete character successfully';
     } catch (error) {
       return "Error adding document: $error";

@@ -198,7 +198,8 @@ class _ProductInformationState extends State<ProductInformation> {
                                               title: 'Yes',
                                               press: () {
                                                 productService.deleteProduct(
-                                                    widget.product.productID);
+                                                    widget.product.productID,
+                                                    widget.product.image);
                                                 Navigator.pop(context, 'Yes');
                                                 Navigator.pop(context, 'Yes');
                                               }),

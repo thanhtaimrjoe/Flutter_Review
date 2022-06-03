@@ -61,8 +61,8 @@ class EpisodeCard extends StatelessWidget {
                                 title: 'Yes',
                                 press: () {
                                   Navigator.pop(context, 'No');
-                                  episodeService
-                                      .deleteEpisode(episode.episodeID);
+                                  episodeService.deleteEpisode(
+                                      episode.episodeID, episode.image);
                                 }),
                             ButtonTemplete(
                                 title: 'No',

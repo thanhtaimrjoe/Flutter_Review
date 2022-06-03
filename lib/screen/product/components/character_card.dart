@@ -49,8 +49,8 @@ class CharacterCard extends StatelessWidget {
                                 title: 'Yes',
                                 press: () {
                                   Navigator.pop(context, 'No');
-                                  characterService
-                                      .deleteCharacter(character.characterID);
+                                  characterService.deleteCharacter(
+                                      character.characterID, character.image);
                                 }),
                             ButtonTemplete(
                                 title: 'No',

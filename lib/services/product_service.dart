@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:yamabi_admin/modal/product.dart';
 
 class ProductService {
@@ -40,13 +41,14 @@ class ProductService {
     }
   }
 
-  Future<String> deleteProduct(String productID) async {
+  Future<String> deleteProduct(String productID, String imageURL) async {
     try {
       await FirebaseFirestore.instance
           .collection("product")
           .where('productID', isEqualTo: productID)
           .get()
           .then((events) => events.docs[0].reference.delete());
+      FirebaseStorage.instance.refFromURL(imageURL).delete();
       return 'Delete product successfully';
     } catch (error) {
       return "Error adding document: $error";
