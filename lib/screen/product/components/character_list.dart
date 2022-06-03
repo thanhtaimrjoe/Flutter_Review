@@ -27,17 +27,33 @@ class CharacterList extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: SpinKitCubeGrid(color: primaryColor));
         }
-        return ListView(
-          shrinkWrap: true,
-          children: snapshot.data!.docs.map((document) {
-            Character character =
-                Character(document['name'], document['image']);
-            return Padding(
-              padding: const EdgeInsets.only(top: defaultPadding),
-              child: CharacterCard(character: character),
-            );
-          }).toList(),
-        );
+        if (snapshot.data!.docs.isEmpty) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(children: [
+                Image.asset(
+                  '/images/folder.png',
+                  height: 100,
+                ),
+                const SizedBox(height: defaultPadding),
+                const Text('No record')
+              ]),
+            ],
+          );
+        } else {
+          return ListView(
+            shrinkWrap: true,
+            children: snapshot.data!.docs.map((document) {
+              Character character = Character(document['characterID'],
+                  document['image'], document['name'], document['productID']);
+              return Padding(
+                padding: const EdgeInsets.only(bottom: defaultPadding),
+                child: CharacterCard(character: character),
+              );
+            }).toList(),
+          );
+        }
       },
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/episode.dart';
+import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
+import 'package:yamabi_admin/services/episode_service.dart';
 
 class EpisodeCard extends StatelessWidget {
   const EpisodeCard({
@@ -13,6 +15,7 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    EpisodeService episodeService = EpisodeService();
     TextEditingController characterName =
         TextEditingController(text: episode.name);
     TextEditingController characterPrice =
@@ -20,28 +23,54 @@ class EpisodeCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(defaultPadding),
       color: thirdColor,
-      child: Row(children: [
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Image.network(episode.image, width: 100),
         const SizedBox(width: defaultPadding * 2),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FieldTemplete(
-                width: 500,
-                title: 'Name',
-                maxLine: 1,
-                controller: characterName,
-                validate: false,
-                errorMsg: ''),
-            FieldTemplete(
-                width: 300,
-                title: 'Price',
-                maxLine: 1,
-                controller: characterPrice,
-                validate: false,
-                errorMsg: ''),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FieldTemplete(
+                  width: 500,
+                  title: 'Name',
+                  maxLine: 1,
+                  controller: characterName,
+                  validate: false,
+                  errorMsg: ''),
+              FieldTemplete(
+                  width: 300,
+                  title: 'Price',
+                  maxLine: 1,
+                  controller: characterPrice,
+                  validate: false,
+                  errorMsg: ''),
+            ],
+          ),
         ),
+        IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                          title: const Text('Warning'),
+                          content:
+                              const Text('Are you sure you want to delete?'),
+                          actions: [
+                            ButtonTemplete(
+                                title: 'Yes',
+                                press: () {
+                                  Navigator.pop(context, 'No');
+                                  episodeService
+                                      .deleteEpisode(episode.episodeID);
+                                }),
+                            ButtonTemplete(
+                                title: 'No',
+                                press: () {
+                                  Navigator.pop(context, 'No');
+                                })
+                          ]));
+            }),
       ]),
     );
   }

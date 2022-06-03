@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/character.dart';
+import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
+import 'package:yamabi_admin/services/character_service.dart';
 
 class CharacterCard extends StatelessWidget {
   const CharacterCard({Key? key, required this.character}) : super(key: key);
@@ -12,6 +12,7 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CharacterService characterService = CharacterService();
     TextEditingController characterName =
         TextEditingController(text: character.name);
     return Container(
@@ -20,18 +21,44 @@ class CharacterCard extends StatelessWidget {
       child: Row(children: [
         Image.network(character.image, width: 100),
         const SizedBox(width: defaultPadding * 2),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FieldTemplete(
-                width: 500,
-                title: 'Name',
-                maxLine: 1,
-                controller: characterName,
-                validate: false,
-                errorMsg: ''),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FieldTemplete(
+                  width: 500,
+                  title: 'Name',
+                  maxLine: 1,
+                  controller: characterName,
+                  validate: false,
+                  errorMsg: ''),
+            ],
+          ),
         ),
+        IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                          title: const Text('Warning'),
+                          content:
+                              const Text('Are you sure you want to delete?'),
+                          actions: [
+                            ButtonTemplete(
+                                title: 'Yes',
+                                press: () {
+                                  Navigator.pop(context, 'No');
+                                  characterService
+                                      .deleteCharacter(character.characterID);
+                                }),
+                            ButtonTemplete(
+                                title: 'No',
+                                press: () {
+                                  Navigator.pop(context, 'No');
+                                })
+                          ]));
+            }),
       ]),
     );
   }

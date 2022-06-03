@@ -95,8 +95,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                       user.addUser(result);
                                       // ignore: use_build_context_synchronously
                                       Navigator.pushReplacementNamed(
-                                          context, RoutesName.HOME_PAGE,
-                                          arguments: result);
+                                          context, RoutesName.HOME_PAGE);
                                     } else {
                                       setState(() {
                                         isError = true;

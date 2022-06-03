@@ -25,14 +25,12 @@ class ProductDialog extends StatefulWidget {
 class _ProductDialogState extends State<ProductDialog> {
   PlatformFile imgFile =
       PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
-  bool productIDValidate = false;
   bool nameValidate = false;
   bool overviewValidate = false;
   String categoryID = 'A1';
   @override
   Widget build(BuildContext context) {
     ProductService productService = ProductService();
-    TextEditingController productIDController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController overviewController = TextEditingController();
     return Dialog(
@@ -108,13 +106,6 @@ class _ProductDialogState extends State<ProductDialog> {
                 ),
                 FieldTemplete(
                     width: 500,
-                    title: 'ProductID',
-                    maxLine: 1,
-                    controller: productIDController,
-                    validate: nameValidate,
-                    errorMsg: 'Input invalid product ID'),
-                FieldTemplete(
-                    width: 500,
                     title: 'Name',
                     maxLine: 1,
                     controller: nameController,
@@ -134,18 +125,9 @@ class _ProductDialogState extends State<ProductDialog> {
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
-                        String fileName = productIDController.text +
-                            const Uuid().v1() +
-                            imgFile.name;
-                        String docID =
-                            '${productIDController.text}_${const Uuid().v1()}';
+                        String productID = const Uuid().v1();
+                        String fileName = productID;
                         bool result = false;
-                        if (productIDController.text.isEmpty) {
-                          setState(() {
-                            productIDValidate = true;
-                          });
-                          result = true;
-                        }
                         if (nameController.text.isEmpty) {
                           setState(() {
                             nameValidate = true;
@@ -192,8 +174,8 @@ class _ProductDialogState extends State<ProductDialog> {
                                   nameController.text,
                                   imageURL,
                                   overviewController.text,
-                                  productIDController.text,
-                                  docID);
+                                  productID,
+                                  '');
                               String result =
                                   await productService.addNewProduct(product);
                               if (result == 'Add new product successfully') {

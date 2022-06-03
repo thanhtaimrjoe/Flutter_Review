@@ -41,6 +41,7 @@ class MyProduct extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: defaultPadding),
                 const Padding(
                   padding: EdgeInsets.all(defaultPadding / 2),
                   child: Text(
@@ -48,6 +49,7 @@ class MyProduct extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
+                const SizedBox(height: defaultPadding),
                 ProductInformation(product: product),
                 const SizedBox(height: defaultPadding),
                 Padding(
@@ -73,6 +75,7 @@ class MyProduct extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: defaultPadding),
                 EpisodeList(productID: product.productID),
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding / 2),
@@ -97,6 +100,7 @@ class MyProduct extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: defaultPadding),
                 CharacterList(productID: product.productID)
               ],
             ),

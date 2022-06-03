@@ -90,10 +90,8 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
-                        String episodeID = widget.productID + const Uuid().v1();
-                        String fileName = episodeID + imgFile.name;
-                        String docID =
-                            '${widget.productID}_${const Uuid().v1()}';
+                        String episodeID = const Uuid().v1();
+                        String fileName = episodeID;
                         int episodePrice = 0;
                         bool result = false;
                         if (nameController.text.isEmpty) {
@@ -151,9 +149,9 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                                   imageURL,
                                   episodePrice,
                                   widget.productID);
-                              String result = await episodeService
-                                  .addNewEpisode(episode, docID);
-                              if (result == 'Add New Episode successfully') {
+                              String result =
+                                  await episodeService.addNewEpisode(episode);
+                              if (result == 'Add new episode successfully') {
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(

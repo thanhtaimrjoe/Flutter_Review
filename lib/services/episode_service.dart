@@ -9,16 +9,29 @@ class EpisodeService {
         .snapshots();
   }
 
-  Future<String> addNewEpisode(Episode episode, String docID) async {
+  Future<String> addNewEpisode(Episode episode) async {
     try {
-      await FirebaseFirestore.instance.collection("episode").doc(docID).set({
+      await FirebaseFirestore.instance.collection("episode").add({
         'episodeID': episode.episodeID,
         'image': episode.image,
         'name': episode.name,
         'price': episode.price,
         'productID': episode.productID,
       });
-      return 'Add New Episode successfully';
+      return 'Add new episode successfully';
+    } catch (error) {
+      return "Error adding document: $error";
+    }
+  }
+
+  Future<String> deleteEpisode(String episodeID) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("episode")
+          .where('episodeID', isEqualTo: episodeID)
+          .get()
+          .then((events) => events.docs[0].reference.delete());
+      return 'Remove episode successfully';
     } catch (error) {
       return "Error adding document: $error";
     }

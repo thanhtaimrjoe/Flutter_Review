@@ -81,10 +81,8 @@ class _CharacterDialogState extends State<CharacterDialog> {
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
-                        String fileName =
-                            widget.productID + const Uuid().v1() + imgFile.name;
-                        String docID =
-                            '${widget.productID}_${const Uuid().v1()}';
+                        String characterID = const Uuid().v1();
+                        String fileName = characterID;
                         bool result = false;
                         if (nameController.text.isEmpty) {
                           setState(() {
@@ -121,11 +119,13 @@ class _CharacterDialogState extends State<CharacterDialog> {
                             case TaskState.success:
                               String imageURL =
                                   await uploadTask.ref.getDownloadURL();
-                              Character character =
-                                  Character(nameController.text, imageURL);
-                              String result =
-                                  await characterService.addNewCharacter(
-                                      character, widget.productID, docID);
+                              Character character = Character(
+                                  characterID,
+                                  imageURL,
+                                  nameController.text,
+                                  widget.productID);
+                              String result = await characterService
+                                  .addNewCharacter(character);
                               if (result == 'Add New Character successfully') {
                                 showDialog(
                                     context: context,

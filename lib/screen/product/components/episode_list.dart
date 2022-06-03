@@ -25,17 +25,37 @@ class EpisodeList extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: SpinKitCubeGrid(color: primaryColor));
           }
-          return ListView(
-            shrinkWrap: true,
-            children: snapshot.data!.docs.map((document) {
-              Episode episode = Episode(document['episodeID'], document['name'],
-                  document['image'], document['price'], document['productID']);
-              return Padding(
-                padding: const EdgeInsets.only(top: defaultPadding),
-                child: EpisodeCard(episode: episode),
-              );
-            }).toList(),
-          );
+          if (snapshot.data!.docs.isEmpty) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(children: [
+                  Image.asset(
+                    '/images/folder.png',
+                    height: 100,
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  const Text('No record')
+                ]),
+              ],
+            );
+          } else {
+            return ListView(
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((document) {
+                Episode episode = Episode(
+                    document['episodeID'],
+                    document['name'],
+                    document['image'],
+                    document['price'],
+                    document['productID']);
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: defaultPadding),
+                  child: EpisodeCard(episode: episode),
+                );
+              }).toList(),
+            );
+          }
         });
   }
 }

@@ -27,10 +27,7 @@ class ProductService {
 
   Future<String> addNewProduct(Product product) async {
     try {
-      await FirebaseFirestore.instance
-          .collection("product")
-          .doc(product.docID)
-          .set({
+      await FirebaseFirestore.instance.collection("product").add({
         'categoryID': product.categoryID,
         'image': product.image,
         'name': product.name,

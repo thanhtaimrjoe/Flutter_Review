@@ -9,15 +9,28 @@ class CharacterService {
         .snapshots();
   }
 
-  Future<String> addNewCharacter(
-      Character character, String productID, String docID) async {
+  Future<String> addNewCharacter(Character character) async {
     try {
-      await FirebaseFirestore.instance.collection("character").doc(docID).set({
-        'productID': productID,
+      await FirebaseFirestore.instance.collection("character").add({
+        'characterID': character.characterID,
+        'productID': character.productID,
         'image': character.image,
         'name': character.name,
       });
       return 'Add New Character successfully';
+    } catch (error) {
+      return "Error adding document: $error";
+    }
+  }
+
+  Future<String> deleteCharacter(String characterID) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("character")
+          .where('characterID', isEqualTo: characterID)
+          .get()
+          .then((events) => events.docs[0].reference.delete());
+      return 'Remove character successfully';
     } catch (error) {
       return "Error adding document: $error";
     }

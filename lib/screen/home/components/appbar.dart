@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:yamabi_admin/constants.dart';
+import 'package:yamabi_admin/modal/user.dart';
+import 'package:yamabi_admin/routes/route_names.dart';
 
 class MyAppBar extends StatelessWidget {
   const MyAppBar({
@@ -8,6 +11,7 @@ class MyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context, listen: false);
     var outlineInputBorder = const OutlineInputBorder(
         borderSide: BorderSide.none,
         borderRadius: BorderRadius.all(Radius.circular(defaultPadding / 4)));
@@ -16,9 +20,12 @@ class MyAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Text(
-            "YAMABI",
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, RoutesName.HOME_PAGE),
+            child: const Text(
+              "YAMABI",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
           ),
           SizedBox(
             width: 650,
@@ -36,13 +43,13 @@ class MyAppBar extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 backgroundImage: NetworkImage(
-                  'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%2Fproducts%2F%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9%2Fonepiece_character6.jpg?alt=media&token=ea1c49f7-59e6-48b7-88e1-1c70125efcf0',
+                  user.avatar,
                 ),
               ),
               const SizedBox(width: defaultPadding),
-              const Text('Yano'),
+              Text(user.fullname),
               const SizedBox(width: defaultPadding),
               IconButton(
                 iconSize: 40,

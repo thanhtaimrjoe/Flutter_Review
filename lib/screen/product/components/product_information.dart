@@ -72,7 +72,7 @@ class _ProductInformationState extends State<ProductInformation> {
               children: [
                 FieldTemplete(
                     title: 'ProductID',
-                    width: 400,
+                    width: double.infinity,
                     maxLine: 1,
                     controller: productIDController,
                     validate: false,
