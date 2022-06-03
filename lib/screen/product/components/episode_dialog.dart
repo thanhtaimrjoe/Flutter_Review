@@ -29,7 +29,6 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
   @override
   Widget build(BuildContext context) {
     EpisodeService episodeService = EpisodeService();
-    Size size = MediaQuery.of(context).size;
     TextEditingController nameController = TextEditingController();
     TextEditingController priceController = TextEditingController();
     return Dialog(
@@ -48,7 +47,7 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                       padding: const EdgeInsets.symmetric(
                           vertical: defaultPadding / 2),
                       color: whiteColor,
-                      child: Image.asset('/images/no-image.png', width: 170)),
+                      child: Image.network(noImg, width: 170)),
                 if (imgFile.bytes!.isNotEmpty)
                   Image.memory(Uint8List.fromList(imgFile.bytes!), width: 170),
                 ButtonTemplete(

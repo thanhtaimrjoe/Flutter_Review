@@ -44,8 +44,7 @@ class _CategoryDialogState extends State<CategoryDialog> {
                         padding: const EdgeInsets.symmetric(
                             vertical: defaultPadding / 2),
                         color: whiteColor,
-                        child: Image.asset('/images/no-image-avatar.png',
-                            width: 170)),
+                        child: Image.network(noAvtarImg, width: 170)),
                   if (imgFile.bytes!.isNotEmpty)
                     Image.memory(Uint8List.fromList(imgFile.bytes!),
                         width: 170),

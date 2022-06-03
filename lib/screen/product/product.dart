@@ -101,7 +101,8 @@ class MyProduct extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: defaultPadding),
-                CharacterList(productID: product.productID)
+                CharacterList(productID: product.productID),
+                const SizedBox(height: defaultPadding),
               ],
             ),
           ),

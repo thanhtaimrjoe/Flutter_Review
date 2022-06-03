@@ -39,4 +39,17 @@ class ProductService {
       return "Error adding document: $error";
     }
   }
+
+  Future<String> deleteProduct(String productID) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("product")
+          .where('productID', isEqualTo: productID)
+          .get()
+          .then((events) => events.docs[0].reference.delete());
+      return 'Delete product successfully';
+    } catch (error) {
+      return "Error adding document: $error";
+    }
+  }
 }

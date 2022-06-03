@@ -32,8 +32,8 @@ class CharacterList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(children: [
-                Image.asset(
-                  '/images/folder.png',
+                Image.network(
+                  noRecordImg,
                   height: 100,
                 ),
                 const SizedBox(height: defaultPadding),

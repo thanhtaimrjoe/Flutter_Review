@@ -43,8 +43,8 @@ class _CharacterDialogState extends State<CharacterDialog> {
                 if (imgFile.bytes!.isEmpty)
                   Container(
                       color: whiteColor,
-                      child: Image.asset(
-                        '/images/no-image-avatar.png',
+                      child: Image.network(
+                        noAvtarImg,
                         width: 170,
                       )),
                 if (imgFile.bytes!.isNotEmpty)

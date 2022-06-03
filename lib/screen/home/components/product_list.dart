@@ -28,28 +28,44 @@ class ProductList extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: SpinKitCubeGrid(color: primaryColor));
           }
-          return GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: size.height / size.width * 1.1,
-                crossAxisCount: 5,
-              ),
-              shrinkWrap: true,
-              children: snapshot.data!.docs.map((document) {
-                Product product = Product(
-                    document['categoryID'],
-                    document['name'],
-                    document['image'],
-                    document['overview'],
-                    document['productID'],
-                    document.id);
-                return ProductCard(
-                  product: product,
-                  press: () {
-                    Navigator.pushNamed(context, RoutesName.PRODUCT_DETAIL,
-                        arguments: product);
-                  },
-                );
-              }).toList());
+          if (snapshot.data!.docs.isEmpty) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(children: [
+                  Image.network(
+                    noRecordImg,
+                    height: 100,
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  const Text('No record')
+                ]),
+              ],
+            );
+          } else {
+            return GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: size.height / size.width * 1.1,
+                  crossAxisCount: 5,
+                ),
+                shrinkWrap: true,
+                children: snapshot.data!.docs.map((document) {
+                  Product product = Product(
+                      document['categoryID'],
+                      document['name'],
+                      document['image'],
+                      document['overview'],
+                      document['productID'],
+                      document.id);
+                  return ProductCard(
+                    product: product,
+                    press: () {
+                      Navigator.pushNamed(context, RoutesName.PRODUCT_DETAIL,
+                          arguments: product);
+                    },
+                  );
+                }).toList());
+          }
         });
   }
 }

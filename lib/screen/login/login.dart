@@ -37,8 +37,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               height: size.height,
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('/images/background.jpg'),
-                      fit: BoxFit.cover)),
+                      image: NetworkImage(backgroundImg), fit: BoxFit.cover)),
               child: Center(
                   child: Container(
                       width: 500,

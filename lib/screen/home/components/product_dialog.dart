@@ -4,7 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yamabi_admin/constants.dart';
-import 'package:yamabi_admin/modal/episode.dart';
 import 'package:yamabi_admin/modal/product.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
@@ -38,7 +37,7 @@ class _ProductDialogState extends State<ProductDialog> {
         child: Container(
           padding: const EdgeInsets.all(defaultPadding),
           width: 730,
-          height: 440,
+          height: 420,
           color: thirdColor,
           child: Row(children: [
             Column(
@@ -49,7 +48,7 @@ class _ProductDialogState extends State<ProductDialog> {
                       padding: const EdgeInsets.symmetric(
                           vertical: defaultPadding / 2),
                       color: whiteColor,
-                      child: Image.asset('/images/no-image.png', width: 170)),
+                      child: Image.network(noImg, width: 170)),
                 if (imgFile.bytes!.isNotEmpty)
                   Image.memory(Uint8List.fromList(imgFile.bytes!), width: 170),
                 const SizedBox(height: defaultPadding),
@@ -114,14 +113,14 @@ class _ProductDialogState extends State<ProductDialog> {
                 FieldTemplete(
                     width: 500,
                     title: 'Overview',
-                    maxLine: 1,
+                    maxLine: 5,
                     controller: overviewController,
                     validate: overviewValidate,
                     errorMsg: 'Input invalid overview'),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: defaultPadding * 6.5,
-                      vertical: defaultPadding),
+                      vertical: defaultPadding / 2),
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {

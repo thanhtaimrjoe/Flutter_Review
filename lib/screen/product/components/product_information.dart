@@ -1,12 +1,11 @@
-import 'dart:html';
 import 'dart:typed_data';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yamabi_admin/constants.dart';
 import 'package:yamabi_admin/modal/product.dart';
+import 'package:yamabi_admin/routes/route_names.dart';
 import 'package:yamabi_admin/screen/product/components/button_templete.dart';
 import 'package:yamabi_admin/screen/product/components/field_templete.dart';
 import 'package:yamabi_admin/services/product_service.dart';
@@ -185,7 +184,31 @@ class _ProductInformationState extends State<ProductInformation> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(defaultPadding / 2),
-                      child: ButtonTemplete(title: 'Cancel', press: () {}),
+                      child: ButtonTemplete(
+                          title: 'Delete',
+                          press: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                        title: const Text('Warning'),
+                                        content: const Text(
+                                            'Are you sure you want to delete?'),
+                                        actions: [
+                                          ButtonTemplete(
+                                              title: 'Yes',
+                                              press: () {
+                                                productService.deleteProduct(
+                                                    widget.product.productID);
+                                                Navigator.pop(context, 'Yes');
+                                                Navigator.pop(context, 'Yes');
+                                              }),
+                                          ButtonTemplete(
+                                              title: 'No',
+                                              press: () {
+                                                Navigator.pop(context, 'No');
+                                              })
+                                        ]));
+                          }),
                     ),
                   ],
                 )

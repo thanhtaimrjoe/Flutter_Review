@@ -30,7 +30,7 @@ class CharacterService {
           .where('characterID', isEqualTo: characterID)
           .get()
           .then((events) => events.docs[0].reference.delete());
-      return 'Remove character successfully';
+      return 'Delete character successfully';
     } catch (error) {
       return "Error adding document: $error";
     }
