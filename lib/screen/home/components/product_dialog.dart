@@ -26,7 +26,12 @@ class _ProductDialogState extends State<ProductDialog> {
       PlatformFile(name: '', size: 0, bytes: Uint8List.fromList([]));
   bool nameValidate = false;
   bool overviewValidate = false;
-  String categoryID = 'A1';
+  String categoryID = '';
+  @override
+  void initState() {
+    categoryID = widget.categories[0]['id'];
+  }
+
   @override
   Widget build(BuildContext context) {
     ProductService productService = ProductService();
@@ -85,6 +90,9 @@ class _ProductDialogState extends State<ProductDialog> {
                       const SizedBox(width: defaultPadding),
                       Expanded(
                         child: DropdownButton(
+                          underline: Container(
+                            height: 2,
+                          ),
                           value: categoryID,
                           elevation: 0,
                           onChanged: (String? newValue) {

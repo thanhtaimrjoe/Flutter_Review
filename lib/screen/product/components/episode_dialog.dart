@@ -162,6 +162,8 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                                                   press: () {
                                                     Navigator.pop(
                                                         context, 'OK');
+                                                    Navigator.pop(
+                                                        context, 'OK');
                                                   })
                                             ]));
                               } else {

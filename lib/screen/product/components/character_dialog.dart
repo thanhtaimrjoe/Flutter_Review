@@ -138,6 +138,8 @@ class _CharacterDialogState extends State<CharacterDialog> {
                                                   press: () {
                                                     Navigator.pop(
                                                         context, 'OK');
+                                                    Navigator.pop(
+                                                        context, 'OK');
                                                   })
                                             ]));
                               } else {
