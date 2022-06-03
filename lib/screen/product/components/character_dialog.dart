@@ -81,7 +81,12 @@ class _CharacterDialogState extends State<CharacterDialog> {
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
+                        int charactersLength = await characterService
+                            .getCharactersLength(widget.productID);
+                        String charactersCount =
+                            charactersLength.toString().padLeft(4, '0');
                         String characterID = const Uuid().v1();
+                        String docID = '$charactersCount-$characterID';
                         String fileName = characterID;
                         bool result = false;
                         if (nameController.text.isEmpty) {
@@ -125,7 +130,7 @@ class _CharacterDialogState extends State<CharacterDialog> {
                                   nameController.text,
                                   widget.productID);
                               String result = await characterService
-                                  .addNewCharacter(character);
+                                  .addNewCharacter(character, docID);
                               if (result == 'Add New Character successfully') {
                                 showDialog(
                                     context: context,

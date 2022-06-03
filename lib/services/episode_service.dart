@@ -10,9 +10,9 @@ class EpisodeService {
         .snapshots();
   }
 
-  Future<String> addNewEpisode(Episode episode) async {
+  Future<String> addNewEpisode(Episode episode, String docID) async {
     try {
-      await FirebaseFirestore.instance.collection("episode").add({
+      await FirebaseFirestore.instance.collection("episode").doc(docID).set({
         'episodeID': episode.episodeID,
         'image': episode.image,
         'name': episode.name,
@@ -23,6 +23,14 @@ class EpisodeService {
     } catch (error) {
       return "Error adding document: $error";
     }
+  }
+
+  Future<int> getEpisodesLength(String productID) {
+    return FirebaseFirestore.instance
+        .collection('episode')
+        .where('productID', isEqualTo: productID)
+        .get()
+        .then((events) => events.docs.length);
   }
 
   Future<String> deleteEpisode(String episodeID, String imageURL) async {

@@ -89,7 +89,12 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                   child: ButtonTemplete(
                       title: 'Confirm',
                       press: () async {
+                        int episodesLength = await episodeService
+                            .getEpisodesLength(widget.productID);
+                        String episodesCount =
+                            episodesLength.toString().padLeft(4, '0');
                         String episodeID = const Uuid().v1();
+                        String docID = '$episodesCount-$episodeID';
                         String fileName = episodeID;
                         int episodePrice = 0;
                         bool result = false;
@@ -148,8 +153,8 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
                                   imageURL,
                                   episodePrice,
                                   widget.productID);
-                              String result =
-                                  await episodeService.addNewEpisode(episode);
+                              String result = await episodeService
+                                  .addNewEpisode(episode, docID);
                               if (result == 'Add new episode successfully') {
                                 showDialog(
                                     context: context,
