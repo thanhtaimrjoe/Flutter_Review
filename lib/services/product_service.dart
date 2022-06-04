@@ -12,14 +12,25 @@ class ProductService {
 
   Future<String> updateProduct(Product product) async {
     try {
-      await FirebaseFirestore.instance
-          .collection("product")
-          .doc(product.docID)
-          .update({
-        'image': product.image,
-        'name': product.name,
-        'overview': product.overview,
-      });
+      if (product.image.isEmpty) {
+        await FirebaseFirestore.instance
+            .collection("product")
+            .doc(product.docID)
+            .update({
+          'name': product.name,
+          'overview': product.overview,
+        });
+      } else {
+        await FirebaseFirestore.instance
+            .collection("product")
+            .doc(product.docID)
+            .update({
+          'image': product.image,
+          'name': product.name,
+          'overview': product.overview,
+        });
+      }
+
       return 'Update successfully';
     } catch (error) {
       return "Error adding document: $error";
@@ -53,5 +64,12 @@ class ProductService {
     } catch (error) {
       return "Error adding document: $error";
     }
+  }
+
+  Future<void> removeOldImage(String imageURL) async {
+    try {
+      FirebaseStorage.instance.refFromURL(imageURL).delete();
+      // ignore: empty_catches
+    } catch (error) {}
   }
 }

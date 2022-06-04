@@ -31,7 +31,7 @@ class CharacterCard extends StatelessWidget {
                   maxLine: 1,
                   controller: characterName,
                   validate: false,
-                  errorMsg: ''),
+                  errorMsg: 'Input invalid name'),
             ],
           ),
         ),

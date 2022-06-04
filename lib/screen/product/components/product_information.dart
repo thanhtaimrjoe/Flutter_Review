@@ -81,15 +81,15 @@ class _ProductInformationState extends State<ProductInformation> {
                     width: double.infinity,
                     maxLine: 1,
                     controller: nameController,
-                    validate: false,
-                    errorMsg: ''),
+                    validate: nameValidate,
+                    errorMsg: 'Input invalid name'),
                 FieldTemplete(
                     title: 'Overview',
                     width: double.infinity,
                     maxLine: 5,
                     controller: overviewController,
-                    validate: false,
-                    errorMsg: ''),
+                    validate: overviewValidate,
+                    errorMsg: 'Input invalid overview'),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -98,9 +98,7 @@ class _ProductInformationState extends State<ProductInformation> {
                       child: ButtonTemplete(
                           title: 'Save',
                           press: () async {
-                            String fileName = widget.product.productID +
-                                const Uuid().v1() +
-                                imgFile.name;
+                            String fileName = const Uuid().v1();
                             bool result = false;
                             if (nameController.text.isEmpty) {
                               setState(() {
@@ -120,7 +118,7 @@ class _ProductInformationState extends State<ProductInformation> {
                                 //Upload file
                                 final uploadTask = await FirebaseStorage
                                     .instance
-                                    .ref('product/$fileName')
+                                    .ref('products/$fileName')
                                     .putData(
                                         imgFile.bytes!,
                                         SettableMetadata(
@@ -130,6 +128,8 @@ class _ProductInformationState extends State<ProductInformation> {
                                   case TaskState.success:
                                     imageURL =
                                         await uploadTask.ref.getDownloadURL();
+                                    productService
+                                        .removeOldImage(widget.product.image);
                                     break;
                                   case TaskState.paused:
                                     break;
