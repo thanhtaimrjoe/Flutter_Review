@@ -43,7 +43,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       width: 500,
                       height: 320,
                       padding: const EdgeInsets.all(defaultPadding * 2),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       child: Column(
