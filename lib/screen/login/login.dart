@@ -43,7 +43,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       width: 500,
                       height: 320,
                       padding: const EdgeInsets.all(defaultPadding * 2),
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
                       child: Column(
                         children: [
                           const Text('YAMABI',
@@ -87,18 +89,25 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                     User result =
                                         await userService.checkUserExist(
                                             username.text, password.text);
-                                    if (result.username == username.text) {
-                                      // ignore: use_build_context_synchronously
-                                      final user = Provider.of<User>(context,
-                                          listen: false);
-                                      user.addUser(result);
-                                      // ignore: use_build_context_synchronously
-                                      Navigator.pushReplacementNamed(
-                                          context, RoutesName.HOME_PAGE);
-                                    } else {
+                                    if (username.text.isEmpty ||
+                                        password.text.isEmpty) {
                                       setState(() {
                                         isError = true;
                                       });
+                                    } else {
+                                      if (result.username == username.text) {
+                                        // ignore: use_build_context_synchronously
+                                        final user = Provider.of<User>(context,
+                                            listen: false);
+                                        user.addUser(result);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pushReplacementNamed(
+                                            context, RoutesName.HOME_PAGE);
+                                      } else {
+                                        setState(() {
+                                          isError = true;
+                                        });
+                                      }
                                     }
                                   },
                                   child: const Text('Sign In')),
