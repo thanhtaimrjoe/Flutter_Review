@@ -44,11 +44,11 @@ class _CharacterDialogState extends State<CharacterDialog> {
                   Container(
                       color: whiteColor,
                       child: Image.network(
-                        noAvtarImg,
-                        width: 170,
+                        noImg,
+                        width: 125,
                       )),
                 if (imgFile.bytes!.isNotEmpty)
-                  Image.memory(Uint8List.fromList(imgFile.bytes!), width: 170),
+                  Image.memory(Uint8List.fromList(imgFile.bytes!), width: 125),
                 ButtonTemplete(
                     title: 'Choose Image',
                     press: () async {

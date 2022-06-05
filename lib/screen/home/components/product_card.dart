@@ -17,12 +17,17 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       // ignore: sort_child_properties_last
       child: Container(
+        color: Colors.amberAccent,
         margin: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Image.network(
-              product.image,
-              width: double.infinity,
+            Expanded(
+              child: Image.network(
+                product.image,
+                width: 760,
+                height: 1200,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: defaultPadding / 4),
             Text(

@@ -19,7 +19,10 @@ class CharacterCard extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       color: thirdColor,
       child: Row(children: [
-        Image.network(character.image, width: 100),
+        Image.network(
+          character.image,
+          width: 125,
+        ),
         const SizedBox(width: defaultPadding * 2),
         Expanded(
           child: Column(

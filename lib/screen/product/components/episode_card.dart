@@ -24,7 +24,7 @@ class EpisodeCard extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       color: thirdColor,
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Image.network(episode.image, width: 100),
+        Image.network(episode.image, width: 125),
         const SizedBox(width: defaultPadding * 2),
         Expanded(
           child: Column(
