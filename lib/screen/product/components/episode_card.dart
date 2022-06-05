@@ -21,18 +21,21 @@ class EpisodeCard extends StatelessWidget {
     TextEditingController characterPrice =
         TextEditingController(text: '${episode.price}');
     return Container(
-      padding: const EdgeInsets.all(defaultPadding),
+      margin: const EdgeInsets.all(8),
       color: thirdColor,
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Image.network(episode.image,
-            width: 150, height: 230, fit: BoxFit.cover),
-        const SizedBox(width: defaultPadding * 2),
+        Container(
+          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+          child: Image.network(episode.image,
+              width: 180, height: 286, fit: BoxFit.cover),
+        ),
         Expanded(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FieldTemplete(
-                  width: 500,
+                  width: 400,
                   title: 'Name',
                   maxLine: 1,
                   controller: characterName,

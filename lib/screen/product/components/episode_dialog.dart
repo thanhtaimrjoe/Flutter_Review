@@ -36,7 +36,7 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
         child: Container(
           padding: const EdgeInsets.all(defaultPadding),
           width: 730,
-          height: 380,
+          height: 366,
           color: thirdColor,
           child: Row(children: [
             Column(
@@ -44,13 +44,11 @@ class _EpisodeDialogState extends State<EpisodeDialog> {
               children: [
                 if (imgFile.bytes!.isEmpty)
                   Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: defaultPadding / 2),
                       color: whiteColor,
-                      child: Image.network(noImg, width: 170, height: 280)),
+                      child: Image.network(noImg, width: 180, height: 286)),
                 if (imgFile.bytes!.isNotEmpty)
                   Image.memory(Uint8List.fromList(imgFile.bytes!),
-                      width: 170, height: 280, fit: BoxFit.cover),
+                      width: 180, height: 286, fit: BoxFit.cover),
                 ButtonTemplete(
                     title: 'Choose Image',
                     press: () async {

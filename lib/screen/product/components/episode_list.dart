@@ -15,6 +15,7 @@ class EpisodeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     EpisodeService episodeService = EpisodeService();
     return StreamBuilder<QuerySnapshot>(
         stream: episodeService.fetchRealtimeEpisodes(productID),
@@ -40,7 +41,10 @@ class EpisodeList extends StatelessWidget {
               ],
             );
           } else {
-            return ListView(
+            return GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: size.height / size.width * 4),
               shrinkWrap: true,
               children: snapshot.data!.docs.map((document) {
                 Episode episode = Episode(

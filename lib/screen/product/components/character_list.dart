@@ -16,8 +16,8 @@ class CharacterList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     CharacterService characterService = CharacterService();
-
     return StreamBuilder<QuerySnapshot>(
       stream: characterService.fetchRealtimeCharacters(productID),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -42,15 +42,15 @@ class CharacterList extends StatelessWidget {
             ],
           );
         } else {
-          return ListView(
+          return GridView(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: size.height / size.width * 6),
             shrinkWrap: true,
             children: snapshot.data!.docs.map((document) {
               Character character = Character(document['characterID'],
                   document['image'], document['name'], document['productID']);
-              return Padding(
-                padding: const EdgeInsets.only(bottom: defaultPadding),
-                child: CharacterCard(character: character),
-              );
+              return CharacterCard(character: character);
             }).toList(),
           );
         }
