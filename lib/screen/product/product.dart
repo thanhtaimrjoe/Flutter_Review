@@ -34,75 +34,82 @@ class MyProduct extends StatelessWidget {
             title: const MyAppBar()),
         body: SingleChildScrollView(
           child: Container(
-            width: size.width,
             color: backgroundColor,
-            padding:
-                const EdgeInsets.symmetric(horizontal: defaultPadding * 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: defaultPadding),
-                const Padding(
-                  padding: EdgeInsets.all(defaultPadding / 2),
-                  child: Text(
-                    'Manga information',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: defaultPadding),
-                ProductInformation(product: product),
-                const SizedBox(height: defaultPadding),
-                Padding(
-                  padding: const EdgeInsets.all(defaultPadding / 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: defaultPadding),
+                  width: size.width / 1.5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'List of episode',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                      const SizedBox(height: defaultPadding),
+                      const Padding(
+                        padding: EdgeInsets.all(defaultPadding / 2),
+                        child: Text(
+                          'Manga information',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      ButtonTemplete(
-                          title: 'Create new episode',
-                          press: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return EpisodeDialog(
-                                      productID: product.productID);
-                                });
-                          })
+                      const SizedBox(height: defaultPadding),
+                      ProductInformation(product: product),
+                      const SizedBox(height: defaultPadding),
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding / 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'List of episode',
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            ButtonTemplete(
+                                title: 'Create new episode',
+                                press: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return EpisodeDialog(
+                                            productID: product.productID);
+                                      });
+                                })
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: defaultPadding),
+                      EpisodeList(productID: product.productID),
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding / 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'List of character',
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            ButtonTemplete(
+                                title: 'Create new character',
+                                press: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return CharacterDialog(
+                                            productID: product.productID);
+                                      });
+                                })
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: defaultPadding),
+                      CharacterList(productID: product.productID),
+                      const SizedBox(height: defaultPadding),
                     ],
                   ),
                 ),
-                const SizedBox(height: defaultPadding),
-                EpisodeList(productID: product.productID),
-                Padding(
-                  padding: const EdgeInsets.all(defaultPadding / 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'List of character',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      ButtonTemplete(
-                          title: 'Create new character',
-                          press: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CharacterDialog(
-                                      productID: product.productID);
-                                });
-                          })
-                    ],
-                  ),
-                ),
-                const SizedBox(height: defaultPadding),
-                CharacterList(productID: product.productID),
-                const SizedBox(height: defaultPadding),
               ],
             ),
           ),

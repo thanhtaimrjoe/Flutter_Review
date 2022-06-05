@@ -42,7 +42,7 @@ class _ProductDialogState extends State<ProductDialog> {
         child: Container(
           padding: const EdgeInsets.all(defaultPadding),
           width: 730,
-          height: 420,
+          height: 380,
           color: thirdColor,
           child: Row(children: [
             Column(
@@ -53,9 +53,10 @@ class _ProductDialogState extends State<ProductDialog> {
                       padding: const EdgeInsets.symmetric(
                           vertical: defaultPadding / 2),
                       color: whiteColor,
-                      child: Image.network(noImg, width: 170)),
+                      child: Image.network(noImg, width: 170, height: 280)),
                 if (imgFile.bytes!.isNotEmpty)
-                  Image.memory(Uint8List.fromList(imgFile.bytes!), width: 170),
+                  Image.memory(Uint8List.fromList(imgFile.bytes!),
+                      width: 170, height: 280, fit: BoxFit.cover),
                 const SizedBox(height: defaultPadding),
                 ButtonTemplete(
                     title: 'Choose Image',
