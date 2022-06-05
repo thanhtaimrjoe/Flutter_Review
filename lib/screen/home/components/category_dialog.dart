@@ -31,7 +31,7 @@ class _CategoryDialogState extends State<CategoryDialog> {
         child: Container(
             padding: const EdgeInsets.all(defaultPadding),
             width: 730,
-            height: 300,
+            height: 280,
             color: thirdColor,
             child: Row(children: [
               Column(
@@ -42,10 +42,11 @@ class _CategoryDialogState extends State<CategoryDialog> {
                         padding: const EdgeInsets.symmetric(
                             vertical: defaultPadding / 2),
                         color: whiteColor,
-                        child: Image.network(noAvtarImg, width: 170)),
+                        child:
+                            Image.network(noAvtarImg, width: 170, height: 170)),
                   if (imgFile.bytes!.isNotEmpty)
                     Image.memory(Uint8List.fromList(imgFile.bytes!),
-                        width: 170),
+                        width: 170, height: 170, fit: BoxFit.cover),
                   const SizedBox(height: defaultPadding),
                   ButtonTemplete(
                       title: 'Choose Image',

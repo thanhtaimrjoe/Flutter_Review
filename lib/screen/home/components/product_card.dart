@@ -17,7 +17,6 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       // ignore: sort_child_properties_last
       child: Container(
-        color: Colors.amberAccent,
         margin: const EdgeInsets.all(8),
         child: Column(
           children: [

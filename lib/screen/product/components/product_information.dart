@@ -47,9 +47,11 @@ class _ProductInformationState extends State<ProductInformation> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (imgFile.bytes!.isEmpty)
-                  Image.network(widget.product.image, height: 280),
+                  Image.network(widget.product.image,
+                      width: 170, height: 280, fit: BoxFit.cover),
                 if (imgFile.bytes!.isNotEmpty)
-                  Image.memory(Uint8List.fromList(imgFile.bytes!), height: 280),
+                  Image.memory(Uint8List.fromList(imgFile.bytes!),
+                      width: 170, height: 280, fit: BoxFit.cover),
                 const SizedBox(height: defaultPadding / 2),
                 ButtonTemplete(
                     title: 'Choose image',
