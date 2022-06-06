@@ -48,10 +48,10 @@ class _ProductInformationState extends State<ProductInformation> {
               children: [
                 if (imgFile.bytes!.isEmpty)
                   Image.network(widget.product.image,
-                      width: 170, height: 280, fit: BoxFit.cover),
+                      width: 180, height: 286, fit: BoxFit.cover),
                 if (imgFile.bytes!.isNotEmpty)
                   Image.memory(Uint8List.fromList(imgFile.bytes!),
-                      width: 170, height: 280, fit: BoxFit.cover),
+                      width: 180, height: 286, fit: BoxFit.cover),
                 const SizedBox(height: defaultPadding / 2),
                 ButtonTemplete(
                     title: 'Choose image',
