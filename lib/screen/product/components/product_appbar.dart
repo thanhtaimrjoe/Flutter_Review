@@ -7,15 +7,16 @@ class ProductAppBar extends StatelessWidget {
   const ProductAppBar({
     Key? key,
     required this.product,
+    required this.categoryName,
   }) : super(key: key);
 
   final Product product;
+  final String categoryName;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return SliverAppBar(
-      //title: Text(product.name),
       floating: true,
       pinned: true,
       expandedHeight: 200,
@@ -62,7 +63,7 @@ class ProductAppBar extends StatelessWidget {
                               color: Colors.grey,
                               backgroundBlendMode: BlendMode.modulate),
                           child: Text(
-                            product.categoryID,
+                            categoryName,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 12),
                           ),

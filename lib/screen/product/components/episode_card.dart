@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yama_shopping/constants.dart';
 
 class EpisodeCard extends StatelessWidget {
   const EpisodeCard({
@@ -14,8 +15,8 @@ class EpisodeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
+        padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
         decoration: BoxDecoration(
             border: Border(
                 top: const BorderSide(width: 0),
@@ -26,9 +27,11 @@ class EpisodeCard extends StatelessWidget {
           children: [
             Image.network(
               episodes[index].image,
-              width: 80,
+              width: 100,
+              height: 160,
+              fit: BoxFit.cover,
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: defaultPadding),
             Expanded(
               child: Text(
                 episodes[index].name,

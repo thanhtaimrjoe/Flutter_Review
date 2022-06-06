@@ -13,7 +13,7 @@ class ProductTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.all(defaultPadding),
         child: Row(
           children: [
             Container(width: 10, height: 25, color: primaryColor),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yama_shopping/constants.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -21,7 +20,11 @@ class ProductCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.network(image),
+            Image.network(
+              image,
+              height: 190,
+              fit: BoxFit.cover,
+            ),
             Text(
               title,
               maxLines: 1,

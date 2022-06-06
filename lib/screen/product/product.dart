@@ -3,12 +3,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/constants.dart';
 import 'package:yama_shopping/modal/cart.dart';
-import 'package:yama_shopping/modal/character.dart';
 import 'package:yama_shopping/modal/product.dart';
 import 'package:yama_shopping/screen/product/components/character_card.dart';
 import 'package:yama_shopping/screen/product/components/episode_card.dart';
 import 'package:yama_shopping/screen/product/components/product_appbar.dart';
 import 'package:yama_shopping/screen/product/components/product_title.dart';
+import 'package:yama_shopping/services/category_service.dart';
 import 'package:yama_shopping/services/character_service.dart';
 import 'package:yama_shopping/services/episode_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,6 +23,7 @@ class MyProductPage extends StatelessWidget {
     Product product = Product(argument['categoryID'], argument['name'],
         argument['image'], argument['productID'], argument['overview']);
     final card = Provider.of<Cart>(context);
+    CategoryService categoryService = CategoryService();
     EpisodeService episodeService = EpisodeService();
     CharacterService characterService = CharacterService();
     return Scaffold(
@@ -33,15 +34,17 @@ class MyProductPage extends StatelessWidget {
               episodeService.findEpisodesByProductID(product.productID),
           initialData: const [],
         ),
-        // FutureProvider<List<dynamic>>(
-        //     create: (context) =>
-        //         characterService.findCharactersByProductID(product.productID),
-        //     initialData: const [])
+        FutureProvider<String>(
+            create: (context) => categoryService
+                .findCategoryNameByCategoryID(product.categoryID),
+            initialData: '')
       ],
       child: Consumer<List<dynamic>>(
         builder: (context, episodes, child) => CustomScrollView(
           slivers: [
-            ProductAppBar(product: product),
+            Consumer<String>(
+                builder: (context, categoryName, child) => ProductAppBar(
+                    product: product, categoryName: categoryName)),
             if (episodes.isNotEmpty)
               ProductTitle(title: AppLocalizations.of(context)!.chapterList),
             episodes.isEmpty
@@ -92,36 +95,18 @@ class MyProductPage extends StatelessWidget {
             if (episodes.isNotEmpty)
               ProductTitle(title: AppLocalizations.of(context)!.character),
             if (episodes.isNotEmpty)
-              SliverToBoxAdapter(
-                child: FutureProvider<List<dynamic>>(
+              FutureProvider<List<dynamic>>(
                   create: (context) => characterService
                       .findCharactersByProductID(product.productID),
                   initialData: const [],
                   child: Consumer<List<dynamic>>(
-                      builder: (context, character, child) => Container(
-                            color: const Color.fromARGB(255, 179, 201, 238),
-                            margin: const EdgeInsets.only(
-                                bottom: defaultPadding * 2,
-                                left: defaultPadding,
-                                right: defaultPadding),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: defaultPadding / 4),
-                            width: MediaQuery.of(context).size.width,
-                            height: 141,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: character.length,
-                              itemBuilder: (context, index) {
-                                return CharacterCard(
-                                  image: character[index].image,
-                                  name: character[index].name,
-                                );
-                              },
-                            ),
-                          )),
-                ),
-              )
+                      builder: (context, characters, child) => SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (context, index) => CharacterCard(
+                                    characters: characters,
+                                    index: index,
+                                  ),
+                              childCount: characters.length))))
           ],
         ),
       ),

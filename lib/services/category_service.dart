@@ -18,4 +18,18 @@ class CategoryService {
       return [];
     }
   }
+
+  Future<String> findCategoryNameByCategoryID(String categoryID) async {
+    try {
+      String result = '';
+      await FirebaseFirestore.instance
+          .collection("category")
+          .where('id', isEqualTo: categoryID)
+          .get()
+          .then((event) => {result = event.docs[0].get('name')});
+      return result;
+    } catch (e) {
+      return '';
+    }
+  }
 }

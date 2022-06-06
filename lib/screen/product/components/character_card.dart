@@ -4,25 +4,34 @@ import 'package:yama_shopping/constants.dart';
 class CharacterCard extends StatelessWidget {
   const CharacterCard({
     Key? key,
-    required this.image,
-    required this.name,
+    required this.index,
+    required this.characters,
   }) : super(key: key);
 
-  final String image, name;
+  final List<dynamic> characters;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(defaultPadding / 2),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
+      padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
+      decoration: BoxDecoration(
+          border: Border(
+              top: const BorderSide(width: 0),
+              bottom: (index == characters.length - 1)
+                  ? const BorderSide(width: 0)
+                  : BorderSide.none)),
+      child: Row(
         children: [
           Image.network(
-            image,
-            width: 100,
-            height: 100,
+            characters[index].image,
+            width: 80,
+            height: 120,
+            fit: BoxFit.cover,
           ),
-          Text(name),
+          const SizedBox(width: defaultPadding),
+          Text(characters[index].name),
         ],
       ),
     );
