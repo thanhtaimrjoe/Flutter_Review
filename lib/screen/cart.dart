@@ -34,8 +34,8 @@ class EmptyCart extends StatelessWidget {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.network(
-          'https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/empty-cart.png?alt=media&token=93bdf841-30a4-496a-9fb0-1e38184b207d',
+        Image.asset(
+          'assets/images/empty-cart.png',
           width: 200,
           height: 200,
         ),
