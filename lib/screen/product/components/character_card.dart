@@ -31,7 +31,8 @@ class CharacterCard extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           const SizedBox(width: defaultPadding),
-          Text(characters[index].name),
+          Text(characters[index].name,
+              style: const TextStyle(fontSize: 16, color: Colors.black)),
         ],
       ),
     );
