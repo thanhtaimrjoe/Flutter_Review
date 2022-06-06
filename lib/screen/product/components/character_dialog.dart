@@ -126,7 +126,8 @@ class _CharacterDialogState extends State<CharacterDialog> {
                                   characterID,
                                   imageURL,
                                   nameController.text,
-                                  widget.productID);
+                                  widget.productID,
+                                  '');
                               String result = await characterService
                                   .addNewCharacter(character, docID);
                               if (result == 'Add New Character successfully') {

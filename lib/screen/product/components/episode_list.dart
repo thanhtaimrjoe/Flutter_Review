@@ -44,7 +44,7 @@ class EpisodeList extends StatelessWidget {
             return GridView(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: size.height / size.width * 4),
+                  childAspectRatio: size.height / size.width * 3),
               shrinkWrap: true,
               children: snapshot.data!.docs.map((document) {
                 Episode episode = Episode(
@@ -53,10 +53,9 @@ class EpisodeList extends StatelessWidget {
                     document['image'],
                     document['price'],
                     document['productID']);
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: defaultPadding),
-                  child: EpisodeCard(episode: episode),
-                );
+                return Container(
+                    color: Colors.amberAccent,
+                    child: EpisodeCard(episode: episode));
               }).toList(),
             );
           }

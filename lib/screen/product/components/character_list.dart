@@ -48,8 +48,12 @@ class CharacterList extends StatelessWidget {
                 childAspectRatio: size.height / size.width * 6),
             shrinkWrap: true,
             children: snapshot.data!.docs.map((document) {
-              Character character = Character(document['characterID'],
-                  document['image'], document['name'], document['productID']);
+              Character character = Character(
+                  document['characterID'],
+                  document['image'],
+                  document['name'],
+                  document['productID'],
+                  document.id);
               return CharacterCard(character: character);
             }).toList(),
           );

@@ -26,8 +26,7 @@ class EpisodeCard extends StatelessWidget {
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
           decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          child: Image.network(episode.image,
-              width: 180, height: 286, fit: BoxFit.cover),
+          child: Image.network(episode.image, fit: BoxFit.fitHeight),
         ),
         Expanded(
           child: Column(

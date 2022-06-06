@@ -45,4 +45,18 @@ class CharacterService {
       return "Error adding document: $error";
     }
   }
+
+  Future<String> updateCharacter(String name, String docID) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("character")
+          .doc(docID)
+          .update({
+        'name': name,
+      });
+      return 'Update successfully';
+    } catch (error) {
+      return "Error adding document: $error";
+    }
+  }
 }
