@@ -26,7 +26,7 @@ class ProductList extends StatelessWidget {
             return const Center(child: Text('Something went wrong'));
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: SpinKitCubeGrid(color: primaryColor));
+            return const Center();
           }
           if (snapshot.data!.docs.isEmpty) {
             return Row(

@@ -53,9 +53,7 @@ class EpisodeList extends StatelessWidget {
                     document['image'],
                     document['price'],
                     document['productID']);
-                return Container(
-                    color: Colors.amberAccent,
-                    child: EpisodeCard(episode: episode));
+                return EpisodeCard(episode: episode);
               }).toList(),
             );
           }

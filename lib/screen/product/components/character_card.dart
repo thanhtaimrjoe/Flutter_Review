@@ -15,15 +15,7 @@ class CharacterCard extends StatefulWidget {
 }
 
 class _CharacterCardState extends State<CharacterCard> {
-  //late FocusNode myFocusNode;
   bool isEdit = false;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   myFocusNode = FocusNode();
-  // }
-
   @override
   Widget build(BuildContext context) {
     CharacterService characterService = CharacterService();
@@ -35,8 +27,7 @@ class _CharacterCardState extends State<CharacterCard> {
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
           decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          child: Image.network(widget.character.image,
-              width: 150, height: 230, fit: BoxFit.cover),
+          child: Image.network(widget.character.image, fit: BoxFit.fitHeight),
         ),
         Expanded(
           child: Container(
