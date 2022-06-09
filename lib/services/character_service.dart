@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yama_shopping/modal/character.dart';
+import 'package:yama_shopping/models/character.dart';
 
 class CharacterService {
   Future<List<dynamic>> findCharactersByProductID(String productID) async {

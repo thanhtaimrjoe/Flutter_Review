@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yama_shopping/modal/episode.dart';
+import 'package:yama_shopping/models/episode.dart';
 
 class EpisodeService {
   Future<List<dynamic>> findEpisodesByProductID(String productID) async {

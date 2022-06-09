@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yama_shopping/modal/cart.dart';
+import 'package:yama_shopping/models/cart.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyCartPage extends StatelessWidget {

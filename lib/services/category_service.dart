@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yama_shopping/modal/category.dart';
+import 'package:yama_shopping/models/category.dart';
 
 class CategoryService {
   Future<List<dynamic>> firestoreCategories() async {

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/constants.dart';
-import 'package:yama_shopping/screen/cart.dart';
-import 'package:yama_shopping/screen/home/components/categories.dart';
-import 'package:yama_shopping/screen/home/components/new_arrival.dart';
-import 'package:yama_shopping/screen/home/components/popular.dart';
-import 'package:yama_shopping/screen/home/components/search_form.dart';
-import 'package:yama_shopping/screen/home/components/section_title.dart';
-import 'package:yama_shopping/screen/personal/personal.dart';
+import 'package:yama_shopping/screens/cart.dart';
+import 'package:yama_shopping/widgets/home/categories.dart';
+import 'package:yama_shopping/widgets/home/new_arrival.dart';
+import 'package:yama_shopping/widgets/home/popular.dart';
+import 'package:yama_shopping/widgets/home/search_form.dart';
+import 'package:yama_shopping/widgets/home/section_title.dart';
+import 'package:yama_shopping/screens/personal/personal.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyHome extends StatefulWidget {

@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yama_shopping/constants.dart';
-import 'package:yama_shopping/modal/cart.dart';
-import 'package:yama_shopping/screen/home/home.dart';
-import 'package:yama_shopping/screen/list_product.dart';
-import 'package:yama_shopping/screen/product/product.dart';
+import 'package:yama_shopping/models/cart.dart';
+import 'package:yama_shopping/screens/home.dart';
+import 'package:yama_shopping/screens/list_product.dart';
+import 'package:yama_shopping/screens/product/product.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
 import 'package:yama_shopping/services/category_service.dart';
-import 'screen/login.dart';
+import 'screens/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

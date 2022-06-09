@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yama_shopping/modal/episode.dart';
+import 'package:yama_shopping/models/episode.dart';
 
 class Cart with ChangeNotifier {
   List<CartItem> items = [];
