@@ -8,7 +8,7 @@ import 'package:yama_shopping/widgets/home/new_arrival.dart';
 import 'package:yama_shopping/widgets/home/popular.dart';
 import 'package:yama_shopping/widgets/home/search_form.dart';
 import 'package:yama_shopping/widgets/home/section_title.dart';
-import 'package:yama_shopping/screens/personal/personal.dart';
+import 'package:yama_shopping/screens/personal.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyHome extends StatefulWidget {

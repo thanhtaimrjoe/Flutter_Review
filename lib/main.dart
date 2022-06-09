@@ -5,7 +5,7 @@ import 'package:yama_shopping/constants.dart';
 import 'package:yama_shopping/models/cart.dart';
 import 'package:yama_shopping/screens/home.dart';
 import 'package:yama_shopping/screens/list_product.dart';
-import 'package:yama_shopping/screens/product/product.dart';
+import 'package:yama_shopping/screens/product.dart';
 import 'package:yama_shopping/services/authentication_service.dart';
 import 'package:yama_shopping/services/category_service.dart';
 import 'screens/login.dart';
